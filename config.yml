@@ -1,0 +1,129 @@
+project:
+  name: "Compound-Sustainability-Stress-Modeling"
+  version: "1.0"
+  description: "Spatio-temporal compound stress modeling for 10 Indian cities"
+
+time:
+  start_month: "2015-01"
+  end_month: "2025-12"
+  aggregation: "monthly"
+
+spatial:
+  h3_resolution: 8                # ~0.74 km² per hex, ~1500 hexes/city
+  bbox_buffer_km: 10              # Buffer around city bounding box
+
+cities:
+  - mumbai
+  - delhi
+  - bengaluru
+  - chennai
+  - hyderabad
+  - pune
+  - ahmedabad
+  - kolkata
+  - surat
+  - indore
+
+paths:
+  raw_data: "data/raw"
+  processed_data: "data/processed"
+  features_data: "data/features"
+  h3_panel: "data/h3_panel"
+  metadata: "data/metadata"
+  logs: "logs"
+
+datasets:
+  era5: true
+  sentinel2_ndvi: true
+  modis_lst: true
+  ghsl_built_up: true
+  pm25: true
+  osm: true
+  vulnerability: true
+
+era5:
+  variables:
+    - "2m_temperature"
+    - "2m_dewpoint_temperature"
+    - "total_precipitation"
+    - "10m_u_component_of_wind"
+    - "10m_v_component_of_wind"
+    - "surface_solar_radiation_downwards"
+    - "volumetric_soil_water_layer_1"
+    - "volumetric_soil_water_layer_2"
+  grid_resolution: 0.1            # Degrees, ~11 km
+  product_type: "reanalysis"
+  dataset: "reanalysis-era5-single-levels"
+
+satellite:
+  ndvi_collection: "sentinel-2-l2a"
+  lst_collection: "modis-13A3-061"   # MODIS LST monthly
+  cloud_cover_threshold: 20          # Percent max cloud cover
+  ndvi_bands:
+    red: "B04"
+    nir: "B08"
+
+pm25:
+  # NASA SEDAC Annual mean - no auth required
+  sedac_url: "https://sedac.ciesin.columbia.edu/downloads/data/sdei/sdei-global-annual-avg-pm2-5-modvrs-2001-2022/sdei-global-annual-avg-pm2-5-modvrs-2001-2022-tif.zip"
+  unit: "ug_m3"
+
+osm:
+  network_type: "drive"           # For road density
+  timeout: 300
+  cache_folder: "data/raw/osm_cache"
+
+ssi:
+  # City-specific weight multipliers (applied to PCA base weights)
+  city_weights:
+    delhi:
+      pollution_exposure: 1.3
+      heat_stress: 1.2
+      water_stress: 0.8
+    mumbai:
+      heat_stress: 1.2
+      water_stress: 1.3
+      pollution_exposure: 1.0
+    bengaluru:
+      water_stress: 1.4
+      heat_stress: 1.1
+    chennai:
+      heat_stress: 1.2
+      water_stress: 1.3
+    hyderabad:
+      heat_stress: 1.3
+      water_stress: 1.2
+    ahmedabad:
+      heat_stress: 1.5
+      water_stress: 1.1
+    kolkata:
+      heat_stress: 1.1
+      water_stress: 1.2
+      pollution_exposure: 1.2
+    surat:
+      water_stress: 1.3
+      pollution_exposure: 1.2
+    pune:
+      water_stress: 1.2
+      heat_stress: 1.1
+    indore:
+      heat_stress: 1.1
+      water_stress: 1.2
+
+  ssi_bands:
+    Low: [0.0, 0.25]
+    Moderate: [0.25, 0.5]
+    High: [0.5, 0.75]
+    Extreme: [0.75, 1.0]
+
+  archetype_k: 6                  # k-means clusters for stress archetypes
+  anomaly_threshold_pct: 90       # Percentile above which anomaly_flag=True
+
+normalization:
+  method: "zscore"                # Options: zscore, minmax
+  clip_floor: 0.0                 # Clamp negatives to 0 (0 = normal, >0 = stress)
+  baseline_window_years: 3        # Rolling window for dynamic baselines
+
+logging:
+  level: "INFO"
+  format: "{time:YYYY-MM-DD HH:mm:ss} | {level} | {name} | {message}"

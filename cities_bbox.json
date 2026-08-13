@@ -1,0 +1,358 @@
+{
+  "mumbai": {
+    "min_lon": 72.75,
+    "min_lat": 18.87,
+    "max_lon": 73.1,
+    "max_lat": 19.28,
+    "primary_stresses": [
+      "heat",
+      "flood",
+      "pollution"
+    ],
+    "state": "Maharashtra"
+  },
+  "delhi": {
+    "min_lon": 76.84,
+    "min_lat": 28.4,
+    "max_lon": 77.34,
+    "max_lat": 28.88,
+    "primary_stresses": [
+      "extreme_heat",
+      "pollution",
+      "dust"
+    ],
+    "state": "Delhi"
+  },
+  "bengaluru": {
+    "min_lon": 77.45,
+    "min_lat": 12.84,
+    "max_lon": 77.75,
+    "max_lat": 13.15,
+    "primary_stresses": [
+      "water_crisis",
+      "urban_heat"
+    ],
+    "state": "Karnataka"
+  },
+  "chennai": {
+    "min_lon": 80.15,
+    "min_lat": 12.9,
+    "max_lon": 80.32,
+    "max_lat": 13.22,
+    "primary_stresses": [
+      "heat",
+      "flooding",
+      "water_stress"
+    ],
+    "state": "Tamil Nadu"
+  },
+  "hyderabad": {
+    "min_lon": 78.32,
+    "min_lat": 17.25,
+    "max_lon": 78.63,
+    "max_lat": 17.56,
+    "primary_stresses": [
+      "heat",
+      "drought",
+      "urban_sprawl"
+    ],
+    "state": "Telangana"
+  },
+  "pune": {
+    "min_lon": 73.73,
+    "min_lat": 18.42,
+    "max_lon": 73.98,
+    "max_lat": 18.62,
+    "primary_stresses": [
+      "heat",
+      "water_stress",
+      "rapid_growth"
+    ],
+    "state": "Maharashtra"
+  },
+  "ahmedabad": {
+    "min_lon": 72.45,
+    "min_lat": 22.95,
+    "max_lon": 72.7,
+    "max_lat": 23.15,
+    "primary_stresses": [
+      "extreme_heat"
+    ],
+    "state": "Gujarat"
+  },
+  "kolkata": {
+    "min_lon": 88.24,
+    "min_lat": 22.45,
+    "max_lon": 88.5,
+    "max_lat": 22.72,
+    "primary_stresses": [
+      "heat",
+      "flooding",
+      "pollution"
+    ],
+    "state": "West Bengal"
+  },
+  "surat": {
+    "min_lon": 72.76,
+    "min_lat": 21.07,
+    "max_lon": 73.01,
+    "max_lat": 21.28,
+    "primary_stresses": [
+      "flooding",
+      "industrial_pollution",
+      "heat"
+    ],
+    "state": "Gujarat"
+  },
+  "indore": {
+    "min_lon": 75.78,
+    "min_lat": 22.62,
+    "max_lon": 76.0,
+    "max_lat": 22.82,
+    "primary_stresses": [
+      "heat",
+      "water_stress"
+    ],
+    "state": "Madhya Pradesh"
+  },
+  "jaipur": {
+    "min_lon": 74.9143445,
+    "min_lat": 26.4404606,
+    "max_lon": 76.2832045,
+    "max_lat": 27.5184801,
+    "primary_stresses": [
+      "heat",
+      "water",
+      "pollution"
+    ],
+    "state": "Unknown"
+  },
+  "lucknow": {
+    "min_lon": 80.560386,
+    "min_lat": 26.5037728,
+    "max_lon": 81.2175668,
+    "max_lat": 27.1586342,
+    "primary_stresses": [
+      "heat",
+      "water",
+      "pollution"
+    ],
+    "state": "Unknown"
+  },
+  "kanpur": {
+    "min_lon": 80.1195895,
+    "min_lat": 26.1738369,
+    "max_lon": 80.5914346,
+    "max_lat": 26.6401262,
+    "primary_stresses": [
+      "heat",
+      "water",
+      "pollution"
+    ],
+    "state": "Unknown"
+  },
+  "nagpur": {
+    "min_lon": 78.9952182,
+    "min_lat": 21.0529736,
+    "max_lon": 79.1788461,
+    "max_lat": 21.2310022,
+    "primary_stresses": [
+      "heat",
+      "water",
+      "pollution"
+    ],
+    "state": "Unknown"
+  },
+  "bhopal": {
+    "min_lon": 77.1656638,
+    "min_lat": 23.0725047,
+    "max_lon": 77.6485205,
+    "max_lat": 23.8953516,
+    "primary_stresses": [
+      "heat",
+      "water",
+      "pollution"
+    ],
+    "state": "Unknown"
+  },
+  "visakhapatnam": {
+    "min_lon": 83.1098127,
+    "min_lat": 17.5461762,
+    "max_lon": 83.525006,
+    "max_lat": 18.0648215,
+    "primary_stresses": [
+      "heat",
+      "water",
+      "pollution"
+    ],
+    "state": "Unknown"
+  },
+  "patna": {
+    "min_lon": 84.6869288,
+    "min_lat": 25.2032601,
+    "max_lon": 86.0689271,
+    "max_lat": 25.7328751,
+    "primary_stresses": [
+      "heat",
+      "water",
+      "pollution"
+    ],
+    "state": "Unknown"
+  },
+  "vadodara": {
+    "min_lon": 72.8629143,
+    "min_lat": 21.8221519,
+    "max_lon": 73.5662088,
+    "max_lat": 22.8145536,
+    "primary_stresses": [
+      "heat",
+      "water",
+      "pollution"
+    ],
+    "state": "Unknown"
+  },
+  "ghaziabad": {
+    "min_lon": 77.1992428,
+    "min_lat": 28.6221757,
+    "max_lon": 77.7095278,
+    "max_lat": 28.9277798,
+    "primary_stresses": [
+      "heat",
+      "water",
+      "pollution"
+    ],
+    "state": "Unknown"
+  },
+  "ludhiana": {
+    "min_lon": 75.3561629,
+    "min_lat": 30.5604457,
+    "max_lon": 76.3233406,
+    "max_lat": 31.0182725,
+    "primary_stresses": [
+      "heat",
+      "water",
+      "pollution"
+    ],
+    "state": "Unknown"
+  },
+  "agra": {
+    "min_lon": 77.3979471,
+    "min_lat": 26.7417971,
+    "max_lon": 78.8537316,
+    "max_lat": 27.4092226,
+    "primary_stresses": [
+      "heat",
+      "water",
+      "pollution"
+    ],
+    "state": "Unknown"
+  },
+  "nashik": {
+    "min_lon": 73.248269,
+    "min_lat": 19.5858913,
+    "max_lon": 74.9351263,
+    "max_lat": 20.8649273,
+    "primary_stresses": [
+      "heat",
+      "water",
+      "pollution"
+    ],
+    "state": "Unknown"
+  },
+  "ranchi": {
+    "min_lon": 84.8654365,
+    "min_lat": 22.8834487,
+    "max_lon": 85.9027926,
+    "max_lat": 23.7174878,
+    "primary_stresses": [
+      "heat",
+      "water",
+      "pollution"
+    ],
+    "state": "Unknown"
+  },
+  "meerut": {
+    "min_lon": 77.422611,
+    "min_lat": 28.7366824,
+    "max_lon": 78.1238583,
+    "max_lat": 29.2664838,
+    "primary_stresses": [
+      "heat",
+      "water",
+      "pollution"
+    ],
+    "state": "Unknown"
+  },
+  "rajkot": {
+    "min_lon": 70.0296588,
+    "min_lat": 21.5258358,
+    "max_lon": 71.5091846,
+    "max_lat": 22.6133217,
+    "primary_stresses": [
+      "heat",
+      "water",
+      "pollution"
+    ],
+    "state": "Unknown"
+  },
+  "varanasi": {
+    "min_lon": 82.666605,
+    "min_lat": 25.164354,
+    "max_lon": 83.1881762,
+    "max_lat": 25.5795305,
+    "primary_stresses": [
+      "heat",
+      "water",
+      "pollution"
+    ],
+    "state": "Unknown"
+  },
+  "srinagar": {
+    "min_lon": 74.6680892,
+    "min_lat": 34.0077082,
+    "max_lon": 75.1458404,
+    "max_lat": 34.2283497,
+    "primary_stresses": [
+      "heat",
+      "water",
+      "pollution"
+    ],
+    "state": "Unknown"
+  },
+  "aurangabad": {
+    "min_lon": 84.0069218,
+    "min_lat": 24.4767985,
+    "max_lon": 84.7473983,
+    "max_lat": 25.1290008,
+    "primary_stresses": [
+      "heat",
+      "water",
+      "pollution"
+    ],
+    "state": "Unknown"
+  },
+  "amritsar": {
+    "min_lon": 74.486625,
+    "min_lat": 31.4817289,
+    "max_lon": 75.4042713,
+    "max_lat": 32.0551137,
+    "primary_stresses": [
+      "heat",
+      "water",
+      "pollution"
+    ],
+    "state": "Unknown"
+  },
+  "coimbatore": {
+    "min_lon": 76.655931,
+    "min_lat": 10.2204226,
+    "max_lon": 77.2936678,
+    "max_lat": 11.4052378,
+    "primary_stresses": [
+      "heat",
+      "water",
+      "pollution"
+    ],
+    "state": "Unknown"
+  }
+}
