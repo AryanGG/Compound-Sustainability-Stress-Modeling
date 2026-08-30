@@ -302,6 +302,11 @@ def main(
             panel.to_parquet(int_path, index=False)
             log.info("Intermediate panel saved -> {p}", p=int_path)
 
+            # Save CSV for the process step
+            process_csv_path = Path(config["paths"]["processed_data"]) / f"{city_id}_process.csv"
+            panel.to_csv(process_csv_path, index=False)
+            log.info("Process step CSV saved -> {p}", p=process_csv_path)
+
         elif phase in ("features", "ssi"):
             # Load previously processed intermediate panel
             int_path = (
@@ -320,10 +325,22 @@ def main(
         # ── Features ──────────────────────────────────────────────────────────
         if phase in ("features", "all"):
             panel = run_features(panel)
+            # Save CSV for the features step
+            features_csv_dir = Path(config["paths"]["features_data"])
+            features_csv_dir.mkdir(parents=True, exist_ok=True)
+            features_csv_path = features_csv_dir / f"{city_id}_features.csv"
+            panel.to_csv(features_csv_path, index=False)
+            log.info("Features step CSV saved -> {p}", p=features_csv_path)
 
         # ── SSI ───────────────────────────────────────────────────────────────
         if phase in ("ssi", "all"):
             panel = run_ssi(panel, city_id)
+            # Save CSV for the ssi step
+            ssi_csv_dir = Path(config["paths"]["h3_panel"]) / "final"
+            ssi_csv_dir.mkdir(parents=True, exist_ok=True)
+            ssi_csv_path = ssi_csv_dir / f"{city_id}_ssi.csv"
+            panel.to_csv(ssi_csv_path, index=False)
+            log.info("SSI step CSV saved -> {p}", p=ssi_csv_path)
 
         # ── Validate & Save ───────────────────────────────────────────────────
         if phase in ("ssi", "all") and not panel.empty:
@@ -331,6 +348,10 @@ def main(
             if valid:
                 out_path = save_final(panel, city_id)
                 log.info("Final output -> {p}", p=out_path)
+                # Save final output as a CSV file
+                final_csv_path = out_path.with_suffix(".csv")
+                panel.to_csv(final_csv_path, index=False)
+                log.info("Final output CSV saved -> {p}", p=final_csv_path)
 
         print_summary(panel, city_id)
 
