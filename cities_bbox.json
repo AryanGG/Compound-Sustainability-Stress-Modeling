@@ -4,6 +4,10 @@
     "min_lat": 18.87,
     "max_lon": 73.1,
     "max_lat": 19.28,
+    "boundary_queries": [
+      "Mumbai City District, Maharashtra, India",
+      "Mumbai Suburban, Maharashtra, India"
+    ],
     "primary_stresses": [
       "heat",
       "flood",
@@ -63,6 +67,9 @@
     "min_lat": 18.42,
     "max_lon": 73.98,
     "max_lat": 18.62,
+    "boundary_queries": [
+      "Pune City Subdistrict, Pune, Maharashtra, India"
+    ],
     "primary_stresses": [
       "heat",
       "water_stress",

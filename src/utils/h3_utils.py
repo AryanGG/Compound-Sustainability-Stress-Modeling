@@ -54,7 +54,8 @@ def generate_h3_cells_for_city(
     bbox_file: str = "cities_bbox.json",
 ) -> List[str]:
     """
-    Generate all H3 cell IDs covering a city's bounding box.
+    Generate all H3 cell IDs covering a city's bounding box, filtered by boundary
+    if boundary_queries are defined in the config.
 
     Args:
         city      : City slug matching cities_bbox.json key.
@@ -64,6 +65,9 @@ def generate_h3_cells_for_city(
     Returns:
         List of H3 cell ID strings.
     """
+    from shapely.geometry import Point
+    import osmnx as ox
+
     bbox = load_city_bbox(city, bbox_file)
 
     outer = [
@@ -76,7 +80,32 @@ def generate_h3_cells_for_city(
 
     poly = h3.LatLngPoly(outer)
     cells = h3.polygon_to_cells(poly, resolution)
-    return list(cells)
+
+    queries = bbox.get("boundary_queries", [])
+    if not queries:
+        return list(cells)
+
+    try:
+        gdfs = []
+        for q in queries:
+            gdfs.append(ox.geocode_to_gdf(q))
+        boundary_gdf = pd.concat(gdfs, ignore_index=True)
+        if hasattr(boundary_gdf, "union_all"):
+            boundary_geom = boundary_gdf.union_all()
+        elif hasattr(boundary_gdf, "unary_union"):
+            boundary_geom = boundary_gdf.unary_union
+        else:
+            boundary_geom = boundary_gdf.geometry.unary_union
+
+        filtered_cells = []
+        for cell in cells:
+            lat, lon = h3.cell_to_latlng(cell)
+            if boundary_geom.contains(Point(lon, lat)):
+                filtered_cells.append(cell)
+        return filtered_cells
+    except Exception as exc:
+        print(f"Warning: Boundary filtering failed for {city}, falling back to full bbox. Error: {exc}")
+        return list(cells)
 
 
 # ─── H3 → GeoDataFrame ────────────────────────────────────────────────────────
