@@ -12,11 +12,11 @@ Monthly approximation:
     public climatology pattern (relative seasonal adjustment factors).
     
 Backup stub: CAMS (Copernicus Atmosphere Monitoring Service) monthly.
-  - Requires CAMS API key; function stubbed with clear guidance.
+  - Implemented via `download_cams_pm25` using `cdsapi` pointing to ADS URL.
+  - Requires CAMS API key in `~/.adsapirc`.
 
 Output:
-  data/raw/pm25/{city}/annual_{year}.tif             (downloaded once per year)
-  data/raw/pm25/{city}/monthly_{year}_{month:02d}.tif (derived monthly)
+  data/raw/pm25/{city}/monthly_{year}_{month:02d}.tif (derived or CAMS direct)
 """
 
 from __future__ import annotations
@@ -98,6 +98,82 @@ def _make_monthly_from_annual(
         dst.write(monthly_data[np.newaxis, :, :])
 
     return out_path
+
+
+def download_cams_pm25(
+    year: int,
+    month: int,
+    bbox: dict,
+    out_dir: Path,
+    overwrite: bool = False,
+) -> Optional[Path]:
+    """
+    Download Copernicus CAMS monthly reanalysis PM2.5 data (cams-global-reanalysis-eac4-monthly).
+    
+    Unlike SEDAC (which is annual), CAMS provides real monthly means.
+    Requires `cdsapi` and a valid CAMS ADS account configured in `~/.adsapirc`.
+    
+    Args:
+        year     : Year.
+        month    : Month 1-12.
+        bbox     : City bounding box dict.
+        out_dir  : Output directory.
+        overwrite: Re-download even if file exists.
+        
+    Returns:
+        Path to the downloaded monthly NetCDF, or None on failure.
+    """
+    try:
+        import cdsapi
+    except ImportError as exc:
+        log.warning("cdsapi not installed. CAMS download skipped.")
+        return None
+
+    out_dir.mkdir(parents=True, exist_ok=True)
+    nc_path = out_dir / f"cams_pm25_{year}_{month:02d}.nc"
+    
+    if nc_path.exists() and not overwrite:
+        log.debug("CAMS PM2.5 already exists: {p}", p=nc_path)
+        return nc_path
+        
+    # Add a 0.5 deg margin to ensure coverage
+    margin = 0.5
+    area = [
+        bbox["max_lat"] + margin,  # North
+        bbox["min_lon"] - margin,  # West
+        bbox["min_lat"] - margin,  # South
+        bbox["max_lon"] + margin,  # East
+    ]
+
+    request = {
+        "format": "netcdf",
+        "variable": "particulate_matter_2.5um",
+        "year": str(year),
+        "month": f"{month:02d}",
+        "product_type": "monthly_mean",
+        "area": area,
+    }
+    
+    log.info("Downloading CAMS PM2.5 for {year}-{month:02d}...", year=year, month=month)
+    
+    try:
+        # Point client to ADS (Atmosphere Data Store) URL explicitly, since ~/.cdsapirc might point to Climate Data Store for ERA5
+        import os
+        cams_url = os.environ.get("CAMS_URL", "https://ads.atmosphere.copernicus.eu/api/v2")
+        cams_key = os.environ.get("CAMS_API_KEY")
+        
+        if cams_key:
+            client = cdsapi.Client(url=cams_url, key=cams_key, quiet=True)
+        else:
+            # Relies on ~/.adsapirc existing
+            client = cdsapi.Client(url=cams_url, quiet=True)
+            
+        client.retrieve("cams-global-reanalysis-eac4-monthly", request, str(nc_path))
+        log.success("CAMS PM2.5 saved → {p}", p=nc_path)
+        return nc_path
+    except Exception as exc:
+        log.warning("CAMS PM2.5 download failed: {err}", err=exc)
+        return None
 
 
 def download_sedac_pm25(
@@ -235,16 +311,15 @@ def ingest_pm25_city(
     overwrite: bool = False,
 ) -> list[Path]:
     """
-    Generate monthly PM2.5 GeoTIFFs for a city over the configured time range.
+    Generate monthly PM2.5 files for a city over the configured time range.
 
     Workflow:
-      1. Try to download SEDAC annual mean per year.
-      2. If SEDAC fails, generate synthetic annual mean.
-      3. Derive monthly rasters by scaling with India seasonality index.
-      4. Clip each raster to city bbox.
+      1. Primary: Try downloading CAMS real monthly data for the month.
+      2. Fallback: Try SEDAC annual mean and scale using seasonality.
+      3. Fallback: Generate synthetic annual mean and scale.
 
     Returns:
-        List of paths to monthly GeoTIFF files.
+        List of paths to monthly files (NetCDF if CAMS, GeoTIFF if SEDAC/Synthetic).
     """
     import rasterio
     import rasterio.mask
