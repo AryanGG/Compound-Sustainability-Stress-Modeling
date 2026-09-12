@@ -38,6 +38,18 @@
     ],
     "state": "Karnataka"
   },
+  "bikaner": {
+    "min_lon": 73.18,
+    "min_lat": 27.90,
+    "max_lon": 73.46,
+    "max_lat": 28.14,
+    "primary_stresses": [
+      "extreme_heat",
+      "water_stress",
+      "vegetation_degradation"
+    ],
+    "state": "Rajasthan"
+  },
   "chennai": {
     "min_lon": 80.15,
     "min_lat": 12.9,

@@ -1,28 +1,22 @@
 project:
   name: "Compound-Sustainability-Stress-Modeling"
   version: "1.0"
-  description: "Spatio-temporal compound stress modeling for 10 Indian cities"
+  description: "Spatio-temporal compound sustainability stress modeling for 4 Indian cities (Mumbai, Delhi, Bengaluru, Bikaner)"
 
 time:
-  start_month: "2015-01"
-  end_month: "2025-12"
+  start_month: "2020-01"
+  end_month: "2022-12"
   aggregation: "monthly"
 
 spatial:
-  h3_resolution: 8                # ~0.74 km² per hex, ~1500 hexes/city
+  h3_resolution: 8                # ~0.74 km² per hex
   bbox_buffer_km: 10              # Buffer around city bounding box
 
 cities:
   - mumbai
   - delhi
   - bengaluru
-  - chennai
-  - hyderabad
-  - pune
-  - ahmedabad
-  - kolkata
-  - surat
-  - indore
+  - bikaner
 
 paths:
   raw_data: "data/raw"
@@ -57,16 +51,17 @@ era5:
 
 satellite:
   ndvi_collection: "sentinel-2-l2a"
-  lst_collection: "modis-13A3-061"   # MODIS LST monthly
+  lst_collection: "modis-11A2-061"   # MODIS MOD11A2 LST (1 km)
   cloud_cover_threshold: 20          # Percent max cloud cover
   ndvi_bands:
     red: "B04"
     nir: "B08"
 
 pm25:
-  # NASA SEDAC Annual mean - no auth required
+  # NASA SEDAC Annual mean
   sedac_url: "https://sedac.ciesin.columbia.edu/downloads/data/sdei/sdei-global-annual-avg-pm2-5-modvrs-2001-2022/sdei-global-annual-avg-pm2-5-modvrs-2001-2022-tif.zip"
   unit: "ug_m3"
+  who_guideline_ug_m3: 15.0         # WHO 2021 annual guideline threshold
 
 osm:
   network_type: "drive"           # For road density
@@ -74,41 +69,36 @@ osm:
   cache_folder: "data/raw/osm_cache"
 
 ssi:
-  # City-specific weight multipliers (applied to PCA base weights)
+  # Compound interaction parameters (Zscheischler et al. 2018)
+  gamma: 0.5                      # Interaction scaling factor
+  kappa: 1.0                      # City-rank adjustment sensitivity factor
+
+  # City-specific weight multipliers
   city_weights:
     delhi:
       pollution_exposure: 1.3
       heat_stress: 1.2
       water_stress: 0.8
+      urban_vulnerability: 1.1
+      vegetation_degradation: 0.9
     mumbai:
       heat_stress: 1.2
       water_stress: 1.3
       pollution_exposure: 1.0
+      urban_vulnerability: 1.2
+      vegetation_degradation: 0.9
     bengaluru:
       water_stress: 1.4
       heat_stress: 1.1
-    chennai:
-      heat_stress: 1.2
-      water_stress: 1.3
-    hyderabad:
-      heat_stress: 1.3
-      water_stress: 1.2
-    ahmedabad:
+      urban_vulnerability: 1.1
+      vegetation_degradation: 1.1
+      pollution_exposure: 0.9
+    bikaner:
       heat_stress: 1.5
-      water_stress: 1.1
-    kolkata:
-      heat_stress: 1.1
-      water_stress: 1.2
-      pollution_exposure: 1.2
-    surat:
-      water_stress: 1.3
-      pollution_exposure: 1.2
-    pune:
-      water_stress: 1.2
-      heat_stress: 1.1
-    indore:
-      heat_stress: 1.1
-      water_stress: 1.2
+      water_stress: 1.4
+      vegetation_degradation: 1.3
+      urban_vulnerability: 1.0
+      pollution_exposure: 0.8
 
   ssi_bands:
     Low: [0.0, 0.25]
@@ -122,7 +112,7 @@ ssi:
 normalization:
   method: "zscore"                # Options: zscore, minmax
   clip_floor: 0.0                 # Clamp negatives to 0 (0 = normal, >0 = stress)
-  baseline_window_years: 3        # Rolling window for dynamic baselines
+  baseline_window_years: 3        # 3-year baseline (2020-2022)
 
 logging:
   level: "INFO"
