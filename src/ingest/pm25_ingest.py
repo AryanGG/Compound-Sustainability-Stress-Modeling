@@ -186,7 +186,7 @@ def download_sedac_pm25(
 
     NOTE: SEDAC requires an EarthData login. The direct URL will redirect to a
     login page unless a session cookie is set. This function attempts the download
-    and falls back to creating a synthetic raster.
+    and raises an exception if it fails.
 
     For manual download, visit:
     https://sedac.ciesin.columbia.edu/data/set/sdei-global-annual-avg-pm2-5-modvrs-2001-2022/data-download
@@ -235,72 +235,14 @@ def download_sedac_pm25(
 
     except Exception as exc:
         log.warning(
-            "SEDAC PM2.5 download failed (requires EarthData session). "
-            "Using synthetic fallback. Error: {err}",
+            "SEDAC PM2.5 download failed (requires EarthData session). Error: {err}",
             err=exc,
         )
         zip_path.unlink(missing_ok=True)
         return None
 
 
-def create_synthetic_pm25(
-    bbox: dict,
-    year: int,
-    out_dir: Path,
-) -> Path:
-    """
-    Create a synthetic annual mean PM2.5 GeoTIFF for a city bbox.
 
-    Uses realistic urbanisation-based gradients:
-    - Central (dense) areas: higher PM2.5
-    - Peripheral areas: lower PM2.5
-    Seeded by bbox for reproducibility.
-
-    Args:
-        bbox   : City bounding box dict.
-        year   : Year (affects seed).
-        out_dir: Output directory.
-
-    Returns:
-        Path to synthetic GeoTIFF.
-    """
-    import rasterio
-    from rasterio.transform import from_bounds
-
-    out_dir.mkdir(parents=True, exist_ok=True)
-    out_path = out_dir / f"synthetic_pm25_{year}.tif"
-
-    width, height = 200, 200
-    transform = from_bounds(
-        bbox["min_lon"], bbox["min_lat"],
-        bbox["max_lon"], bbox["max_lat"],
-        width, height,
-    )
-
-    # Gradient: higher in centre, lower at edges
-    rng = np.random.default_rng(seed=int(bbox["min_lat"] * 1000 + year))
-    base_pm25 = rng.uniform(30, 80)   # Urban India: 30–80 µg/m³ annual mean
-
-    # Distance from centre (normalised 0–1)
-    x = np.linspace(-1, 1, width)
-    y = np.linspace(-1, 1, height)
-    xx, yy = np.meshgrid(x, y)
-    dist = np.sqrt(xx**2 + yy**2)
-    gradient = base_pm25 * (1 - 0.3 * dist)
-
-    noise = rng.normal(0, 2, (height, width))
-    data = (gradient + noise).clip(5, 150).astype("float32")
-
-    with rasterio.open(
-        out_path, "w", driver="GTiff",
-        height=height, width=width, count=1,
-        dtype="float32", crs="EPSG:4326",
-        transform=transform, nodata=-9999,
-    ) as dst:
-        dst.write(data[np.newaxis, :, :])
-
-    log.info("Synthetic PM2.5 ({year}) created → {p}", year=year, p=out_path)
-    return out_path
 
 
 def ingest_pm25_city(
@@ -316,10 +258,9 @@ def ingest_pm25_city(
     Workflow:
       1. Primary: Try downloading CAMS real monthly data for the month.
       2. Fallback: Try SEDAC annual mean and scale using seasonality.
-      3. Fallback: Generate synthetic annual mean and scale.
 
     Returns:
-        List of paths to monthly files (NetCDF if CAMS, GeoTIFF if SEDAC/Synthetic).
+        List of paths to monthly files (NetCDF if CAMS, GeoTIFF if SEDAC).
     """
     import rasterio
     import rasterio.mask
@@ -363,16 +304,11 @@ def ingest_pm25_city(
                         dst.write(out_img)
                     annual_rasters[year] = clipped
                 except Exception as exc:
-                    log.warning("Clip failed: {err}", err=exc)
-                    annual_rasters[year] = create_synthetic_pm25(bbox, year, city_dir)
+                    raise RuntimeError(f"Clip failed: {exc}") from exc
             else:
                 annual_rasters[year] = clipped
         else:
-            # Fallback: synthetic
-            synth = city_dir / f"annual_{year}.tif"
-            if not synth.exists() or overwrite:
-                synth = create_synthetic_pm25(bbox, year, city_dir)
-            annual_rasters[year] = synth
+            raise RuntimeError(f"Failed to fetch PM2.5 data for year {year}. Both CAMS and SEDAC failed.")
 
     # Step 2: Derive monthly rasters
     monthly_paths = []

@@ -129,7 +129,6 @@ def run_process(
     from src.process.harmonize import build_h3_panel
     panel = build_h3_panel(
         city,
-        synthetic=synthetic,
         start_month=start_month,
         end_month=end_month,
     )
@@ -309,15 +308,20 @@ def main(
 
         elif phase in ("features", "ssi"):
             # Load previously processed intermediate panel
-            int_path = (
-                Path(config["paths"]["processed_data"]) / f"{city_id}.parquet"
-            )
+            if phase == "features":
+                int_path = Path(config["paths"]["processed_data"]) / f"{city_id}.parquet"
+            else:
+                int_path = Path(config["paths"]["features_data"]) / f"{city_id}_features.csv"
+                
             if int_path.exists():
-                panel = pd.read_parquet(int_path)
+                if int_path.suffix == '.parquet':
+                    panel = pd.read_parquet(int_path)
+                else:
+                    panel = pd.read_csv(int_path)
                 log.info("Loaded intermediate panel: {p}", p=int_path)
             else:
                 log.error(
-                    "No intermediate panel for {city}. Run 'process' phase first.",
+                    "No intermediate panel for {city}. Run earlier phases first.",
                     city=city_id,
                 )
                 continue

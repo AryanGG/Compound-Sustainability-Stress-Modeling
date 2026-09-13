@@ -256,99 +256,65 @@ def fetch_ghsl_built_up(
         Path to clipped GeoTIFF or None on failure.
     """
     try:
-        import rasterio
-        import rasterio.mask
-        from rasterio.crs import CRS
-        import requests
-        from shapely.geometry import box, mapping
+        import planetary_computer as pc
+        import pystac_client
+        import rioxarray  # noqa: F401
+        import stackstac
     except ImportError as exc:
-        raise ImportError("Install rasterio, requests, shapely.") from exc
+        raise ImportError("Install planetary_computer, pystac_client, stackstac.") from exc
 
     city_dir = out_dir / city
     city_dir.mkdir(parents=True, exist_ok=True)
 
     out_path = city_dir / "built_up.tif"
     if out_path.exists() and not overwrite:
-        log.debug("GHSL built-up already exists: {p}", p=out_path)
+        log.debug("GHSL/ESA built-up already exists: {p}", p=out_path)
         return out_path
 
-    # Try a smaller, more accessible GHSL tile
-    # Using ESA WorldCover as fallback for built-up detection
-    ghsl_url = (
-        "https://s3-us-west-2.amazonaws.com/mrlc/NLCD_2019_Land_Cover_L48_20210604.img"
-    )
+    log.info("Fetching ESA WorldCover built-up for {city}", city=city)
 
-    log.info("Fetching GHSL built-up for {city}", city=city)
-
-    # For real data: use rasterio.open with /vsicurl/ to stream from URL
-    url_to_try = GHSL_URL
-    vsicurl_path = f"/vsicurl/{url_to_try}"
-
-    bbox_geom = [mapping(box(
+    bbox_list = [
         bbox["min_lon"], bbox["min_lat"],
-        bbox["max_lon"], bbox["max_lat"]
-    ))]
+        bbox["max_lon"], bbox["max_lat"],
+    ]
 
     try:
-        import rasterio
-        with rasterio.open(vsicurl_path) as src:
-            out_image, out_transform = rasterio.mask.mask(
-                src, bbox_geom, crop=True, nodata=src.nodata
-            )
-            out_meta = src.meta.copy()
-            out_meta.update(
-                {
-                    "driver": "GTiff",
-                    "height": out_image.shape[1],
-                    "width": out_image.shape[2],
-                    "transform": out_transform,
-                    "compress": "deflate",
-                }
-            )
-        with rasterio.open(out_path, "w", **out_meta) as dst:
-            dst.write(out_image)
+        catalog = pystac_client.Client.open(
+            "https://planetarycomputer.microsoft.com/api/stac/v1",
+            modifier=pc.sign_inplace,
+        )
 
-        log.success("GHSL built-up saved → {p}", p=out_path)
+        search = catalog.search(
+            collections=["esa-worldcover"],
+            bbox=bbox_list,
+        )
+        items = list(search.item_collection())
+        if not items:
+            log.warning("No ESA WorldCover items found for {city}", city=city)
+            return None
+
+        stack = stackstac.stack(
+            items,
+            assets=["map"],
+            bounds_latlon=bbox_list,
+            resolution=0.0001,
+            epsg=4326,
+        )
+        map_data = stack.sel(band="map").max(dim="time", skipna=True)
+        # ESA WorldCover class 50 is Built-up
+        built_up = (map_data == 50).astype("float32")
+        
+        built_up = built_up.expand_dims("band")
+        built_up.rio.to_raster(str(out_path), driver="GTiff", compress="deflate")
+
+        log.success("ESA built-up saved → {p}", p=out_path)
         return out_path
 
     except Exception as exc:
-        log.warning(
-            "GHSL download failed (network or vsicurl). Creating synthetic placeholder: {err}",
-            err=exc,
-        )
-        return _create_synthetic_built_up(bbox, out_path)
+        raise RuntimeError(f"ESA WorldCover download failed: {exc}") from exc
 
 
-def _create_synthetic_built_up(bbox: dict, out_path: Path) -> Path:
-    """
-    Create a synthetic built-up fraction raster as a fallback.
-    Values are seeded from bbox to ensure reproducibility.
-    """
-    try:
-        import rasterio
-        from rasterio.transform import from_bounds
-    except ImportError:
-        return None
 
-    width, height = 100, 100
-    transform = from_bounds(
-        bbox["min_lon"], bbox["min_lat"],
-        bbox["max_lon"], bbox["max_lat"],
-        width, height,
-    )
-
-    rng = np.random.default_rng(seed=int(bbox["min_lat"] * 1000))
-    data = rng.uniform(0.2, 0.8, (1, height, width)).astype("float32")
-
-    with rasterio.open(
-        out_path, "w", driver="GTiff",
-        height=height, width=width, count=1,
-        dtype="float32", crs="EPSG:4326", transform=transform,
-    ) as dst:
-        dst.write(data)
-
-    log.warning("Synthetic built-up raster created at {p}", p=out_path)
-    return out_path
 
 
 # ─── City-level Ingest Orchestrator ──────────────────────────────────────────

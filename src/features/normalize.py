@@ -125,12 +125,15 @@ def normalize_indicator(
 
     if method == "zscore":
         s = zscore_normalize(s, baseline_mean, baseline_std)
+        if apply_floor:
+            s = clip_and_floor(s, floor=0.0, ceiling=3.0)
+        s = s / 3.0  # Scale to [0, 1]
     elif method == "minmax":
         s = minmax_normalize(s)
     else:
         raise ValueError(f"Unknown normalization method: {method}")
 
-    if apply_floor:
+    if apply_floor and method != "zscore":
         s = clip_and_floor(s, floor=0.0)
 
     return s
@@ -221,12 +224,18 @@ def apply_baseline_zscore(
     if invert:
         raw = -raw
 
-    normalized = (raw - merged["baseline_mean"]) / merged["baseline_std"].replace(0, np.nan)
+    # Enforce a minimum physical standard deviation to prevent Z-score explosion
+    std = merged["baseline_std"].fillna(1e-3)
+    std = np.where(std < 1e-3, 1e-3, std)
+
+    normalized = (raw - merged["baseline_mean"]) / std
 
     if apply_floor:
-        normalized = normalized.clip(lower=0.0)
+        normalized = normalized.clip(lower=0.0, upper=3.0)
+        # Map bounded Z-score [0, 3] to [0, 1]
+        normalized = normalized / 3.0
 
-    # Fill NaN (e.g. zero-std baseline, or unmatched hex–month) with 0 (= at-baseline)
+    # Fill NaN (e.g. unmatched hex–month) with 0 (= at-baseline)
     normalized = normalized.fillna(0.0)
 
     out_name = output_col or f"{value_col}_norm"

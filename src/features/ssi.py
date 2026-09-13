@@ -454,22 +454,11 @@ def compute_ssi(
     ssi_linear_raw = compute_ssi_value(df, adjusted_weights)
     ssi_compound_raw = compute_ssi_compound_value(df, adjusted_weights, gamma=0.5)
 
-    # ── Step 4: Normalize to 0–1 ──────────────────────────────────────────────
     # A. Linear Normalization
-    lin_min, lin_max = ssi_linear_raw.min(), ssi_linear_raw.max()
-    if lin_max - lin_min > 1e-9:
-        ssi_linear_01 = (ssi_linear_raw - lin_min) / (lin_max - lin_min)
-    else:
-        ssi_linear_01 = pd.Series(0.0, index=ssi_linear_raw.index)
-    df["ssi_linear"] = ssi_linear_01.clip(0, 1)
+    df["ssi_linear"] = ssi_linear_raw.clip(0, 1)
 
     # B. Compound Normalization (Saved to ssi_value for downstream dashboard compatibility)
-    comp_min, comp_max = ssi_compound_raw.min(), ssi_compound_raw.max()
-    if comp_max - comp_min > 1e-9:
-        ssi_compound_01 = (ssi_compound_raw - comp_min) / (comp_max - comp_min)
-    else:
-        ssi_compound_01 = pd.Series(0.0, index=ssi_compound_raw.index)
-    df["ssi_value"] = ssi_compound_01.clip(0, 1)
+    df["ssi_value"] = ssi_compound_raw.clip(0, 1)
 
     # ── Step 5: Derived columns ───────────────────────────────────────────────
     k = config.get("ssi", {}).get("archetype_k", 6)

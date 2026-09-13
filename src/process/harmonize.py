@@ -76,7 +76,6 @@ def build_h3_panel(
     resolution: Optional[int] = None,
     start_month: Optional[str] = None,
     end_month: Optional[str] = None,
-    synthetic: bool = False,
 ) -> pd.DataFrame:
     """
     Build the full H3 × monthly panel for a single city.
@@ -86,7 +85,6 @@ def build_h3_panel(
         resolution: H3 resolution override (default from config).
         start_month: Time range override.
         end_month  : Time range override.
-        synthetic : If True, generate synthetic data for all variables.
 
     Returns:
         Full panel DataFrame with all raw variables.
@@ -107,9 +105,6 @@ def build_h3_panel(
     panel = build_h3_time_skeleton(cells, start, end)
     panel["city_id"] = city
     log.info("{city}: Skeleton has {n} rows", city=city, n=len(panel))
-
-    if synthetic:
-        return _build_synthetic_panel(panel, city)
 
     # ── Step 3: ERA5 ──────────────────────────────────────────────────────────
     try:
@@ -195,69 +190,7 @@ def build_h3_panel(
     return panel
 
 
-def _build_synthetic_panel(panel: pd.DataFrame, city: str) -> pd.DataFrame:
-    """
-    Fill a panel skeleton with realistic synthetic data for testing.
-    Each city is seeded deterministically so results are reproducible.
-    """
-    from src.ingest.vulnerability_ingest import CITY_VULNERABILITY_PRIORS
 
-    n = len(panel)
-    rng = np.random.default_rng(seed=abs(hash(city)) % (2**31))
-    priors = CITY_VULNERABILITY_PRIORS.get(city, {})
-
-    # Temperature varies seasonally; add city-specific base
-    city_base_temp = {
-        "mumbai": 28, "delhi": 25, "bengaluru": 23, "chennai": 29,
-        "hyderabad": 27, "pune": 26, "ahmedabad": 29, "kolkata": 27,
-        "surat": 28, "indore": 26,
-    }.get(city, 26)
-
-    months = pd.to_datetime(panel["date"]).dt.month.values
-    seasonal_t = city_base_temp + 5 * np.sin((months - 3) * np.pi / 6)
-    panel["temp_mean_c"] = seasonal_t + rng.normal(0, 1.5, n)
-    panel["dewpoint_mean_c"] = panel["temp_mean_c"] - rng.uniform(5, 12, n)
-
-    # Precipitation: monsoon peak June–September
-    precip_base = np.where(
-        (months >= 6) & (months <= 9),
-        rng.exponential(80, n),
-        rng.exponential(10, n),
-    )
-    panel["precip_sum_mm"] = precip_base.clip(0)
-
-    panel["wind_speed"] = rng.exponential(3, n).clip(0.5, 15)
-    panel["radiation"] = (
-        200 + 100 * np.cos((months - 4) * np.pi / 6) + rng.normal(0, 15, n)
-    ).clip(50, 500)
-    panel["soil_moisture"] = (
-        0.2 + 0.15 * np.sin((months - 7) * np.pi / 6) + rng.normal(0, 0.03, n)
-    ).clip(0.05, 0.5)
-
-    panel["ndvi"] = (
-        0.35 + 0.15 * np.sin((months - 7) * np.pi / 6) + rng.normal(0, 0.05, n)
-    ).clip(0, 1)
-
-    panel["lst_c"] = panel["temp_mean_c"] + rng.uniform(2, 8, n)
-    panel["pm25"] = (
-        45 - 15 * np.sin((months - 7) * np.pi / 6) + rng.normal(0, 5, n)
-    ).clip(5, 150)
-    panel["built_up_fraction"] = rng.beta(2, 2, n).clip(0, 1)
-
-    panel["road_density_km_km2"] = rng.exponential(8, n).clip(0)
-    panel["building_density"] = rng.exponential(300, n).clip(0)
-    panel["building_fp_fraction"] = rng.beta(2, 3, n).clip(0, 1)
-    panel["green_space_fraction"] = rng.beta(1, 5, n).clip(0, 1)
-
-    for col, default in [
-        ("bpl_pct", 0.18), ("slum_pct", 0.30),
-        ("elderly_pct", 0.10), ("literacy_pct", 0.85),
-    ]:
-        base = priors.get(col, default)
-        panel[col] = (base + rng.normal(0, 0.03, n)).clip(0, 1)
-
-    log.info("Synthetic panel built for {city}: {n} rows", city=city, n=n)
-    return panel
 
 
 def save_panel(
