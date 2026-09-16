@@ -7,9 +7,16 @@ Input: ndvi (0 to 1)
 Output: vegetation_idx (normalized, 0 = baseline, >0 = degradation stress)
 
 Method:
-  - NDVI anomaly: (NDVI_t - NDVI_baseline_month) / NDVI_baseline_std
+  - NDVI anomaly: (NDVI_baseline_month - NDVI_t) / NDVI_baseline_std
   - Inverted: lower NDVI relative to baseline → higher stress
   - Baseline: calendar-month mean from first `baseline_years` of data
+
+References:
+    Tucker, C.J. (1979). Red and Photographic Infrared Linear Combinations
+    for Monitoring Vegetation. Remote Sensing of Environment, 8(2), 127–150.
+    Anyamba, A., & Tucker, C.J. (2005). Analysis of Sahelian Vegetation
+    Dynamics Using NOAA-AVHRR NDVI Data from 1981–2003. Journal of Arid
+    Environments, 63(3), 596–614.
 """
 
 from __future__ import annotations

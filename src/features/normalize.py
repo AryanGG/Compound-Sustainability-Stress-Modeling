@@ -120,15 +120,16 @@ def normalize_indicator(
     """
     s = series.copy()
 
-    if invert:
-        s = -s
-
     if method == "zscore":
         s = zscore_normalize(s, baseline_mean, baseline_std)
+        if invert:
+            s = -s
         if apply_floor:
-            s = clip_and_floor(s, floor=0.0, ceiling=3.0)
-        s = s / 3.0  # Scale to [0, 1]
+            s = clip_and_floor(s, floor=-3.0, ceiling=3.0)
+        s = (s + 3.0) / 6.0  # Scale [-3, 3] to [0, 1]
     elif method == "minmax":
+        if invert:
+            s = -s
         s = minmax_normalize(s)
     else:
         raise ValueError(f"Unknown normalization method: {method}")
@@ -221,22 +222,23 @@ def apply_baseline_zscore(
     merged = df.merge(stats, on=[groupby_col, "_month"], how="left")
 
     raw = merged[value_col]
-    if invert:
-        raw = -raw
 
     # Enforce a minimum physical standard deviation to prevent Z-score explosion
     std = merged["baseline_std"].fillna(1e-3)
     std = np.where(std < 1e-3, 1e-3, std)
 
     normalized = (raw - merged["baseline_mean"]) / std
+    
+    if invert:
+        normalized = -normalized
 
     if apply_floor:
-        normalized = normalized.clip(lower=0.0, upper=3.0)
-        # Map bounded Z-score [0, 3] to [0, 1]
-        normalized = normalized / 3.0
+        normalized = normalized.clip(lower=-3.0, upper=3.0)
+        # Map bounded Z-score [-3, 3] to [0, 1] (0.5 is the baseline average)
+        normalized = (normalized + 3.0) / 6.0
 
-    # Fill NaN (e.g. unmatched hex–month) with 0 (= at-baseline)
-    normalized = normalized.fillna(0.0)
+    # Fill NaN (e.g. unmatched hex–month) with 0.5 (= at-baseline average)
+    normalized = normalized.fillna(0.5)
 
     out_name = output_col or f"{value_col}_norm"
     df[out_name] = normalized.values

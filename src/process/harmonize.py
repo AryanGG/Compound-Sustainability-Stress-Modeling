@@ -183,6 +183,14 @@ def build_h3_panel(
     extra = [c for c in panel.columns if c not in priority_cols]
     panel = panel[existing + extra]
 
+    # ── Step 10: Temporal Interpolation ───────────────────────────────────────
+    # Fill gaps caused by missing satellite data (e.g. NDVI during monsoon)
+    if "ndvi" in panel.columns:
+        panel = panel.sort_values(["h3_index", "date"])
+        panel["ndvi"] = panel.groupby("h3_index")["ndvi"].transform(
+            lambda g: g.interpolate(method="linear", limit_direction="both")
+        )
+
     log.info(
         "Panel built for {city}: {rows:,} rows × {cols} cols",
         city=city, rows=len(panel), cols=len(panel.columns),

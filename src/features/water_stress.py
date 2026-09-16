@@ -3,14 +3,28 @@ src/features/water_stress.py
 ─────────────────────────────
 Compute water stress index per H3 hex per month.
 
-Inputs: precip_sum_mm, soil_moisture
+Inputs: precip_sum_mm, temp_mean_c, soil_moisture
 Output: water_stress_idx (normalized, 0 = baseline, >0 = stress)
 
-Components:
-  1. Precipitation deficit: negative anomaly from long-term monthly mean
-     (lower-than-normal precip → higher water stress)
-  2. Soil moisture deficit: deviation below historical 25th percentile
-     (low soil water content → drought stress)
+Primary method: Standardized Water Deficit (SWD)
+  Inspired by SPEI methodology (Vicente-Serrano et al. 2010) but uses
+  z-score normalization rather than log-logistic distribution fitting.
+  Steps:
+    1. Compute Potential Evapotranspiration via Thornthwaite (1948) method
+    2. Compute monthly water balance: D = P − PET
+    3. Aggregate with 3-month rolling sum (captures seasonal drought)
+    4. Normalize via baseline z-score (per hex, per calendar month)
+
+Fallback method: Custom deficit blend
+  When temperature is unavailable (no PET possible):
+    1. Precipitation deficit: z-score anomaly from monthly baseline
+    2. Soil moisture deficit: deviation below historical 25th percentile
+
+References:
+    Thornthwaite, C.W. (1948). An Approach toward a Rational Classification
+    of Climate. Geographical Review, 38(1), 55–94.
+    Vicente-Serrano, S.M. et al. (2010). A Multiscalar Drought Index
+    Sensitive to Global Warming: The SPEI. J. Climate, 23, 1696–1718.
 """
 
 from __future__ import annotations
@@ -63,7 +77,7 @@ def compute_thornthwaite_pet(df: pd.DataFrame, temp_col: str = "temp_mean_c") ->
     lats_deg = {}
     for h in hexes:
         try:
-            lats_deg[h] = h3.cell_to_latlon(h)[0]
+            lats_deg[h] = h3.cell_to_latlng(h)[0]
         except Exception:
             try:
                 lats_deg[h] = h3.h3_to_geo(h)[0]
@@ -202,7 +216,7 @@ def add_water_stress_idx(
 
     if has_precip and has_temp:
         try:
-            log.info("Using field-standard SPEI (precipitation-evapotranspiration deficit) for water stress.")
+            log.info("Using Standardized Water Deficit: D = P − PET (Thornthwaite), 3-month rolling, baseline z-score.")
             # 1. Compute Potential Evapotranspiration
             df["pet"] = compute_thornthwaite_pet(df)
             # 2. Compute deficit D = P - PET
@@ -232,13 +246,13 @@ def add_water_stress_idx(
             df = df.drop(columns=["pet", "D", "D_rolled"], errors="ignore")
             
             log.info(
-                "Water stress (SPEI-based): mean={m:.2f}, max={mx:.2f}",
+                "Water stress (SWD): mean={m:.2f}, max={mx:.2f}",
                 m=df["water_stress_idx"].mean(),
                 mx=df["water_stress_idx"].max(),
             )
             return df
         except Exception as exc:
-            log.warning("SPEI calculation failed ({err}); falling back to default deficit blend.", err=exc)
+            log.warning("SWD calculation failed ({err}); falling back to default deficit blend.", err=exc)
 
     # Fallback to existing precipitation deficit + soil moisture deficit blend
     log.info("Using fallback custom deficit blend for water stress.")

@@ -7,10 +7,20 @@ Inputs: temp_mean_c, dewpoint_mean_c, lst_c
 Output: heat_stress_idx (normalized, 0 = baseline, >0 = stress)
 
 Method:
-  1. Compute Relative Humidity from T and Td (August-Roche-Magnus)
-  2. Compute Heat Index via Rothfusz regression equation
-  3. Blend with LST anomaly (skin temperature signal)
-  4. Normalize against city-level baseline
+  1. Compute Relative Humidity from T and Td
+     (August-Roche-Magnus approximation; Alduchov & Eskridge 1996)
+  2. Compute Heat Index via NWS Rothfusz regression equation (in °F)
+     (Rothfusz 1990; Steadman 1979)
+  3. Blend with LST anomaly via PCA-derived weights
+  4. Normalize against city-level baseline (z-score)
+
+References:
+    Alduchov, O.A. & Eskridge, R.E. (1996). Improved Magnus Form
+    Approximation of Saturation Vapor Pressure. J. Appl. Meteorol., 35, 601–609.
+    Rothfusz, L.P. (1990). The Heat Index Equation. NWS Technical
+    Attachment SR 90-23.
+    Steadman, R.G. (1979). The Assessment of Sultriness. Part I.
+    J. Appl. Meteorol., 18, 861–873.
 """
 
 from __future__ import annotations
@@ -31,8 +41,16 @@ def compute_relative_humidity(
     """
     Estimate relative humidity (%) from temperature and dewpoint.
 
-    Formula: Magnus approximation
-    RH ≈ 100 * exp(17.625 * Td / (243.04 + Td)) / exp(17.625 * T / (243.04 + T))
+    Uses the August-Roche-Magnus approximation with coefficients from
+    Alduchov & Eskridge (1996): α = 17.625, β = 243.04 °C.
+
+    Formula:
+        RH ≈ 100 × exp(α·Td/(β+Td)) / exp(α·T/(β+T))
+
+    Reference:
+        Alduchov, O.A. & Eskridge, R.E. (1996). Improved Magnus Form
+        Approximation of Saturation Vapor Pressure. J. Appl. Meteorol.,
+        35, 601–609.
 
     Args:
         temp_c     : 2m air temperature in °C.
@@ -56,12 +74,19 @@ def compute_heat_index(
     """
     Compute Steadman / Rothfusz Heat Index in °C.
 
-    Note: Valid for T > 26°C and RH > 40%; returns T for cooler conditions.
+    Implementation follows the NWS algorithm exactly:
+      1. Compute simple HI (Steadman); if < 80°F, return it.
+      2. Apply full Rothfusz regression (valid for T ≥ 80°F).
+      3. Apply NWS low-RH adjustment (RH < 13%, 80 ≤ T ≤ 112°F).
+      4. Apply NWS high-RH adjustment (RH > 85%, 80 ≤ T ≤ 87°F).
+      5. Convert result from °F back to °C.
 
-    Rothfusz equation (NWS formulation):
-    HI = -8.78469 + 1.61139411*T + 2.338549*RH
-         - 0.14611605*T*RH - 0.01230809*T² - 0.01642482*RH²
-         + 0.002211732*T²*RH + 0.00072546*T*RH² - 0.000003582*T²*RH²
+    References:
+        Rothfusz, L.P. (1990). The Heat Index Equation. NWS Technical
+        Attachment SR 90-23.
+        Steadman, R.G. (1979). The Assessment of Sultriness. Part I:
+        A Temperature-Humidity Index Based on Human Physiology and
+        Clothing Science. J. Appl. Meteorol., 18, 861–873.
 
     Args:
         temp_c : Temperature in °C.
@@ -70,26 +95,57 @@ def compute_heat_index(
     Returns:
         Heat Index in °C.
     """
-    T = temp_c.values.astype(float)
+    # Convert to Fahrenheit for the NWS algorithm
+    T = temp_c.values.astype(float) * 9.0 / 5.0 + 32.0
     R = rh.values.astype(float)
 
-    hi = (
-        -8.78469
-        + 1.61139411 * T
-        + 2.338549 * R
-        - 0.14611605 * T * R
-        - 0.01230809 * T ** 2
-        - 0.01642482 * R ** 2
-        + 0.002211732 * (T ** 2) * R
-        + 0.00072546 * T * (R ** 2)
-        - 0.000003582 * (T ** 2) * (R ** 2)
+    # Step 1: Steadman simple formula (screening step)
+    hi_simple = 0.5 * (T + 61.0 + (T - 68.0) * 1.2 + R * 0.094)
+
+    # Step 2: Full Rothfusz regression (NWS official coefficients, °F)
+    hi_full = (
+        -42.379
+        + 2.04901523 * T
+        + 10.14333127 * R
+        - 0.22475541 * T * R
+        - 0.00683783 * T ** 2
+        - 0.05481717 * R ** 2
+        + 0.00122874 * (T ** 2) * R
+        + 0.00085282 * T * (R ** 2)
+        - 0.00000199 * (T ** 2) * (R ** 2)
     )
 
-    # Use simple T where conditions are outside valid range
-    valid = (T > 26) & (R > 40)
-    hi = np.where(valid, hi, T)
+    # Step 3: NWS low-humidity adjustment
+    # When RH < 13% and 80°F ≤ T ≤ 112°F
+    low_rh_mask = (R < 13.0) & (T >= 80.0) & (T <= 112.0)
+    # Clip argument to prevent sqrt of negative (only relevant outside mask)
+    sqrt_arg = np.clip((17.0 - np.abs(T - 95.0)) / 17.0, 0.0, None)
+    adjustment_low = np.where(
+        low_rh_mask,
+        -((13.0 - R) / 4.0) * np.sqrt(sqrt_arg),
+        0.0,
+    )
 
-    return pd.Series(hi, index=temp_c.index, name="heat_index_c")
+    # Step 4: NWS high-humidity adjustment
+    # When RH > 85% and 80°F ≤ T ≤ 87°F
+    high_rh_mask = (R > 85.0) & (T >= 80.0) & (T <= 87.0)
+    adjustment_high = np.where(
+        high_rh_mask,
+        ((R - 85.0) / 10.0) * ((87.0 - T) / 5.0),
+        0.0,
+    )
+
+    hi_full = hi_full + adjustment_low + adjustment_high
+
+    # Use simple formula when average of simple and T is below 80°F;
+    # otherwise use the full Rothfusz regression
+    use_full = hi_simple >= 80.0
+    hi_f = np.where(use_full, hi_full, hi_simple)
+
+    # Convert back to °C
+    hi_c = (hi_f - 32.0) * 5.0 / 9.0
+
+    return pd.Series(hi_c, index=temp_c.index, name="heat_index_c")
 
 
 def compute_heat_stress_pca_weights(
