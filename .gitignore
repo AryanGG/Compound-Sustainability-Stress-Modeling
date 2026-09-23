@@ -20,6 +20,7 @@ __pycache__/
 data/raw/*
 data/processed/*
 data/feature/*
+data/features/*
 data/metadata/*
 data/h3_panel/*
 
@@ -27,6 +28,7 @@ data/h3_panel/*
 !data/raw/.gitkeep
 !data/processed/.gitkeep
 !data/feature/.gitkeep
+!data/features/.gitkeep
 !data/metadata/.gitkeep
 !data/h3_panel/.gitkeep
 
@@ -50,3 +52,6 @@ reports/*
 
 # Raw parquet files anywhere
 *.parquet
+
+# Scratch / throwaway scripts (may contain credentials or hardcoded paths)
+scratch/
