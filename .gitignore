@@ -1,0 +1,52 @@
+# Virtual environment
+.venv/
+env/
+
+# Cache directories
+cache/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Mac system files
+.DS_Store
+
+# Data folders (DO NOT push large data to GitHub)
+data/raw/*
+data/processed/*
+data/feature/*
+data/metadata/*
+data/h3_panel/*
+
+# Keep folder structure
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/feature/.gitkeep
+!data/metadata/.gitkeep
+!data/h3_panel/.gitkeep
+
+# Logs
+logs/*
+!logs/.gitkeep
+*.log
+
+# Environment / secrets — NEVER commit API keys
+.env
+.env.*
+!.env.example
+
+# Generated reports (large self-contained HTML files)
+reports/*
+!reports/.gitkeep
+
+# Generated root-level visualization maps & raw downloaded datasets
+/*.html
+/*.nc
+
+# Raw parquet files anywhere
+*.parquet
