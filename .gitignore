@@ -26,6 +26,10 @@ data/h3_panel/*
 
 # Keep folder structure
 !data/raw/.gitkeep
+# Allow small reference CSVs needed to run the pipeline
+!data/raw/vulnerability/
+!data/raw/vulnerability/india_district_vulnerability.csv
+!data/raw/vulnerability/india_district_vulnerability_TEMPLATE.csv
 !data/processed/.gitkeep
 !data/feature/.gitkeep
 !data/features/.gitkeep
