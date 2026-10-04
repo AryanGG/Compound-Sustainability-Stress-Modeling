@@ -235,6 +235,10 @@ def compute_ssi_value(
     """
     Compute the raw weighted sum SSI from indicator columns.
 
+    Skips any indicator that is entirely null and rebalances the remaining
+    weights to still sum to 1.0. This prevents a missing data source (e.g.
+    PM2.5) from silently biasing scores downward via fillna(0).
+
     Args:
         df     : Panel DataFrame with indicator columns.
         weights: Dict of indicator → weight.
@@ -242,12 +246,32 @@ def compute_ssi_value(
     Returns:
         pd.Series of raw SSI scores (not yet normalized to 0–1).
     """
-    ssi_raw = pd.Series(0.0, index=df.index)
+    # Identify indicators that are present and not entirely null
+    active = {
+        col: w
+        for col, w in weights.items()
+        if col in df.columns and df[col].notna().any()
+    }
 
-    for col, w in weights.items():
-        if col in df.columns:
-            values = df[col].fillna(0.0)
-            ssi_raw += w * values
+    skipped = set(weights) - set(active)
+    if skipped:
+        log.warning(
+            "Indicators entirely null — excluded from SSI, weights rebalanced: {s}",
+            s=skipped,
+        )
+
+    # Rebalance weights to sum to 1.0 over active indicators
+    total_w = sum(active.values())
+    if total_w <= 0:
+        log.error("No active indicators; SSI will be all zeros.")
+        return pd.Series(0.0, index=df.index)
+
+    ssi_raw = pd.Series(0.0, index=df.index)
+    for col, w in active.items():
+        rebalanced_w = w / total_w
+        # Only fill NaN within a column that has some data (hex-level gaps)
+        values = df[col].fillna(df[col].median())
+        ssi_raw += rebalanced_w * values
 
     return ssi_raw
 
@@ -467,6 +491,12 @@ def compute_ssi(
     df["ssi_band"] = assign_ssi_band(df["ssi_value"])
     df["archetype_id"] = assign_archetypes(df, available_indicators, k=k)
     df["anomaly_flag"] = assign_anomaly_flag(df["ssi_value"], anomaly_pct)
+
+    # ── Step 6: Drop stray artifact columns ──────────────────────────────────
+    drop_cols = [c for c in ["number"] if c in df.columns]
+    if drop_cols:
+        log.info("Dropping stray artifact columns: {cols}", cols=drop_cols)
+        df = df.drop(columns=drop_cols)
 
     log.info(
         "SSI complete for {city}: mean={m:.3f}, anomaly_rate={ar:.1%}",

@@ -61,6 +61,16 @@ def add_vegetation_idx(
 
     baseline = compute_monthly_baseline(df, ndvi_col, baseline_years=baseline_years)
 
+    # NDVI = 0.0 is a satellite fill/nodata value (cloudy passes), not real
+    # vegetation. Replace with NaN so the baseline is not skewed.
+    zero_count = (df[ndvi_col] == 0).sum()
+    if zero_count > 0:
+        log.warning(
+            "Replacing {n} NDVI=0.0 values with NaN (satellite nodata fill values)",
+            n=zero_count,
+        )
+        df[ndvi_col] = df[ndvi_col].replace(0.0, np.nan)
+
     # Invert=True: lower NDVI than baseline → higher stress
     df = apply_baseline_zscore(
         df,
