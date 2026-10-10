@@ -253,14 +253,15 @@ def ingest_pm25_city(
     overwrite: bool = False,
 ) -> list[Path]:
     """
-    Generate monthly PM2.5 files for a city over the configured time range.
+    Generate monthly PM2.5 GeoTIFF files for a city over the configured time range.
 
-    Workflow:
-      1. Primary: Try downloading CAMS real monthly data for the month.
-      2. Fallback: Try SEDAC annual mean and scale using seasonality.
+    Workflow (per month):
+      1. PRIMARY  — CAMS real monthly reanalysis (requires CAMS_API_KEY in .env)
+      2. FALLBACK — SEDAC annual mean GeoTIFF scaled by India seasonality index
+                    (requires manual download or EarthData session)
 
     Returns:
-        List of paths to monthly files (NetCDF if CAMS, GeoTIFF if SEDAC).
+        List of paths to monthly GeoTIFF files produced.
     """
     import rasterio
     import rasterio.mask
@@ -276,22 +277,19 @@ def ingest_pm25_city(
     months = pd.date_range(start=start, end=end, freq="MS")
     years = sorted(set(dt.year for dt in months))
 
-    # Step 1: Get annual rasters (one per year)
-    annual_rasters: dict[int, Path] = {}
+    # Pre-fetch SEDAC annual rasters as fallback (one per year)
+    sedac_annual: dict[int, Path] = {}
     for year in years:
-        # Try SEDAC global raster first
-        global_tif = download_sedac_pm25(year, raw_dir / "_global", overwrite)
-
-        if global_tif:
-            # Clip to city bbox
+        tif = download_sedac_pm25(year, raw_dir / "_global", overwrite)
+        if tif:
             clipped = city_dir / f"annual_{year}.tif"
             if not clipped.exists() or overwrite:
                 bbox_geom = [mapping(box(
                     bbox["min_lon"], bbox["min_lat"],
-                    bbox["max_lon"], bbox["max_lat"]
+                    bbox["max_lon"], bbox["max_lat"],
                 ))]
                 try:
-                    with rasterio.open(global_tif) as src:
+                    with rasterio.open(tif) as src:
                         out_img, out_transform = rasterio.mask.mask(src, bbox_geom, crop=True)
                         out_meta = src.meta.copy()
                         out_meta.update(
@@ -302,31 +300,85 @@ def ingest_pm25_city(
                         )
                     with rasterio.open(clipped, "w", **out_meta) as dst:
                         dst.write(out_img)
-                    annual_rasters[year] = clipped
+                    sedac_annual[year] = clipped
                 except Exception as exc:
-                    raise RuntimeError(f"Clip failed: {exc}") from exc
+                    log.warning("SEDAC clip failed for {year}: {err}", year=year, err=exc)
             else:
-                annual_rasters[year] = clipped
+                sedac_annual[year] = clipped
         else:
-            raise RuntimeError(f"Failed to fetch PM2.5 data for year {year}. Both CAMS and SEDAC failed.")
+            log.warning(
+                "SEDAC annual raster unavailable for {year}. "
+                "Download manually from https://sedac.ciesin.columbia.edu or "
+                "ensure CAMS_API_KEY is set in .env.",
+                year=year,
+            )
 
-    # Step 2: Derive monthly rasters
+    # Process each month: CAMS first, SEDAC fallback
     monthly_paths = []
     for dt in months:
         out_path = city_dir / f"monthly_{dt.year}_{dt.month:02d}.tif"
+
         if out_path.exists() and not overwrite:
             monthly_paths.append(out_path)
             continue
 
-        annual = annual_rasters.get(dt.year)
+        # ── Attempt 1: CAMS ──────────────────────────────────────────────────
+        cams_nc = download_cams_pm25(dt.year, dt.month, bbox, city_dir, overwrite)
+
+        if cams_nc and cams_nc.exists():
+            # Convert CAMS NetCDF → GeoTIFF so the rest of the pipeline
+            # (raster_to_h3) can read it uniformly
+            try:
+                import xarray as xr
+                ds = xr.open_dataset(cams_nc)
+                # CAMS EAC4 variable name for PM2.5
+                var = next(
+                    (v for v in ["pm2p5", "particulate_matter_2.5um", "pm2_5"]
+                     if v in ds.data_vars),
+                    None,
+                )
+                if var:
+                    da = ds[var].isel(time=0) if "time" in ds[var].dims else ds[var]
+                    da = da.squeeze()
+                    # Convert kg/m³ → µg/m³
+                    arr = da.values.astype("float32") * 1e9
+                    lats = da.coords.get("latitude", da.coords.get("lat")).values
+                    lons = da.coords.get("longitude", da.coords.get("lon")).values
+                    from rasterio.transform import from_bounds
+                    transform = from_bounds(lons.min(), lats.min(), lons.max(), lats.max(),
+                                            arr.shape[-1], arr.shape[-2])
+                    profile = dict(
+                        driver="GTiff", dtype="float32", width=arr.shape[-1],
+                        height=arr.shape[-2], count=1, crs="EPSG:4326",
+                        transform=transform, compress="deflate", nodata=-9999,
+                    )
+                    if arr.ndim == 2:
+                        arr = arr[np.newaxis, :, :]
+                    with rasterio.open(out_path, "w", **profile) as dst:
+                        dst.write(arr)
+                    monthly_paths.append(out_path)
+                    log.info("CAMS → GeoTIFF: {p}", p=out_path)
+                    continue
+                else:
+                    log.warning("CAMS NetCDF has no recognised PM2.5 variable. Falling back to SEDAC.")
+            except Exception as exc:
+                log.warning("CAMS NetCDF conversion failed: {err}. Falling back to SEDAC.", err=exc)
+
+        # ── Attempt 2: SEDAC seasonal scaling ───────────────────────────────
+        annual = sedac_annual.get(dt.year)
         if annual and annual.exists():
             _make_monthly_from_annual(annual, dt.month, out_path)
             monthly_paths.append(out_path)
+            log.info("SEDAC seasonal → {p}", p=out_path)
         else:
-            log.warning("No annual PM2.5 for {year}, skipping {dt}", year=dt.year, dt=dt)
+            log.error(
+                "No PM2.5 data for {city} {year}-{month:02d}. "
+                "Set CAMS_API_KEY in .env or download SEDAC manually.",
+                city=city, year=dt.year, month=dt.month,
+            )
 
     log.info(
-        "PM2.5 ingestion complete for {city}: {n} monthly files",
-        city=city, n=len(monthly_paths),
+        "PM2.5 ingestion complete for {city}: {n}/{total} monthly files",
+        city=city, n=len(monthly_paths), total=len(months),
     )
     return monthly_paths
