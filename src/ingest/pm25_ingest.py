@@ -277,12 +277,15 @@ def ingest_pm25_city(
     months = pd.date_range(start=start, end=end, freq="MS")
     years = sorted(set(dt.year for dt in months))
 
-    # Pre-fetch SEDAC annual rasters as fallback (one per year)
-    sedac_annual: dict[int, Path] = {}
-    for year in years:
-        tif = download_sedac_pm25(year, raw_dir / "_global", overwrite)
+    # Cache for on-demand SEDAC annual rasters if needed as fallback
+    sedac_annual: dict[int, Optional[Path]] = {}
+
+    def _get_sedac_annual(yr: int) -> Optional[Path]:
+        if yr in sedac_annual:
+            return sedac_annual[yr]
+        tif = download_sedac_pm25(yr, raw_dir / "_global", overwrite)
         if tif:
-            clipped = city_dir / f"annual_{year}.tif"
+            clipped = city_dir / f"annual_{yr}.tif"
             if not clipped.exists() or overwrite:
                 bbox_geom = [mapping(box(
                     bbox["min_lon"], bbox["min_lat"],
@@ -300,18 +303,21 @@ def ingest_pm25_city(
                         )
                     with rasterio.open(clipped, "w", **out_meta) as dst:
                         dst.write(out_img)
-                    sedac_annual[year] = clipped
+                    sedac_annual[yr] = clipped
                 except Exception as exc:
-                    log.warning("SEDAC clip failed for {year}: {err}", year=year, err=exc)
+                    log.warning("SEDAC clip failed for {year}: {err}", year=yr, err=exc)
+                    sedac_annual[yr] = None
             else:
-                sedac_annual[year] = clipped
+                sedac_annual[yr] = clipped
         else:
             log.warning(
                 "SEDAC annual raster unavailable for {year}. "
                 "Download manually from https://sedac.ciesin.columbia.edu or "
                 "ensure CAMS_API_KEY is set in .env.",
-                year=year,
+                year=yr,
             )
+            sedac_annual[yr] = None
+        return sedac_annual[yr]
 
     # Process each month: CAMS first, SEDAC fallback
     monthly_paths = []
@@ -339,23 +345,32 @@ def ingest_pm25_city(
                 )
                 if var:
                     da = ds[var].isel(time=0) if "time" in ds[var].dims else ds[var]
-                    da = da.squeeze()
-                    # Convert kg/m³ → µg/m³
-                    arr = da.values.astype("float32") * 1e9
-                    lats = da.coords.get("latitude", da.coords.get("lat")).values
-                    lons = da.coords.get("longitude", da.coords.get("lon")).values
+                    lats = np.atleast_1d(ds.coords.get("latitude", ds.coords.get("lat")).values)
+                    lons = np.atleast_1d(ds.coords.get("longitude", ds.coords.get("lon")).values)
+
+                    # Determine grid spacing; fallback to 0.75° (CAMS standard) if 1D/scalar
+                    d_lat = abs(lats[1] - lats[0]) if len(lats) > 1 else (abs(lons[1] - lons[0]) if len(lons) > 1 else 0.75)
+                    d_lon = abs(lons[1] - lons[0]) if len(lons) > 1 else d_lat
+
+                    min_lat = float(lats.min() - d_lat / 2.0)
+                    max_lat = float(lats.max() + d_lat / 2.0)
+                    min_lon = float(lons.min() - d_lon / 2.0)
+                    max_lon = float(lons.max() + d_lon / 2.0)
+
+                    # Convert kg/m³ → µg/m³ and shape as (height, width)
+                    arr = np.asarray(da.values, dtype="float32") * 1e9
+                    arr = arr.reshape((len(lats), len(lons)))
+                    height, width = arr.shape
+
                     from rasterio.transform import from_bounds
-                    transform = from_bounds(lons.min(), lats.min(), lons.max(), lats.max(),
-                                            arr.shape[-1], arr.shape[-2])
+                    transform = from_bounds(min_lon, min_lat, max_lon, max_lat, width, height)
                     profile = dict(
-                        driver="GTiff", dtype="float32", width=arr.shape[-1],
-                        height=arr.shape[-2], count=1, crs="EPSG:4326",
+                        driver="GTiff", dtype="float32", width=width,
+                        height=height, count=1, crs="EPSG:4326",
                         transform=transform, compress="deflate", nodata=-9999,
                     )
-                    if arr.ndim == 2:
-                        arr = arr[np.newaxis, :, :]
                     with rasterio.open(out_path, "w", **profile) as dst:
-                        dst.write(arr)
+                        dst.write(arr[np.newaxis, :, :])
                     monthly_paths.append(out_path)
                     log.info("CAMS → GeoTIFF: {p}", p=out_path)
                     continue
@@ -365,7 +380,7 @@ def ingest_pm25_city(
                 log.warning("CAMS NetCDF conversion failed: {err}. Falling back to SEDAC.", err=exc)
 
         # ── Attempt 2: SEDAC seasonal scaling ───────────────────────────────
-        annual = sedac_annual.get(dt.year)
+        annual = _get_sedac_annual(dt.year)
         if annual and annual.exists():
             _make_monthly_from_annual(annual, dt.month, out_path)
             monthly_paths.append(out_path)
