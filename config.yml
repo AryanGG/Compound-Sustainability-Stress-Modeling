@@ -13,9 +13,12 @@ spatial:
   bbox_buffer_km: 10              # Buffer around city bounding box
 
 cities:
-  - mumbai
   - delhi
-  - bengaluru
+  - mumbai
+  - kolkata
+  - hyderabad
+  - indore
+  - coimbatore
   - bikaner
 
 paths:
