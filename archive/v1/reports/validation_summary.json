@@ -1,0 +1,220 @@
+{
+  "bikaner": {
+    "rows": 34524,
+    "ewm_weights": {
+      "heat_stress_idx": 0.08676502760809332,
+      "water_stress_idx": 0.028655975605422983,
+      "pollution_idx": 0.051179118204553176,
+      "vegetation_idx": 0.00425465501017883,
+      "urban_vulnerability_idx": 0.8291452235717517
+    },
+    "compound_trigger_pct": 22.578496118642104,
+    "monte_carlo_sensitivity": {
+      "mean_rho": 0.9975072983923209,
+      "std_rho": 0.0017311083162759827,
+      "min_rho": 0.9917357370929097,
+      "p05_rho": 0.9941109388769133
+    },
+    "convergent_validity": {
+      "heat_vs_lst": {
+        "rho": 0.760839440436022,
+        "p_val": 0.0,
+        "n": 34524
+      }
+    }
+  },
+  "coimbatore": {
+    "rows": 35820,
+    "ewm_weights": {
+      "heat_stress_idx": 0.07245030544378167,
+      "water_stress_idx": 0.16099163376727613,
+      "pollution_idx": 0.2048332846939003,
+      "vegetation_idx": 0.05621400599465659,
+      "urban_vulnerability_idx": 0.5055107701003853
+    },
+    "compound_trigger_pct": 19.835287548855387,
+    "monte_carlo_sensitivity": {
+      "mean_rho": 0.9976583299629478,
+      "std_rho": 0.0015126813722118738,
+      "min_rho": 0.9918855339455124,
+      "p05_rho": 0.9948596406692133
+    },
+    "convergent_validity": {
+      "heat_vs_lst": {
+        "rho": 0.8874832284538096,
+        "p_val": 0.0,
+        "n": 35630
+      },
+      "vuln_vs_building_fp": {
+        "rho": 0.7130088974188267,
+        "p_val": 0.0,
+        "n": 35820
+      },
+      "vuln_vs_green_space": {
+        "rho": 0.24140604645223546,
+        "p_val": 0.0,
+        "n": 35820
+      }
+    }
+  },
+  "delhi": {
+    "rows": 122328,
+    "ewm_weights": {
+      "heat_stress_idx": 0.4822314774396783,
+      "water_stress_idx": 0.21330789967671904,
+      "pollution_idx": 0.0882045878093525,
+      "vegetation_idx": 0.056685101141553576,
+      "urban_vulnerability_idx": 0.15957093393269656
+    },
+    "compound_trigger_pct": 14.384278333660323,
+    "monte_carlo_sensitivity": {
+      "mean_rho": 0.9943308606855088,
+      "std_rho": 0.004002191103263412,
+      "min_rho": 0.9827068699018066,
+      "p05_rho": 0.986043182822294
+    },
+    "convergent_validity": {
+      "heat_vs_lst": {
+        "rho": 0.8159922524682849,
+        "p_val": 0.0,
+        "n": 122328
+      },
+      "vuln_vs_building_fp": {
+        "rho": 0.7402365803122785,
+        "p_val": 0.0,
+        "n": 122328
+      },
+      "vuln_vs_green_space": {
+        "rho": 0.51960539226715,
+        "p_val": 0.0,
+        "n": 122328
+      }
+    }
+  },
+  "hyderabad": {
+    "rows": 54180,
+    "ewm_weights": {
+      "heat_stress_idx": 0.15733293466583434,
+      "water_stress_idx": 0.3500404137930548,
+      "pollution_idx": 0.2350856586488303,
+      "vegetation_idx": 0.10175806122912774,
+      "urban_vulnerability_idx": 0.15578293166315282
+    },
+    "compound_trigger_pct": 22.013658176448875,
+    "monte_carlo_sensitivity": {
+      "mean_rho": 0.9969026374662104,
+      "std_rho": 0.00256022644484939,
+      "min_rho": 0.9880087138854685,
+      "p05_rho": 0.9913318047894014
+    },
+    "convergent_validity": {
+      "heat_vs_lst": {
+        "rho": 0.8102115041051283,
+        "p_val": 0.0,
+        "n": 54180
+      },
+      "vuln_vs_building_fp": {
+        "rho": 0.8517040975557134,
+        "p_val": 0.0,
+        "n": 54180
+      },
+      "vuln_vs_green_space": {
+        "rho": 0.34630899863785547,
+        "p_val": 0.0,
+        "n": 54180
+      }
+    }
+  },
+  "indore": {
+    "rows": 26316,
+    "ewm_weights": {
+      "heat_stress_idx": 0.14960382815639647,
+      "water_stress_idx": 0.08317181152292887,
+      "pollution_idx": 0.1242198453404794,
+      "vegetation_idx": 0.059830372066694504,
+      "urban_vulnerability_idx": 0.5831741429135008
+    },
+    "compound_trigger_pct": 20.607235142118864,
+    "monte_carlo_sensitivity": {
+      "mean_rho": 0.9971288221709532,
+      "std_rho": 0.0018405735123876313,
+      "min_rho": 0.9905164659998651,
+      "p05_rho": 0.994261233197066
+    },
+    "convergent_validity": {
+      "heat_vs_lst": {
+        "rho": 0.8570933271317179,
+        "p_val": 0.0,
+        "n": 14334
+      }
+    }
+  },
+  "kolkata": {
+    "rows": 35712,
+    "ewm_weights": {
+      "heat_stress_idx": 0.19127681261652602,
+      "water_stress_idx": 0.2859810817707551,
+      "pollution_idx": 0.2827439411498714,
+      "vegetation_idx": 0.09108264219194091,
+      "urban_vulnerability_idx": 0.1489155222709066
+    },
+    "compound_trigger_pct": 10.310259856630823,
+    "monte_carlo_sensitivity": {
+      "mean_rho": 0.9953245387142841,
+      "std_rho": 0.0034847615739295548,
+      "min_rho": 0.9809279745154638,
+      "p05_rho": 0.9891496705658431
+    },
+    "convergent_validity": {
+      "heat_vs_lst": {
+        "rho": 0.722723580176197,
+        "p_val": 0.0,
+        "n": 34319
+      },
+      "vuln_vs_building_fp": {
+        "rho": 0.8520286359571241,
+        "p_val": 0.0,
+        "n": 35712
+      },
+      "vuln_vs_green_space": {
+        "rho": 0.39305667801369604,
+        "p_val": 0.0,
+        "n": 35712
+      }
+    }
+  },
+  "mumbai": {
+    "rows": 25452,
+    "ewm_weights": {
+      "heat_stress_idx": 0.17138366506750893,
+      "water_stress_idx": 0.14520302281634556,
+      "pollution_idx": 0.27838712183276487,
+      "vegetation_idx": 0.12597479769543174,
+      "urban_vulnerability_idx": 0.2790513925879489
+    },
+    "compound_trigger_pct": 17.586044318717587,
+    "monte_carlo_sensitivity": {
+      "mean_rho": 0.9975245503830535,
+      "std_rho": 0.0020541009180129947,
+      "min_rho": 0.9905626178596912,
+      "p05_rho": 0.9931026443486384
+    },
+    "convergent_validity": {
+      "heat_vs_lst": {
+        "rho": 0.4932766384337524,
+        "p_val": 0.0,
+        "n": 24586
+      },
+      "vuln_vs_building_fp": {
+        "rho": 0.8156045706499134,
+        "p_val": 0.0,
+        "n": 25452
+      },
+      "vuln_vs_green_space": {
+        "rho": -0.37533200769460623,
+        "p_val": 0.0,
+        "n": 25452
+      }
+    }
+  }
+}
