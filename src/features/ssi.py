@@ -276,44 +276,77 @@ def compute_ssi_value(
     return ssi_raw
 
 
+PHYSICAL_INTERACTION_PAIRS = [
+    ("heat_stress_idx", "water_stress_idx"),
+    ("heat_stress_idx", "pollution_idx"),
+    ("water_stress_idx", "vegetation_idx"),
+    ("pollution_idx", "urban_vulnerability_idx"),
+]
+
+
+def compute_joint_tail_amplifier(
+    df: pd.DataFrame,
+    pairs: list[tuple[str, str]] = PHYSICAL_INTERACTION_PAIRS,
+    quantile_thresh: float = 0.75,
+) -> pd.Series:
+    """
+    Compute Bivariate Joint Tail Risk Amplifier (Omega_compound).
+
+    Formula:
+        Omega_compound = Sum_{(i,j) in P} I(v_i > q_i,0.75) * I(v_j > q_j,0.75) * sqrt(v_i * v_j)
+
+    Where:
+        P = 4 physically grounded hazard pairs:
+            1. (Heat Stress, Water Deficit) -> Compound Heat-Drought Event
+            2. (Heat Stress, Air Pollution) -> Stagnation-Photochemical Smog Episode
+            3. (Water Deficit, Vegetation Loss) -> Eco-Hydrological Degradation
+            4. (Air Pollution, Built Vulnerability) -> Socio-Environmental Injustice Trap
+        I(.) = Binary indicator: triggers only when BOTH hazards simultaneously exceed their upper quartile (75th percentile).
+        sqrt(v_i * v_j) = Scale-consistent geometric mean intensity.
+    """
+    omega = pd.Series(0.0, index=df.index, name="omega_compound")
+
+    # Calculate upper quartile threshold per indicator on available data
+    quantiles = {}
+    for col in set([p[0] for p in pairs] + [p[1] for p in pairs]):
+        if col in df.columns:
+            s = df[col].dropna()
+            quantiles[col] = float(s.quantile(quantile_thresh)) if len(s) > 0 else 0.75
+
+    for col_i, col_j in pairs:
+        if col_i in df.columns and col_j in df.columns:
+            val_i = df[col_i].fillna(0.0).clip(lower=0.0)
+            val_j = df[col_j].fillna(0.0).clip(lower=0.0)
+            q_i = quantiles.get(col_i, 0.75)
+            q_j = quantiles.get(col_j, 0.75)
+
+            tail_mask = (val_i > q_i) & (val_j > q_j)
+            geom_mean = np.sqrt(val_i * val_j)
+            omega += tail_mask.astype(float) * geom_mean
+
+    return omega
+
+
 def compute_ssi_compound_value(
     df: pd.DataFrame,
     weights: dict[str, float],
-    gamma: float = 0.5,
+    gamma: float = 0.3,
+    quantile_thresh: float = 0.75,
 ) -> pd.Series:
     """
-    Compute raw compound SSI using linear weights plus interaction terms.
+    Compute raw Joint-Tail Compound SSI (JT-SSI).
 
     Formula:
-        SSI_compound_raw = Sum(w_i * v_i) + gamma * Sum(alpha_ij * v_i * v_j)
-    where alpha_ij = max(0, corr(v_i, v_j)).
+        SSI_JT = SSI_linear + gamma * Omega_compound
+    where Omega_compound is the Bivariate Joint Tail Risk Amplifier.
     """
     # 1. Linear combination base
     ssi_linear_raw = compute_ssi_value(df, weights)
 
-    # 2. Add compound interaction terms
-    interaction_sum = pd.Series(0.0, index=df.index)
-    available = [c for c in weights.keys() if c in df.columns]
+    # 2. Add compound joint-tail amplifier
+    omega = compute_joint_tail_amplifier(df, quantile_thresh=quantile_thresh)
 
-    if len(available) >= 2:
-        corr_matrix = df[available].corr().fillna(0.0)
-        
-        # Defensible physical interaction pairs
-        pairs = [
-            ("heat_stress_idx", "water_stress_idx"),
-            ("heat_stress_idx", "pollution_idx"),
-            ("water_stress_idx", "vegetation_idx"),
-            ("pollution_idx", "urban_vulnerability_idx"),
-        ]
-        
-        for col_i, col_j in pairs:
-            if col_i in available and col_j in available:
-                val_i = df[col_i].fillna(0.0)
-                val_j = df[col_j].fillna(0.0)
-                alpha = max(0.0, float(corr_matrix.loc[col_i, col_j]))
-                interaction_sum += alpha * val_i * val_j
-
-    ssi_compound_raw = ssi_linear_raw + gamma * interaction_sum
+    ssi_compound_raw = ssi_linear_raw + gamma * omega
     return ssi_compound_raw
 
 
@@ -475,13 +508,20 @@ def compute_ssi(
     adjusted_weights = apply_city_weight_adjustments(base_weights, city, config)
 
     # ── Step 3: Compute linear and compound raw sums ──────────────────────────
+    gamma = float(config.get("ssi", {}).get("gamma", 0.3))
+    tail_q = float(config.get("ssi", {}).get("tail_quantile", 0.75))
+
     ssi_linear_raw = compute_ssi_value(df, adjusted_weights)
-    ssi_compound_raw = compute_ssi_compound_value(df, adjusted_weights, gamma=0.5)
+    omega_compound = compute_joint_tail_amplifier(df, quantile_thresh=tail_q)
+    ssi_compound_raw = ssi_linear_raw + gamma * omega_compound
 
     # A. Linear Normalization
     df["ssi_linear"] = ssi_linear_raw.clip(0, 1)
 
-    # B. Compound Normalization (Saved to ssi_value for downstream dashboard compatibility)
+    # B. Joint-Tail Risk Amplifier
+    df["omega_compound"] = omega_compound
+
+    # C. Compound Normalization (Saved to ssi_value for downstream dashboard compatibility)
     df["ssi_value"] = ssi_compound_raw.clip(0, 1)
 
     # ── Step 5: Derived columns ───────────────────────────────────────────────

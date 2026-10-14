@@ -1,0 +1,97 @@
+{
+  "_meta": {
+    "git_sha": "a68026071aecc07c0772e44f273c81c6707a9357",
+    "config_sha256": "65b301a3027358dbab9e3794f645e6bbc14075ef57c9dae7773eb3447260cad8",
+    "created_utc": "2026-10-14T11:47:39.813726+00:00",
+    "seed": 20260101
+  },
+  "reference_cities": [
+    "mumbai",
+    "coimbatore"
+  ],
+  "n_reference_obs": 61272,
+  "baseline": {
+    "heat_raw": {
+      "lo": 23.991880234129255,
+      "hi": 36.326646554806324
+    },
+    "water_raw": {
+      "lo": 40.79839624217224,
+      "hi": 232.7527355520824
+    },
+    "veg_raw": {
+      "lo": 0.0,
+      "hi": 0.6369540166854859
+    },
+    "pollution_raw": {
+      "lo": 31.870886374463225,
+      "hi": 222.39652253119857
+    },
+    "exposure_raw": {
+      "lo": 0.0,
+      "hi": 0.6988338363324041
+    }
+  },
+  "weights": {
+    "equal": {
+      "heat_v2": 0.2,
+      "water_v2": 0.2,
+      "veg_v2": 0.2,
+      "pollution_v2": 0.2,
+      "exposure_v2": 0.2
+    },
+    "ewm": {
+      "heat_v2": 0.19469584063025927,
+      "water_v2": 0.12993794273136078,
+      "veg_v2": 0.07082782061212163,
+      "pollution_v2": 0.3234489913253505,
+      "exposure_v2": 0.2810894047009078
+    },
+    "critic": {
+      "heat_v2": 0.19560105508280973,
+      "water_v2": 0.16271976752972245,
+      "veg_v2": 0.15859214419385456,
+      "pollution_v2": 0.2617252696918642,
+      "exposure_v2": 0.221361763501749
+    },
+    "pca": {
+      "heat_v2": 0.3538141041484298,
+      "water_v2": 0.36865301832797365,
+      "veg_v2": 0.17228876554516953,
+      "pollution_v2": 0.029435225661643694,
+      "exposure_v2": 0.07580888631678323
+    }
+  },
+  "primary_scheme": "equal",
+  "primary_weights": {
+    "heat_v2": 0.2,
+    "water_v2": 0.2,
+    "veg_v2": 0.2,
+    "pollution_v2": 0.2,
+    "exposure_v2": 0.2
+  },
+  "pc1_explained": 0.3456,
+  "compound": {
+    "pair": [
+      "heat_v2",
+      "water_v2"
+    ],
+    "q": 0.9,
+    "gamma": 0.3,
+    "thresholds": {
+      "heat_v2": 0.7531211382964402,
+      "water_v2": 0.797506638029826
+    }
+  },
+  "band_cuts": [
+    0.2785163507116554,
+    0.3801405943891002,
+    0.49589479027179095
+  ],
+  "band_labels": [
+    "Low",
+    "Moderate",
+    "High",
+    "Extreme"
+  ]
+}

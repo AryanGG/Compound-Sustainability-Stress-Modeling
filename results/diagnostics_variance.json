@@ -1,0 +1,186 @@
+{
+  "mumbai": {
+    "heat": {
+      "v1_spread": 0.4649,
+      "v1_variance": {
+        "between_month": 0.9622,
+        "between_hex": 0.0224,
+        "residual": 0.0154
+      },
+      "v2_spread": 0.9948,
+      "v2_variance": {
+        "between_month": 0.9863,
+        "between_hex": 0.0073,
+        "residual": 0.0064
+      },
+      "v2_min": 0.0,
+      "v2_max": 1.0,
+      "v2_clip_0_share": 0.0385,
+      "v2_clip_1_share": 0.0482
+    },
+    "water": {
+      "v1_spread": 0.7639,
+      "v1_variance": {
+        "between_month": 0.8177,
+        "between_hex": 0.1496,
+        "residual": 0.0327
+      },
+      "v2_spread": 0.9918,
+      "v2_variance": {
+        "between_month": 0.9816,
+        "between_hex": 0.0081,
+        "residual": 0.0103
+      },
+      "v2_min": 0.0,
+      "v2_max": 1.0,
+      "v2_clip_0_share": 0.0461,
+      "v2_clip_1_share": 0.0433
+    },
+    "veg": {
+      "v1_spread": 0.3975,
+      "v1_variance": {
+        "between_month": 0.248,
+        "between_hex": 0.5826,
+        "residual": 0.1694
+      },
+      "v2_spread": 0.6661,
+      "v2_variance": {
+        "between_month": 0.3082,
+        "between_hex": 0.541,
+        "residual": 0.1508
+      },
+      "v2_min": 0.0,
+      "v2_max": 1.0,
+      "v2_clip_0_share": 0.0304,
+      "v2_clip_1_share": 0.0492
+    },
+    "pollution": {
+      "v1_spread": 0.3396,
+      "v1_variance": {
+        "between_month": 0.9526,
+        "between_hex": 0.0378,
+        "residual": 0.0096
+      },
+      "v2_spread": 0.967,
+      "v2_variance": {
+        "between_month": 1.0,
+        "between_hex": 0.0,
+        "residual": 0.0
+      },
+      "v2_min": 0.033,
+      "v2_max": 1.0,
+      "v2_clip_0_share": 0.0,
+      "v2_clip_1_share": 0.0556
+    },
+    "exposure": {
+      "v1_spread": 0.0,
+      "v1_variance": {
+        "between_month": 0.0,
+        "between_hex": 1.0,
+        "residual": 0.0
+      },
+      "v2_spread": 0.0,
+      "v2_variance": {
+        "between_month": 0.0,
+        "between_hex": 1.0,
+        "residual": 0.0
+      },
+      "v2_min": 0.0,
+      "v2_max": 0.9977,
+      "v2_clip_0_share": 0.133,
+      "v2_clip_1_share": 0.0
+    }
+  },
+  "coimbatore": {
+    "heat": {
+      "v1_spread": 0.3056,
+      "v1_variance": {
+        "between_month": 0.6881,
+        "between_hex": 0.2815,
+        "residual": 0.0304
+      },
+      "v2_spread": 0.6507,
+      "v2_variance": {
+        "between_month": 0.8762,
+        "between_hex": 0.0979,
+        "residual": 0.0259
+      },
+      "v2_min": 0.0,
+      "v2_max": 0.836,
+      "v2_clip_0_share": 0.0072,
+      "v2_clip_1_share": 0.0
+    },
+    "water": {
+      "v1_spread": 0.3268,
+      "v1_variance": {
+        "between_month": 0.9037,
+        "between_hex": 0.0316,
+        "residual": 0.0647
+      },
+      "v2_spread": 0.8316,
+      "v2_variance": {
+        "between_month": 0.9299,
+        "between_hex": 0.0495,
+        "residual": 0.0206
+      },
+      "v2_min": 0.0,
+      "v2_max": 1.0,
+      "v2_clip_0_share": 0.0015,
+      "v2_clip_1_share": 0.0035
+    },
+    "veg": {
+      "v1_spread": 0.4112,
+      "v1_variance": {
+        "between_month": 0.3122,
+        "between_hex": 0.3868,
+        "residual": 0.3009
+      },
+      "v2_spread": 0.7043,
+      "v2_variance": {
+        "between_month": 0.4195,
+        "between_hex": 0.3239,
+        "residual": 0.2566
+      },
+      "v2_min": 0.0,
+      "v2_max": 1.0,
+      "v2_clip_0_share": 0.0126,
+      "v2_clip_1_share": 0.032
+    },
+    "pollution": {
+      "v1_spread": 0.1973,
+      "v1_variance": {
+        "between_month": 0.9287,
+        "between_hex": 0.0572,
+        "residual": 0.0141
+      },
+      "v2_spread": 0.3718,
+      "v2_variance": {
+        "between_month": 1.0,
+        "between_hex": 0.0,
+        "residual": 0.0
+      },
+      "v2_min": 0.0,
+      "v2_max": 0.3718,
+      "v2_clip_0_share": 0.0556,
+      "v2_clip_1_share": 0.0
+    },
+    "exposure": {
+      "v1_spread": 0.0,
+      "v1_variance": {
+        "between_month": 0.0,
+        "between_hex": 1.0,
+        "residual": 0.0
+      },
+      "v2_spread": 0.0,
+      "v2_variance": {
+        "between_month": 0.0,
+        "between_hex": 1.0,
+        "residual": 0.0
+      },
+      "v2_min": 0.0,
+      "v2_max": 1.0,
+      "v2_clip_0_share": 0.0633,
+      "v2_clip_1_share": 0.0352
+    }
+  }
+}

@@ -1,0 +1,275 @@
+{
+  "city": "delhi",
+  "file": "data/h3_panel/final/delhi.parquet",
+  "shape": [
+    122328,
+    34
+  ],
+  "columns": [
+    "city_id",
+    "h3_index",
+    "date",
+    "temp_mean_c",
+    "dewpoint_mean_c",
+    "precip_sum_mm",
+    "wind_speed",
+    "radiation",
+    "soil_moisture",
+    "ndvi",
+    "lst_c",
+    "pm25",
+    "built_up_fraction",
+    "road_density_km_km2",
+    "building_density",
+    "building_fp_fraction",
+    "green_space_fraction",
+    "bpl_pct",
+    "slum_pct",
+    "elderly_pct",
+    "literacy_pct",
+    "latitude",
+    "longitude",
+    "heat_stress_idx",
+    "water_stress_idx",
+    "pollution_idx",
+    "vegetation_idx",
+    "urban_vulnerability_idx",
+    "ssi_linear",
+    "ssi_value",
+    "ssi_band",
+    "archetype_id",
+    "anomaly_flag",
+    "omega_compound"
+  ],
+  "date_min": "2020-01-01",
+  "date_max": "2022-12-01",
+  "n_months": 36,
+  "n_hexes": 3398,
+  "balanced_panel": true,
+  "missing_cols": {
+    "ndvi": 68806,
+    "pm25": 41040
+  },
+  "missing_by_date_top3": {
+    "ndvi": {
+      "2020-09-01": 3398,
+      "2021-02-01": 3398,
+      "2022-11-01": 3398
+    },
+    "pm25": {
+      "2020-01-01": 1140,
+      "2020-02-01": 1140,
+      "2021-09-01": 1140
+    }
+  },
+  "constant_cols": [
+    "bpl_pct",
+    "slum_pct",
+    "elderly_pct",
+    "literacy_pct"
+  ],
+  "static_per_hex_cols": [
+    "built_up_fraction",
+    "road_density_km_km2",
+    "building_density",
+    "building_fp_fraction",
+    "green_space_fraction",
+    "latitude",
+    "longitude",
+    "urban_vulnerability_idx"
+  ],
+  "distinct_per_date_avg": {
+    "temp_mean_c": 3398.0,
+    "dewpoint_mean_c": 3398.0,
+    "precip_sum_mm": 3253.1,
+    "wind_speed": 3398.0,
+    "radiation": 3398.0,
+    "soil_moisture": 3398.0,
+    "ndvi": 1486.6,
+    "lst_c": 2011.8,
+    "pm25": 7.0,
+    "built_up_fraction": 3170.0,
+    "road_density_km_km2": 3207.0,
+    "building_density": 1926.0,
+    "building_fp_fraction": 1952.0,
+    "green_space_fraction": 964.0,
+    "bpl_pct": 1.0,
+    "slum_pct": 1.0,
+    "elderly_pct": 1.0,
+    "literacy_pct": 1.0,
+    "latitude": 3398.0,
+    "longitude": 3398.0,
+    "heat_stress_idx": 2854.6,
+    "water_stress_idx": 3398.0,
+    "pollution_idx": 7.7,
+    "vegetation_idx": 1451.3,
+    "urban_vulnerability_idx": 3173.0,
+    "ssi_linear": 3398.0,
+    "ssi_value": 3378.6,
+    "archetype_id": 3.1,
+    "omega_compound": 489.8
+  },
+  "city_scale_cols(<=5 distinct per date)": [
+    "bpl_pct",
+    "slum_pct",
+    "elderly_pct",
+    "literacy_pct",
+    "archetype_id"
+  ],
+  "index_cols": [
+    "heat_stress_idx",
+    "water_stress_idx",
+    "pollution_idx",
+    "vegetation_idx",
+    "urban_vulnerability_idx"
+  ],
+  "index_summary": {
+    "heat_stress_idx": {
+      "min": 0.0,
+      "max": 0.84092,
+      "mean": 0.40522,
+      "std": 0.27166
+    },
+    "water_stress_idx": {
+      "min": 0.20873,
+      "max": 0.7825,
+      "mean": 0.50292,
+      "std": 0.14002
+    },
+    "pollution_idx": {
+      "min": 0.71667,
+      "max": 1.0,
+      "mean": 0.9185,
+      "std": 0.05968
+    },
+    "vegetation_idx": {
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.66928,
+      "std": 0.14678
+    },
+    "urban_vulnerability_idx": {
+      "min": 0.01201,
+      "max": 0.99547,
+      "mean": 0.54385,
+      "std": 0.2258
+    }
+  },
+  "monthly_mean_spread": {
+    "heat_stress_idx": 0.727,
+    "water_stress_idx": 0.34837,
+    "pollution_idx": 0.11793,
+    "vegetation_idx": 0.12079,
+    "urban_vulnerability_idx": 0.0
+  },
+  "flag_per_month_normalised(spread<0.01)": [],
+  "flag_identical_range_indices": [],
+  "implied_linear_weights": {
+    "heat_stress_idx": 0.4822,
+    "water_stress_idx": 0.2133,
+    "pollution_idx": 0.0882,
+    "vegetation_idx": 0.0567,
+    "urban_vulnerability_idx": 0.1596
+  },
+  "implied_weights_intercept": -0.0,
+  "implied_weights_R2": 1.0,
+  "omega_positive_share": 0.1438,
+  "omega_max": 1.8233,
+  "implied_gamma_median": 0.3,
+  "implied_gamma_std": 0.0,
+  "share_clipped_at_1": 0.0058,
+  "additive_formula_exact": true,
+  "ssi_var_share": {
+    "between_month": 0.6586,
+    "between_hex": 0.2014,
+    "hex_x_month_residual": 0.14
+  },
+  "spearman_pooled_idx_vs_raw": {
+    "heat_stress_idx": {
+      "temp_mean_c": 0.93,
+      "dewpoint_mean_c": 0.879,
+      "precip_sum_mm": 0.445,
+      "wind_speed": -0.175,
+      "radiation": 0.561,
+      "soil_moisture": -0.022,
+      "ndvi": -0.089,
+      "lst_c": 0.816,
+      "pm25": -0.824,
+      "built_up_fraction": 0.015,
+      "building_density": 0.004,
+      "green_space_fraction": -0.003
+    },
+    "water_stress_idx": {
+      "temp_mean_c": 0.137,
+      "dewpoint_mean_c": -0.418,
+      "precip_sum_mm": -0.785,
+      "wind_speed": 0.237,
+      "radiation": 0.482,
+      "soil_moisture": -0.959,
+      "ndvi": -0.121,
+      "lst_c": 0.236,
+      "pm25": 0.247,
+      "built_up_fraction": 0.005,
+      "building_density": 0.041,
+      "green_space_fraction": 0.001
+    },
+    "pollution_idx": {
+      "temp_mean_c": -0.636,
+      "dewpoint_mean_c": -0.62,
+      "precip_sum_mm": -0.436,
+      "wind_speed": 0.118,
+      "radiation": -0.394,
+      "soil_moisture": -0.063,
+      "ndvi": 0.078,
+      "lst_c": -0.562,
+      "pm25": 0.99,
+      "built_up_fraction": 0.063,
+      "building_density": 0.061,
+      "green_space_fraction": 0.045
+    },
+    "vegetation_idx": {
+      "temp_mean_c": 0.04,
+      "dewpoint_mean_c": -0.016,
+      "precip_sum_mm": -0.015,
+      "wind_speed": 0.01,
+      "radiation": 0.001,
+      "soil_moisture": -0.066,
+      "ndvi": -1.0,
+      "lst_c": 0.097,
+      "pm25": -0.029,
+      "built_up_fraction": 0.254,
+      "building_density": 0.149,
+      "green_space_fraction": 0.096
+    },
+    "urban_vulnerability_idx": {
+      "temp_mean_c": 0.001,
+      "dewpoint_mean_c": 0.004,
+      "precip_sum_mm": -0.003,
+      "wind_speed": 0.026,
+      "radiation": -0.006,
+      "soil_moisture": -0.0,
+      "ndvi": -0.438,
+      "lst_c": 0.032,
+      "pm25": 0.081,
+      "built_up_fraction": 0.996,
+      "building_density": 0.732,
+      "green_space_fraction": 0.52
+    }
+  },
+  "heat_vs_lst_within_month": {
+    "mean": 0.966,
+    "min": 0.701,
+    "max": 1.0,
+    "n_months": 36
+  },
+  "anomaly_overall_share": 0.1,
+  "anomaly_top_months": {
+    "2021-06-01": 0.828,
+    "2022-06-01": 0.738,
+    "2022-05-01": 0.561,
+    "2020-10-01": 0.336,
+    "2020-06-01": 0.326
+  },
+  "n_archetypes": 6,
+  "archetypes_per_hex_avg": 3.79
+}

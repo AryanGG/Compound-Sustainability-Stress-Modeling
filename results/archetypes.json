@@ -1,0 +1,71 @@
+{
+  "_meta": {
+    "git_sha": "a68026071aecc07c0772e44f273c81c6707a9357",
+    "config_sha256": "65b301a3027358dbab9e3794f645e6bbc14075ef57c9dae7773eb3447260cad8",
+    "created_utc": "2026-10-14T11:48:23.594488+00:00",
+    "seed": 20260101
+  },
+  "status": "typology_found",
+  "optimal_k": 2,
+  "silhouette": 0.5054,
+  "mean_ari": 1.0,
+  "cluster_shares": {
+    "1": 0.5846,
+    "0": 0.4154
+  },
+  "cluster_names": {
+    "0": "Cluster 0: Suburban/Open / Low Canopy / High Heat",
+    "1": "Cluster 1: Suburban/Open / Low Canopy / Moderate Heat"
+  },
+  "spatial_coherence_observed": 1.0,
+  "spatial_coherence_null_mean": 0.5135,
+  "spatial_coherence_null_p95": 0.525,
+  "k_evaluation": {
+    "2": {
+      "silhouette": 0.5054,
+      "mean_ari": 1.0,
+      "min_cluster_share": 0.4154,
+      "qualifies": true
+    },
+    "3": {
+      "silhouette": 0.4445,
+      "mean_ari": 0.7672,
+      "min_cluster_share": 0.208,
+      "qualifies": true
+    },
+    "4": {
+      "silhouette": 0.4696,
+      "mean_ari": 0.9827,
+      "min_cluster_share": 0.1733,
+      "qualifies": true
+    },
+    "5": {
+      "silhouette": 0.4216,
+      "mean_ari": 0.9581,
+      "min_cluster_share": 0.1428,
+      "qualifies": true
+    },
+    "6": {
+      "silhouette": 0.3903,
+      "mean_ari": 0.8948,
+      "min_cluster_share": 0.0881,
+      "qualifies": true
+    },
+    "7": {
+      "silhouette": 0.3806,
+      "mean_ari": 0.8427,
+      "min_cluster_share": 0.0711,
+      "qualifies": true
+    },
+    "8": {
+      "silhouette": 0.3565,
+      "mean_ari": 0.8143,
+      "min_cluster_share": 0.0723,
+      "qualifies": true
+    }
+  },
+  "hex_assignments": {
+    "csv": "results/archetypes__hex_assignments.csv",
+    "rows": 1702
+  }
+}

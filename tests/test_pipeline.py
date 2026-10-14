@@ -240,7 +240,6 @@ class TestSyntheticPipeline:
             resolution=8,
             start_month="2020-01",
             end_month="2020-06",
-            synthetic=True,
         )
 
         assert not panel.empty, "Panel should not be empty"

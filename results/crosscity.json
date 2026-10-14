@@ -1,0 +1,24 @@
+{
+  "_meta": {
+    "git_sha": "a68026071aecc07c0772e44f273c81c6707a9357",
+    "config_sha256": "65b301a3027358dbab9e3794f645e6bbc14075ef57c9dae7773eb3447260cad8",
+    "created_utc": "2026-10-14T11:48:24.189184+00:00",
+    "seed": 20260101
+  },
+  "cities": [
+    "mumbai",
+    "coimbatore"
+  ],
+  "fit_parameters_file": "results/fit_parameters.json",
+  "order_invariance_across_schemes": {
+    "equal": true,
+    "ewm": true,
+    "critic": true,
+    "pca": true
+  },
+  "all_schemes_preserve_order": true,
+  "table": {
+    "csv": "results/crosscity__table.csv",
+    "rows": 2
+  }
+}

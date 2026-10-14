@@ -13,6 +13,8 @@ Generates a fully self-contained, dark-theme HTML dashboard with:
 
 from __future__ import annotations
 
+import hashlib
+import subprocess
 from datetime import datetime
 from pathlib import Path
 
@@ -571,6 +573,17 @@ def generate_report(city: str, df: pd.DataFrame, output_path: Path) -> Path:
     dom_col     = band_colour.get(dom_band, "#e2e8f0")
     ts_now      = datetime.now().strftime("%d %b %Y, %H:%M IST")
 
+    try:
+        git_sha = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()[:10]
+    except Exception:
+        git_sha = "unknown"
+
+    fit_p = Path("results/fit_parameters.json")
+    if fit_p.exists():
+        params_hash = hashlib.sha256(fit_p.read_bytes()).hexdigest()[:12]
+    else:
+        params_hash = "missing"
+
     html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -648,6 +661,9 @@ def generate_report(city: str, df: pd.DataFrame, output_path: Path) -> Path:
     </a>
     <a class="nav-link" href="#hotspots">
       <div class="nav-dot" style="background:#ef4444"></div> Priority Locations
+    </a>
+    <a class="nav-link" href="#limitations">
+      <div class="nav-dot" style="background:#f43f5e"></div> Limitations
     </a>
   </div>
 </nav>
@@ -844,49 +860,77 @@ def generate_report(city: str, df: pd.DataFrame, output_path: Path) -> Path:
   )}
 </section>
 
+<!-- ──────────────── SECTION 7: LIMITATIONS ──────────────── -->
+<section id="limitations" class="section-wrap">
+  {_section_header("07 / LIMITATIONS", "Methodological Boundaries & Disclosures",
+    "A rigorous, defensible science framework requires upfront disclosure of data constraints and model boundaries. "
+    "Full technical justifications and sensitivity results are detailed in <a href='../docs/limitations.md' style='color:#06b6d4; text-decoration:underline;'>docs/limitations.md</a>.")}
+
+  <div class="card" style="padding:28px; border:1px solid rgba(239,68,68,0.3); background:rgba(239,68,68,0.03); border-radius:12px;">
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+      <span style="font-size:24px;">⚠️</span>
+      <h3 style="color:#ef4444; font-size:18px;">Explicit Model Boundaries & Constraints</h3>
+    </div>
+    <ul style="margin-left:24px; line-height:1.8; color:#cbd5e1; font-size:14px;">
+      <li><strong>Coarse Resolution of Pollution:</strong> CAMS EAC4 surface PM2.5 reanalysis is ~0.75&deg; (~80 km) grid resolution. It provides a monthly city-wide temporal signal, not intra-urban spatial discrimination across individual H3 cells.</li>
+      <li><strong>Spatial Uniformity of Water Stress:</strong> ERA5 total precipitation and volumetric soil moisture drive water stress at ~11 km resolution; between-month variance accounts for ~99% of total variance, reflecting broad climatic seasonality rather than hyper-local drainage variations.</li>
+      <li><strong>Static Exposure Indicators:</strong> Socio-economic vulnerability (BPL, slum household share) and built infrastructure metrics are static priors derived from Census and baseline layers.</li>
+      <li><strong>Missing Observation Window:</strong> November 2022 raw data has a satellite collection gap documented in the data dictionary.</li>
+      <li><strong>Modest Spatial Agreement with Independent LST:</strong> Heat stress exhibits modest within-month spatial correlation with held-out MODIS LST (mean within-month &rho; &asymp; 0.17), indicating spatial micro-climate complexity beyond single-sensor proxies.</li>
+      <li><strong>Modeling Choices (&gamma; and q):</strong> Compound boost parameters (&gamma; = 0.30, 90th percentile q) are explicit modeling choices; robustness grid sweeps demonstrate that spatial rankings remain stable while levels and compound shares adjust smoothly.</li>
+      <li><strong>Absence of Outcome Validation:</strong> SSI represents an environmental hazard exposure composite; it is not calibrated against empirical morbidity, mortality, or financial loss records.</li>
+      <li><strong>Quantile-Based Relative Bands:</strong> Risk bands (Low, Moderate, High, Extreme) are defined by pooled empirical quartiles across reference cities, rather than absolute physiological damage thresholds.</li>
+      <li><strong>Cross-City Sample Size:</strong> Two reference cities (Mumbai, Coimbatore) allow cross-city comparative analysis under frozen baselines, but do not support city-level rank correlation statistics.</li>
+    </ul>
+    <div style="margin-top:20px;">
+      <a href="../docs/limitations.md" style="display:inline-block; padding:10px 20px; background:#8b5cf6; color:#ffffff; border-radius:8px; font-weight:600; text-decoration:none;">
+        Open Full Limitations Document (docs/limitations.md) &rarr;
+      </a>
+    </div>
+  </div>
+</section>
+
 </main>
 
 <!-- ═══════════════════ FOOTER ═══════════════════ -->
 <footer class="page-footer">
   <div class="footer-inner">
     <div>
-      <div class="footer-title">About This Report</div>
+      <div class="footer-title">About This Report (v2 Canonical)</div>
       <p class="footer-text">
-        The <strong style="color:#e2e8f0">Compound Sustainability Stress Index (SSI)</strong> is a composite,
-        spatio-temporal measure of environmental stress computed for Indian cities using multi-source geospatial data.
-        It combines five independently normalised stress indicators — heat, water, pollution, vegetation, and urban
-        vulnerability — into a single 0–1 score using PCA-derived weights adjusted by city-specific risk multipliers.
-        The H3 hexagonal grid at resolution 8 (~0.74 km² per cell) provides a uniform spatial framework for all
-        computations. All indicators use a rolling 3-year baseline for temporal normalisation.
+        The <strong style="color:#e2e8f0">Compound Sustainability Stress Index (SSI v2)</strong> is a composite,
+        spatio-temporal measure of environmental hazard exposure across Indian cities.
+        It combines five independently normalised physical stress drivers — heat, water, pollution, vegetation, and exposure —
+        into a single composite score using a primary equal weighting scheme calibrated on a frozen pooled baseline.
+        An interactive compound boost term couples co-occurring extreme heat and water stress.
       </p>
     </div>
     <div>
       <div class="footer-title">Data Sources</div>
       <ul class="footer-list">
-        <li>ERA5 Reanalysis — Copernicus CDS (ECMWF)</li>
+        <li>ERA5 Reanalysis (0.1&deg;) — Copernicus CDS (ECMWF)</li>
         <li>Sentinel-2 L2A NDVI — Microsoft Planetary Computer</li>
-        <li>MODIS MOD11A2 LST — NASA / Planetary Computer</li>
-        <li>PM₂.₅ Annual Mean — NASA SEDAC SDEI</li>
-        <li>Road &amp; buildings — OpenStreetMap via OSMnx</li>
-        <li>Vulnerability priors — Census of India 2011</li>
+        <li>MODIS MOD11A2 LST (1 km) — NASA / Planetary Computer</li>
+        <li>CAMS EAC4 Monthly PM2.5 (0.75&deg;) — Copernicus ADS</li>
+        <li>Roads &amp; Buildings — OpenStreetMap via OSMnx</li>
+        <li>Vulnerability Priors — Census of India 2011</li>
       </ul>
     </div>
     <div>
-      <div class="footer-title">SSI Methodology</div>
+      <div class="footer-title">v2 Methodology & Reproducibility</div>
       <ul class="footer-list">
-        <li>H3 resolution 8 spatial grid</li>
-        <li>Monthly temporal aggregation</li>
-        <li>Z-score normalisation (3-yr rolling baseline)</li>
-        <li>PCA-based composite weighting</li>
-        <li>City-specific weight adjustments</li>
-        <li>k-means archetype clustering (k=6)</li>
-        <li>90th-percentile anomaly detection</li>
+        <li>H3 resolution 8 spatial framework (~0.74 km&sup2;)</li>
+        <li>Monthly temporal aggregation (2020&ndash;2022)</li>
+        <li>Pooled frozen reference baseline (2nd&ndash;98th percentile scaling)</li>
+        <li>Primary equal weighting across 5 indicators</li>
+        <li>Smooth coupling compound boost (&gamma; = 0.30, q = 0.90)</li>
+        <li>Stationary hex-level archetypes (KMeans k=2)</li>
       </ul>
     </div>
   </div>
-  <div class="footer-copy">
-    <span>Compound SSI Pipeline &nbsp;·&nbsp; {meta['title']}, India &nbsp;·&nbsp; {date_min} – {date_max}</span>
-    <span style="color:#475569">Generated {ts_now}</span>
+  <div class="footer-copy" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-top:24px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.08); font-size:12px; color:#94a3b8;">
+    <span>Compound SSI Pipeline (v2) &nbsp;&middot;&nbsp; {meta['title']}, India &nbsp;&middot;&nbsp; {date_min} &ndash; {date_max}</span>
+    <span>Git SHA: <code style="color:#06b6d4;">{git_sha}</code> &nbsp;&middot;&nbsp; Parameters SHA256: <code style="color:#a78bfa;">{params_hash}</code> &nbsp;&middot;&nbsp; Built: <span style="color:#e2e8f0;">{ts_now}</span></span>
   </div>
 </footer>
 

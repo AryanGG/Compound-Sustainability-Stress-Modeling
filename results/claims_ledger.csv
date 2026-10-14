@@ -1,0 +1,17 @@
+claim_id,statement,number,unit,source_file,json_key,script,status
+C01,PC1 explained variance across 5 standardized indicators,0.3456,fraction,results/weights_preview.json,pc1_explained_variance,scripts/step7_weights.py,reproduced
+C02,Mumbai spatial hex-mean rank correlation between v1 and v2,0.8634,Spearman rho,results/compare_mumbai.json,rho_hexmean,src/analysis/run_compare.py,reproduced
+C03,Coimbatore spatial hex-mean rank correlation between v1 and v2,0.9272,Spearman rho,results/compare_coimbatore.json,rho_hexmean,src/analysis/run_compare.py,reproduced
+C04,Mumbai mean composite SSI shift (v2 - v1),-0.1745,index units,results/compare_mumbai.json,mean_ssi_shift,src/analysis/run_compare.py,reproduced
+C05,Coimbatore mean composite SSI shift (v2 - v1),-0.2320,index units,results/compare_coimbatore.json,mean_ssi_shift,src/analysis/run_compare.py,reproduced
+C06,Mumbai compound joint-tail hazard trigger frequency,0.1443,fraction,results/crosscity__table.csv,share_compound_triggered.0,src/analysis/run_crosscity.py,reproduced
+C07,Coimbatore compound joint-tail hazard trigger frequency,0.0068,fraction,results/crosscity__table.csv,share_compound_triggered.1,src/analysis/run_crosscity.py,reproduced
+C08,Mumbai share of hex-months in Extreme risk band,0.4503,fraction,results/crosscity__table.csv,share_extreme_band.0,src/analysis/run_crosscity.py,reproduced
+C09,Coimbatore share of hex-months in Extreme risk band,0.1077,fraction,results/crosscity__table.csv,share_extreme_band.1,src/analysis/run_crosscity.py,reproduced
+C10,Minimum spatial rank correlation across 4 weighting schemes,0.9425,Spearman rho,results/sensitivity_summary.csv,min_rho_hexmean.0,src/analysis/run_sensitivity.py,reproduced
+C11,Minimum spatial rank correlation across gamma range 0.1 to 0.5,0.9988,Spearman rho,results/sensitivity_summary.csv,min_rho_hexmean.1,src/analysis/run_sensitivity.py,reproduced
+C12,Minimum spatial rank correlation across quantile threshold q 0.75 to 0.90,0.9989,Spearman rho,results/sensitivity_summary.csv,min_rho_hexmean.2,src/analysis/run_sensitivity.py,reproduced
+C13,Minimum spatial rank correlation under leave-one-index-out,0.8870,Spearman rho,results/sensitivity_summary.csv,min_rho_hexmean.3,src/analysis/run_sensitivity.py,reproduced
+C14,Mumbai global spatial autocorrelation on hex-mean SSI v2,0.7285,Moran's I,results/validation.json,V4_spatial_structure_morans_i.details.mumbai.morans_i,src/analysis/run_validation.py,reproduced
+C15,Coimbatore global spatial autocorrelation on hex-mean SSI v2,0.7947,Moran's I,results/validation.json,V4_spatial_structure_morans_i.details.coimbatore.morans_i,src/analysis/run_validation.py,reproduced
+C16,Optimal number of hex-level stress typology archetypes,2,clusters,results/archetypes.json,optimal_k,src/analysis/run_archetypes.py,reproduced

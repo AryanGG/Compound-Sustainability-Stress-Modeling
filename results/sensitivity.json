@@ -1,0 +1,13 @@
+{
+  "_meta": {
+    "git_sha": "a68026071aecc07c0772e44f273c81c6707a9357",
+    "config_sha256": "65b301a3027358dbab9e3794f645e6bbc14075ef57c9dae7773eb3447260cad8",
+    "created_utc": "2026-10-14T11:47:44.459357+00:00",
+    "seed": 20260101
+  },
+  "n_experiments": 48,
+  "grid": {
+    "csv": "results/sensitivity__grid.csv",
+    "rows": 48
+  }
+}

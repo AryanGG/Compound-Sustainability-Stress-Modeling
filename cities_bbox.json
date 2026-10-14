@@ -363,15 +363,18 @@
     "state": "Unknown"
   },
   "coimbatore": {
-    "min_lon": 76.655931,
-    "min_lat": 10.2204226,
-    "max_lon": 77.2936678,
-    "max_lat": 11.4052378,
+    "min_lon": 76.85,
+    "min_lat": 10.90,
+    "max_lon": 77.10,
+    "max_lat": 11.15,
+    "boundary_queries": [
+      "Coimbatore, Tamil Nadu, India"
+    ],
     "primary_stresses": [
       "heat",
       "water",
       "pollution"
     ],
-    "state": "Unknown"
+    "state": "Tamil Nadu"
   }
 }

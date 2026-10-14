@@ -1,0 +1,50 @@
+{
+  "mumbai": {
+    "samples": 23902,
+    "random_split_metrics": {
+      "r2": 0.8722500564261861,
+      "mae": 0.8490869252814234,
+      "rmse": 1.1786386567063443
+    },
+    "spatial_split_metrics": {
+      "r2": 0.8471311440159616,
+      "mae": 0.9097046107338252,
+      "rmse": 1.2562526643275906
+    },
+    "feature_importances": {
+      "precip_sum_mm": 0.36049811250497127,
+      "temp_mean_c": 0.2854963221860691,
+      "built_up_fraction": 0.20985757667442706,
+      "dewpoint_mean_c": 0.07868556388084899,
+      "ndvi": 0.02155010446200204,
+      "green_space_fraction": 0.015576105991999432,
+      "building_density": 0.01010758661682899,
+      "road_density_km_km2": 0.010092505088511882,
+      "building_fp_fraction": 0.008136122594341348
+    }
+  },
+  "coimbatore": {
+    "samples": 34565,
+    "random_split_metrics": {
+      "r2": 0.641450100814041,
+      "mae": 2.097319303696729,
+      "rmse": 3.6951702506626236
+    },
+    "spatial_split_metrics": {
+      "r2": 0.2927458169306003,
+      "mae": 2.6860286986170983,
+      "rmse": 5.338051137525825
+    },
+    "feature_importances": {
+      "temp_mean_c": 0.26209425375819034,
+      "road_density_km_km2": 0.21126061849311767,
+      "dewpoint_mean_c": 0.1486289135094753,
+      "built_up_fraction": 0.11256902915455606,
+      "precip_sum_mm": 0.10071557691742458,
+      "ndvi": 0.06558709947183358,
+      "building_fp_fraction": 0.04644151562620262,
+      "building_density": 0.04586057792825261,
+      "green_space_fraction": 0.006842415140947193
+    }
+  }
+}

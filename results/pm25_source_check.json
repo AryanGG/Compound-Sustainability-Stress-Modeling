@@ -1,0 +1,16 @@
+{
+  "mumbai": {
+    "n_months": 36,
+    "spearman_rho": NaN,
+    "p_value": NaN,
+    "cams_mean": 131.41,
+    "legacy_mean": 157.6
+  },
+  "coimbatore": {
+    "n_months": 36,
+    "spearman_rho": 0.9701,
+    "p_value": 1.6905049857096785e-22,
+    "cams_mean": 62.21,
+    "legacy_mean": 55.23
+  }
+}

@@ -6,13 +6,13 @@ from pathlib import Path
 def export_data(city: str):
     print(f"Exporting data for {city}...")
     
-    # Try parquet first, then fallback to CSV
-    input_file = Path(f"data/h3_panel/final/{city}.parquet")
+    # Load from v2 panel
+    input_file = Path(f"data/h3_panel/v2/{city}.parquet")
     if not input_file.exists():
-        input_file = Path(f"data/h3_panel/final/{city}_ssi.csv")
+        input_file = Path(f"data/h3_panel/v2/{city}_ssi.csv")
     
     if not input_file.exists():
-        print(f"Error: Could not find final output for {city} at {input_file}")
+        print(f"Error: Could not find v2 output for {city} at {input_file}")
         return
 
     print(f"Loading data from {input_file}...")
