@@ -37,12 +37,17 @@ def build_raw(city: str, cfg: dict[str, Any]) -> pd.DataFrame:
     proc_file = processed_dir / f"{city}.parquet"
 
     if not proc_file.exists():
-        # Fallback to data/features if processed parquet is absent
+        # Fallback to data/features or legacy panel store from config
         feat_file = Path(paths_cfg.get("features_data", "data/features")) / f"{city}_features.csv"
+        legacy_dir = cfg.get("v2", {}).get("paths", {}).get("v1")
+        legacy_file = Path(legacy_dir) / f"{city}.parquet" if legacy_dir else None
+
         if feat_file.exists():
             df = pd.read_csv(feat_file)
+        elif legacy_file and legacy_file.exists():
+            df = pd.read_parquet(legacy_file)
         else:
-            raise FileNotFoundError(f"Neither {proc_file} nor {feat_file} exists for city {city}")
+            raise FileNotFoundError(f"No processed data found for city {city} in {proc_file}, {feat_file}, or {legacy_file}")
     else:
         df = pd.read_parquet(proc_file)
 
@@ -101,20 +106,28 @@ def build_raw(city: str, cfg: dict[str, Any]) -> pd.DataFrame:
 
     if pollution_raw.isna().sum() > 0:
         is_imputed = is_imputed | pollution_raw.isna()
+        if "date" in df.columns and "pm25" in df.columns:
+            date_median = df.groupby("date")["pm25"].transform("median")
+            pollution_raw = pollution_raw.fillna(date_median)
         pollution_raw = pollution_raw.fillna(pollution_raw.median())
 
     # 6. Static Exposure / Urban Vulnerability Components
     # Combine static spatial layers: built_up_fraction, building_density, road_density
-    exp_built = df["built_up_fraction"].fillna(0.0).rename("exp_built_up")
-    exp_bld_dens = df["building_density"].fillna(0.0).rename("exp_building_density")
-    exp_roads = df["road_density_km_km2"].fillna(0.0).rename("exp_road_density")
+    exp_built = df["built_up_fraction"].fillna(0.0).rename("exp_built_up") if "built_up_fraction" in df.columns else pd.Series(0.0, index=df.index)
+    exp_bld_dens = df["building_density"].fillna(0.0).rename("exp_building_density") if "building_density" in df.columns else pd.Series(0.0, index=df.index)
+    exp_roads = df["road_density_km_km2"].fillna(0.0).rename("exp_road_density") if "road_density_km_km2" in df.columns else pd.Series(0.0, index=df.index)
 
     # Min-max scaling per component for fair blending
     def _scale(s: pd.Series) -> pd.Series:
         rng = s.max() - s.min()
         return (s - s.min()) / rng if rng > 0 else pd.Series(0.0, index=s.index)
 
-    exposure_raw = (_scale(exp_built) + _scale(exp_bld_dens) + _scale(exp_roads)) / 3.0
+    components = [_scale(exp_built), _scale(exp_bld_dens), _scale(exp_roads)]
+    valid_components = [c for c in components if c.nunique() > 1]
+    if valid_components:
+        exposure_raw = sum(valid_components) / len(valid_components)
+    else:
+        exposure_raw = _scale(exp_built)
     exposure_raw = exposure_raw.rename("exposure_raw")
 
     # Assemble raw panel

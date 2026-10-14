@@ -130,7 +130,7 @@ logging:
 
 v2:
   seed: 20260101
-  cities: [mumbai, coimbatore]
+  cities: [mumbai, coimbatore, delhi, bikaner, hyderabad, indore, kolkata]
   reference_cities: [mumbai, coimbatore]      # fit pool. Never add synthetic/test cities here.
   expected_months: {start: "2020-01-01", end: "2022-12-01"}   # CONFIRM in Step 04 (the audit says Nov 2022 is missing)
   baseline: {lo_q: 0.02, hi_q: 0.98}          # pooled, all months, all reference cities
