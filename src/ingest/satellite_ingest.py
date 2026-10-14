@@ -14,10 +14,18 @@ Output files:
 
 from __future__ import annotations
 
+import os
 import io
 import warnings
 from pathlib import Path
 from typing import Optional
+
+# Set GDAL network options for resilient remote COG streaming
+os.environ.setdefault("GDAL_HTTP_MAX_RETRY", "5")
+os.environ.setdefault("GDAL_HTTP_RETRY_DELAY", "3")
+os.environ.setdefault("GDAL_HTTP_TIMEOUT", "60")
+os.environ.setdefault("GDAL_DISABLE_READDIR_ON_OPEN", "EMPTY_DIR")
+os.environ.setdefault("CPL_VSIL_CURL_ALLOWED_EXTENSIONS", ".tif,.TIF,.vrt")
 
 import numpy as np
 import pandas as pd
@@ -67,6 +75,7 @@ def fetch_ndvi_month(
     try:
         import planetary_computer as pc
         import pystac_client
+        import rasterio
         import rioxarray  # noqa: F401
         import stackstac
         import xarray as xr
@@ -139,7 +148,13 @@ def fetch_ndvi_month(
 
         # Save to GeoTIFF
         ndvi = ndvi.expand_dims("band")
-        ndvi.rio.to_raster(str(out_path), driver="GTiff", compress="deflate")
+        with rasterio.Env(
+            GDAL_HTTP_MAX_RETRY="5",
+            GDAL_HTTP_RETRY_DELAY="3",
+            GDAL_HTTP_TIMEOUT="60",
+            GDAL_DISABLE_READDIR_ON_OPEN="EMPTY_DIR",
+        ):
+            ndvi.rio.to_raster(str(out_path), driver="GTiff", compress="deflate")
         log.success("NDVI saved → {p}", p=out_path)
         return out_path
 
@@ -171,6 +186,7 @@ def fetch_lst_month(
     try:
         import planetary_computer as pc
         import pystac_client
+        import rasterio
         import rioxarray  # noqa: F401
         import stackstac
     except ImportError as exc:
@@ -229,7 +245,13 @@ def fetch_lst_month(
         lst_c = lst_c.where(lst_c > -100)   # Mask invalid pixels
 
         lst_c = lst_c.expand_dims("band")
-        lst_c.rio.to_raster(str(out_path), driver="GTiff", compress="deflate")
+        with rasterio.Env(
+            GDAL_HTTP_MAX_RETRY="5",
+            GDAL_HTTP_RETRY_DELAY="3",
+            GDAL_HTTP_TIMEOUT="60",
+            GDAL_DISABLE_READDIR_ON_OPEN="EMPTY_DIR",
+        ):
+            lst_c.rio.to_raster(str(out_path), driver="GTiff", compress="deflate")
         log.success("LST saved → {p}", p=out_path)
         return out_path
 

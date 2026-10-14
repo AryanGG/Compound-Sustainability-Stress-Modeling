@@ -13,13 +13,13 @@ spatial:
   bbox_buffer_km: 10              # Buffer around city bounding box
 
 cities:
-  - delhi
   - mumbai
-  - kolkata
+  - delhi
+  - bikaner
+  - coimbatore
   - hyderabad
   - indore
-  - coimbatore
-  - bikaner
+  - kolkata
 
 paths:
   raw_data: "data/raw"
@@ -72,8 +72,9 @@ osm:
   cache_folder: "data/raw/osm_cache"
 
 ssi:
-  # Compound interaction parameters (Zscheischler et al. 2018)
-  gamma: 0.5                      # Interaction scaling factor
+  # Compound Joint-Tail parameters (IPCC AR6 / Zscheischler et al. 2018)
+  gamma: 0.3                      # Joint-Tail compound amplifier coupling factor
+  tail_quantile: 0.75             # Upper quartile threshold for compound activation
   kappa: 1.0                      # City-rank adjustment sensitivity factor
 
   # City-specific weight multipliers
@@ -102,6 +103,12 @@ ssi:
       vegetation_degradation: 1.3
       urban_vulnerability: 1.0
       pollution_exposure: 0.8
+    coimbatore:
+      heat_stress: 1.2
+      water_stress: 1.3
+      pollution_exposure: 1.0
+      urban_vulnerability: 1.1
+      vegetation_degradation: 1.0
 
   ssi_bands:
     Low: [0.0, 0.25]
