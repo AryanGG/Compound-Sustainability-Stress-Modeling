@@ -127,3 +127,16 @@ normalization:
 logging:
   level: "INFO"
   format: "{time:YYYY-MM-DD HH:mm:ss} | {level} | {name} | {message}"
+
+v2:
+  seed: 20260101
+  cities: [mumbai, coimbatore]
+  reference_cities: [mumbai, coimbatore]      # fit pool. Never add synthetic/test cities here.
+  expected_months: {start: "2020-01-01", end: "2022-12-01"}   # CONFIRM in Step 04 (the audit says Nov 2022 is missing)
+  baseline: {lo_q: 0.02, hi_q: 0.98}          # pooled, all months, all reference cities
+  primary_scheme: equal                        # decided in Step 07
+  compound: {pair: [heat_v2, water_v2], q: 0.90, gamma: 0.30,
+             sweep_q: [0.75, 0.90], sweep_gamma: [0.1, 0.2, 0.3, 0.4, 0.5]}
+  bands: {quantiles: [0.25, 0.50, 0.75], labels: [Low, Moderate, High, Extreme]}
+  h3: {parent_offset: 2}                       # block-bootstrap blocks = cell_to_parent(res - 2)
+  paths: {raw: data/h3_panel/v2_raw, v2: data/h3_panel/v2, v1: data/h3_panel/final, results: results}

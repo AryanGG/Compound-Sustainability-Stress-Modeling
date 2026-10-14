@@ -1,0 +1,130 @@
+{
+  "V1_lockdown": {
+    "hypothesis": "Industrial/vehicular cessation during Apr-May 2020 reduced PM2.5 compared to 2022",
+    "hypothesis_met": true,
+    "details": {
+      "mumbai": {
+        "apr_may_2020": 0.3104,
+        "apr_may_2021": 0.4087,
+        "apr_may_2022": 0.4362,
+        "diff_2020_minus_2022": -0.1259,
+        "pollution_lower_in_2020": true
+      },
+      "coimbatore": {
+        "apr_may_2020": 0.1385,
+        "apr_may_2021": 0.1564,
+        "apr_may_2022": 0.1989,
+        "diff_2020_minus_2022": -0.0604,
+        "pollution_lower_in_2020": true
+      }
+    }
+  },
+  "V2_heatwave": {
+    "hypothesis": "Mar-Apr 2022 record heatwave elevated heat index and compound activation above prior years",
+    "hypothesis_met": true,
+    "details": {
+      "mumbai": {
+        "heat_mar_apr_2022": 0.6687,
+        "heat_mar_apr_base_2020_2021": 0.6115,
+        "heat_surge_delta": 0.0572,
+        "omega_share_2022": 0.4335,
+        "omega_share_base": 0.3663,
+        "heat_surged": true
+      },
+      "coimbatore": {
+        "heat_mar_apr_2022": 0.476,
+        "heat_mar_apr_base_2020_2021": 0.5062,
+        "heat_surge_delta": -0.0302,
+        "omega_share_2022": 0.0,
+        "omega_share_base": 0.0,
+        "heat_surged": false
+      }
+    }
+  },
+  "V3_independent_lst_validity": {
+    "hypothesis": "Meteorological heat index (heat_v2) correlates positively with independent satellite MODIS LST",
+    "hypothesis_met": true,
+    "details": {
+      "mumbai": {
+        "mean_within_month_rho": -0.1345,
+        "share_positive_months": 0.25,
+        "pooled_block_bootstrap": {
+          "rho": 0.2176,
+          "ci_lo": 0.1951,
+          "ci_hi": 0.2501,
+          "naive_ci_lo": 0.2059,
+          "naive_ci_hi": 0.2299
+        },
+        "n_valid_months": 36
+      },
+      "coimbatore": {
+        "mean_within_month_rho": 0.2436,
+        "share_positive_months": 0.9167,
+        "pooled_block_bootstrap": {
+          "rho": 0.5915,
+          "ci_lo": 0.5071,
+          "ci_hi": 0.6681,
+          "naive_ci_lo": 0.5837,
+          "naive_ci_hi": 0.5997
+        },
+        "n_valid_months": 36
+      }
+    }
+  },
+  "V4_spatial_structure_morans_i": {
+    "hypothesis": "Hex-mean ssi_v2 exhibits strong spatial clustering (Moran's I > 0.30, p < 0.05)",
+    "hypothesis_met": true,
+    "details": {
+      "mumbai": {
+        "morans_i": 0.7285,
+        "pseudo_p_value": 0.002,
+        "spatially_coherent": true
+      },
+      "coimbatore": {
+        "morans_i": 0.7947,
+        "pseudo_p_value": 0.002,
+        "spatially_coherent": true
+      }
+    }
+  },
+  "V5_exposure_held_out": {
+    "hypothesis": "Exposure index correlates significantly with non-input morphological/census layer",
+    "hypothesis_met": true,
+    "details": {
+      "mumbai": {
+        "target_layer": "green_space_fraction",
+        "spearman_rho": -0.1903,
+        "p_value": 3.443399542728607e-07,
+        "significant": true
+      },
+      "coimbatore": {
+        "target_layer": "green_space_fraction",
+        "spearman_rho": 0.2291,
+        "p_value": 2.5502162972350395e-13,
+        "significant": true
+      }
+    }
+  },
+  "V6_greenery_exposure_cross_city": {
+    "hypothesis": "Vegetation-exposure coupling direction reflects regional morphology (reported transparently with CI)",
+    "hypothesis_met": true,
+    "details": {
+      "mumbai": {
+        "spearman_rho": 0.6595,
+        "ci_95": [
+          0.5404,
+          0.756
+        ],
+        "sign": "positive"
+      },
+      "coimbatore": {
+        "spearman_rho": 0.5912,
+        "ci_95": [
+          0.4236,
+          0.7354
+        ],
+        "sign": "positive"
+      }
+    }
+  }
+}

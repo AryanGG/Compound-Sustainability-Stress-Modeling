@@ -1,0 +1,75 @@
+{
+  "reference_cities": [
+    "mumbai",
+    "coimbatore"
+  ],
+  "n_obs": 61272,
+  "pc1_explained_variance": 0.3456,
+  "weights": {
+    "equal": {
+      "heat_v2": 0.2,
+      "water_v2": 0.2,
+      "veg_v2": 0.2,
+      "pollution_v2": 0.2,
+      "exposure_v2": 0.2
+    },
+    "ewm": {
+      "heat_v2": 0.1947,
+      "water_v2": 0.1299,
+      "veg_v2": 0.0708,
+      "pollution_v2": 0.3234,
+      "exposure_v2": 0.2811
+    },
+    "critic": {
+      "heat_v2": 0.1956,
+      "water_v2": 0.1627,
+      "veg_v2": 0.1586,
+      "pollution_v2": 0.2617,
+      "exposure_v2": 0.2214
+    },
+    "pca": {
+      "heat_v2": 0.3538,
+      "water_v2": 0.3687,
+      "veg_v2": 0.1723,
+      "pollution_v2": 0.0294,
+      "exposure_v2": 0.0758
+    }
+  },
+  "spearman_matrix": {
+    "heat_v2": {
+      "heat_v2": 1.0,
+      "water_v2": 0.6279,
+      "veg_v2": 0.1323,
+      "pollution_v2": -0.1261,
+      "exposure_v2": 0.0087
+    },
+    "water_v2": {
+      "heat_v2": 0.6279,
+      "water_v2": 1.0,
+      "veg_v2": 0.164,
+      "pollution_v2": 0.1942,
+      "exposure_v2": 0.0102
+    },
+    "veg_v2": {
+      "heat_v2": 0.1323,
+      "water_v2": 0.164,
+      "veg_v2": 1.0,
+      "pollution_v2": 0.0921,
+      "exposure_v2": 0.382
+    },
+    "pollution_v2": {
+      "heat_v2": -0.1261,
+      "water_v2": 0.1942,
+      "veg_v2": 0.0921,
+      "pollution_v2": 1.0,
+      "exposure_v2": -0.0086
+    },
+    "exposure_v2": {
+      "heat_v2": 0.0087,
+      "water_v2": 0.0102,
+      "veg_v2": 0.382,
+      "pollution_v2": -0.0086,
+      "exposure_v2": 1.0
+    }
+  }
+}

@@ -212,7 +212,7 @@ def save_panel(
     Args:
         panel      : Panel DataFrame.
         city       : City slug (determines output filename).
-        intermediate: If True, save to data/processed/. If False, save to data/h3_panel/final/.
+        intermediate: If True, save to data/processed/. If False, save to data/h3_panel/harmonized/.
 
     Returns:
         Path to saved file.
@@ -222,7 +222,7 @@ def save_panel(
     if intermediate:
         out_dir = Path(config["paths"]["processed_data"])
     else:
-        out_dir = Path(config["paths"]["h3_panel"]) / "final"
+        out_dir = Path(config["paths"]["h3_panel"]) / "harmonized"
 
     out_dir.mkdir(parents=True, exist_ok=True)
     out_path = out_dir / f"{city}.parquet"
