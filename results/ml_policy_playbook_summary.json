@@ -1,0 +1,1215 @@
+{
+  "_meta": {
+    "git_sha": "24144e31892b85f8bddd594cb466eab5410d777c",
+    "config_sha256": "0e8f81cf4cc5495df5e051117df427713ca4a92d979c23e4d9b0307b1812a3b3",
+    "created_utc": "2026-10-15T13:56:22.904669+00:00",
+    "seed": 20260101
+  },
+  "delhi": {
+    "city": "delhi",
+    "monthly_alert_timeline": {
+      "2022-01-01": {
+        "total_hexes": 3398,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 3234,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-02-01": {
+        "total_hexes": 3398,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 3398,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-03-01": {
+        "total_hexes": 3398,
+        "heatwave_red_alerts": 3170,
+        "heatwave_orange_alerts": 43,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-04-01": {
+        "total_hexes": 3398,
+        "heatwave_red_alerts": 2626,
+        "heatwave_orange_alerts": 383,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-05-01": {
+        "total_hexes": 3398,
+        "heatwave_red_alerts": 3398,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 3398
+      },
+      "2022-06-01": {
+        "total_hexes": 3398,
+        "heatwave_red_alerts": 3398,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 3398
+      },
+      "2022-07-01": {
+        "total_hexes": 3398,
+        "heatwave_red_alerts": 3398,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 3394
+      },
+      "2022-08-01": {
+        "total_hexes": 3398,
+        "heatwave_red_alerts": 3398,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 3166,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 192
+      },
+      "2022-09-01": {
+        "total_hexes": 3398,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 3234,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-10-01": {
+        "total_hexes": 3398,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 3237,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-11-01": {
+        "total_hexes": 3398,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 3398,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      }
+    },
+    "sample_priority_ward_interventions": [
+      {
+        "h3_index": "883da1832dfffff",
+        "peak_date": "2022-07-01",
+        "hazard_type": "Heatwave Shock",
+        "predicted_prob": 1.0,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Heatwave Emergency (HAP Stage III)",
+        "priority_interventions": [
+          "Mandatory cessation of outdoor construction and manual labor between 11:00 AM and 4:00 PM",
+          "Dispatch dedicated fleet of mobile drinking water tankers to high-density informal settlements and transit hubs",
+          "Activate designated public transit halls, community centers, and libraries as air-conditioned emergency cooling shelters"
+        ]
+      },
+      {
+        "h3_index": "883da11231fffff",
+        "peak_date": "2022-08-01",
+        "hazard_type": "Heatwave Shock",
+        "predicted_prob": 1.0,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Heatwave Emergency (HAP Stage III)",
+        "priority_interventions": [
+          "Mandatory cessation of outdoor construction and manual labor between 11:00 AM and 4:00 PM",
+          "Dispatch dedicated fleet of mobile drinking water tankers to high-density informal settlements and transit hubs",
+          "Activate designated public transit halls, community centers, and libraries as air-conditioned emergency cooling shelters"
+        ]
+      },
+      {
+        "h3_index": "883da18ec5fffff",
+        "peak_date": "2022-08-01",
+        "hazard_type": "Heatwave Shock",
+        "predicted_prob": 1.0,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Heatwave Emergency (HAP Stage III)",
+        "priority_interventions": [
+          "Mandatory cessation of outdoor construction and manual labor between 11:00 AM and 4:00 PM",
+          "Dispatch dedicated fleet of mobile drinking water tankers to high-density informal settlements and transit hubs",
+          "Activate designated public transit halls, community centers, and libraries as air-conditioned emergency cooling shelters"
+        ]
+      },
+      {
+        "h3_index": "883da10001fffff",
+        "peak_date": "2022-01-01",
+        "hazard_type": "Hazardous Smog Inversion",
+        "predicted_prob": 1.0,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Atmospheric Smog Crisis (GRAP Stage IV)",
+        "priority_interventions": [
+          "Immediate statutory ban on entry of non-BS-VI diesel commercial trucks (except essential goods)",
+          "Complete moratorium on all construction, excavation, demolition, and road-cutting dust activities",
+          "Mandatory 50% work-from-home mandate for all government and commercial corporate offices"
+        ]
+      },
+      {
+        "h3_index": "883da185adfffff",
+        "peak_date": "2022-08-01",
+        "hazard_type": "Hazardous Smog Inversion",
+        "predicted_prob": 1.0,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Atmospheric Smog Crisis (GRAP Stage IV)",
+        "priority_interventions": [
+          "Immediate statutory ban on entry of non-BS-VI diesel commercial trucks (except essential goods)",
+          "Complete moratorium on all construction, excavation, demolition, and road-cutting dust activities",
+          "Mandatory 50% work-from-home mandate for all government and commercial corporate offices"
+        ]
+      },
+      {
+        "h3_index": "883da185b1fffff",
+        "peak_date": "2022-11-01",
+        "hazard_type": "Hazardous Smog Inversion",
+        "predicted_prob": 1.0,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Atmospheric Smog Crisis (GRAP Stage IV)",
+        "priority_interventions": [
+          "Immediate statutory ban on entry of non-BS-VI diesel commercial trucks (except essential goods)",
+          "Complete moratorium on all construction, excavation, demolition, and road-cutting dust activities",
+          "Mandatory 50% work-from-home mandate for all government and commercial corporate offices"
+        ]
+      }
+    ],
+    "statutory_frameworks_invoked": [
+      "Indian Meteorological Department (IMD) Heat Action Plan",
+      "Commission for Air Quality Management (CAQM) / CPCB GRAP Stage I-IV",
+      "State Disaster Management Authority (SDMA) / Power Grid DISCOM Protocol"
+    ]
+  },
+  "mumbai": {
+    "city": "mumbai",
+    "monthly_alert_timeline": {
+      "2022-01-01": {
+        "total_hexes": 707,
+        "heatwave_red_alerts": 3,
+        "heatwave_orange_alerts": 1,
+        "smog_red_alerts": 707,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-02-01": {
+        "total_hexes": 707,
+        "heatwave_red_alerts": 34,
+        "heatwave_orange_alerts": 49,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-03-01": {
+        "total_hexes": 707,
+        "heatwave_red_alerts": 312,
+        "heatwave_orange_alerts": 121,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 573
+      },
+      "2022-04-01": {
+        "total_hexes": 707,
+        "heatwave_red_alerts": 707,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 682
+      },
+      "2022-05-01": {
+        "total_hexes": 707,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-06-01": {
+        "total_hexes": 707,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-07-01": {
+        "total_hexes": 707,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-08-01": {
+        "total_hexes": 707,
+        "heatwave_red_alerts": 1,
+        "heatwave_orange_alerts": 1,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-09-01": {
+        "total_hexes": 707,
+        "heatwave_red_alerts": 2,
+        "heatwave_orange_alerts": 1,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-10-01": {
+        "total_hexes": 707,
+        "heatwave_red_alerts": 2,
+        "heatwave_orange_alerts": 2,
+        "smog_red_alerts": 707,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-11-01": {
+        "total_hexes": 707,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      }
+    },
+    "sample_priority_ward_interventions": [
+      {
+        "h3_index": "88608b0129fffff",
+        "peak_date": "2022-04-01",
+        "hazard_type": "Heatwave Shock",
+        "predicted_prob": 0.9993,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Heatwave Emergency (HAP Stage III)",
+        "priority_interventions": [
+          "Mandatory cessation of outdoor construction and manual labor between 11:00 AM and 4:00 PM",
+          "Dispatch dedicated fleet of mobile drinking water tankers to high-density informal settlements and transit hubs",
+          "Activate designated public transit halls, community centers, and libraries as air-conditioned emergency cooling shelters"
+        ]
+      },
+      {
+        "h3_index": "88608b1987fffff",
+        "peak_date": "2022-04-01",
+        "hazard_type": "Heatwave Shock",
+        "predicted_prob": 0.9992,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Heatwave Emergency (HAP Stage III)",
+        "priority_interventions": [
+          "Mandatory cessation of outdoor construction and manual labor between 11:00 AM and 4:00 PM",
+          "Dispatch dedicated fleet of mobile drinking water tankers to high-density informal settlements and transit hubs",
+          "Activate designated public transit halls, community centers, and libraries as air-conditioned emergency cooling shelters"
+        ]
+      },
+      {
+        "h3_index": "88608b444dfffff",
+        "peak_date": "2022-03-01",
+        "hazard_type": "Heatwave Shock",
+        "predicted_prob": 0.9992,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Heatwave Emergency (HAP Stage III)",
+        "priority_interventions": [
+          "Mandatory cessation of outdoor construction and manual labor between 11:00 AM and 4:00 PM",
+          "Dispatch dedicated fleet of mobile drinking water tankers to high-density informal settlements and transit hubs",
+          "Activate designated public transit halls, community centers, and libraries as air-conditioned emergency cooling shelters"
+        ]
+      },
+      {
+        "h3_index": "88608b0105fffff",
+        "peak_date": "2022-01-01",
+        "hazard_type": "Hazardous Smog Inversion",
+        "predicted_prob": 1.0,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Atmospheric Smog Crisis (GRAP Stage IV)",
+        "priority_interventions": [
+          "Immediate statutory ban on entry of non-BS-VI diesel commercial trucks (except essential goods)",
+          "Complete moratorium on all construction, excavation, demolition, and road-cutting dust activities",
+          "Mandatory 50% work-from-home mandate for all government and commercial corporate offices"
+        ]
+      },
+      {
+        "h3_index": "88608b558bfffff",
+        "peak_date": "2022-01-01",
+        "hazard_type": "Hazardous Smog Inversion",
+        "predicted_prob": 1.0,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Atmospheric Smog Crisis (GRAP Stage IV)",
+        "priority_interventions": [
+          "Immediate statutory ban on entry of non-BS-VI diesel commercial trucks (except essential goods)",
+          "Complete moratorium on all construction, excavation, demolition, and road-cutting dust activities",
+          "Mandatory 50% work-from-home mandate for all government and commercial corporate offices"
+        ]
+      },
+      {
+        "h3_index": "88608b0b55fffff",
+        "peak_date": "2022-01-01",
+        "hazard_type": "Hazardous Smog Inversion",
+        "predicted_prob": 1.0,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Atmospheric Smog Crisis (GRAP Stage IV)",
+        "priority_interventions": [
+          "Immediate statutory ban on entry of non-BS-VI diesel commercial trucks (except essential goods)",
+          "Complete moratorium on all construction, excavation, demolition, and road-cutting dust activities",
+          "Mandatory 50% work-from-home mandate for all government and commercial corporate offices"
+        ]
+      }
+    ],
+    "statutory_frameworks_invoked": [
+      "Indian Meteorological Department (IMD) Heat Action Plan",
+      "Commission for Air Quality Management (CAQM) / CPCB GRAP Stage I-IV",
+      "State Disaster Management Authority (SDMA) / Power Grid DISCOM Protocol"
+    ]
+  },
+  "kolkata": {
+    "city": "kolkata",
+    "monthly_alert_timeline": {
+      "2022-01-01": {
+        "total_hexes": 992,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 992,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-02-01": {
+        "total_hexes": 992,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 992,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-03-01": {
+        "total_hexes": 992,
+        "heatwave_red_alerts": 992,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-04-01": {
+        "total_hexes": 992,
+        "heatwave_red_alerts": 992,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 992
+      },
+      "2022-05-01": {
+        "total_hexes": 992,
+        "heatwave_red_alerts": 992,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-06-01": {
+        "total_hexes": 992,
+        "heatwave_red_alerts": 992,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-07-01": {
+        "total_hexes": 992,
+        "heatwave_red_alerts": 992,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-08-01": {
+        "total_hexes": 992,
+        "heatwave_red_alerts": 992,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-09-01": {
+        "total_hexes": 992,
+        "heatwave_red_alerts": 988,
+        "heatwave_orange_alerts": 2,
+        "smog_red_alerts": 992,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-10-01": {
+        "total_hexes": 992,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 992,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-11-01": {
+        "total_hexes": 992,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 992,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      }
+    },
+    "sample_priority_ward_interventions": [
+      {
+        "h3_index": "883cf2c0e3fffff",
+        "peak_date": "2022-04-01",
+        "hazard_type": "Heatwave Shock",
+        "predicted_prob": 0.9998,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Heatwave Emergency (HAP Stage III)",
+        "priority_interventions": [
+          "Mandatory cessation of outdoor construction and manual labor between 11:00 AM and 4:00 PM",
+          "Dispatch dedicated fleet of mobile drinking water tankers to high-density informal settlements and transit hubs",
+          "Activate designated public transit halls, community centers, and libraries as air-conditioned emergency cooling shelters"
+        ]
+      },
+      {
+        "h3_index": "883cf2c44dfffff",
+        "peak_date": "2022-08-01",
+        "hazard_type": "Heatwave Shock",
+        "predicted_prob": 0.9998,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Heatwave Emergency (HAP Stage III)",
+        "priority_interventions": [
+          "Mandatory cessation of outdoor construction and manual labor between 11:00 AM and 4:00 PM",
+          "Dispatch dedicated fleet of mobile drinking water tankers to high-density informal settlements and transit hubs",
+          "Activate designated public transit halls, community centers, and libraries as air-conditioned emergency cooling shelters"
+        ]
+      },
+      {
+        "h3_index": "883cf2c44bfffff",
+        "peak_date": "2022-09-01",
+        "hazard_type": "Heatwave Shock",
+        "predicted_prob": 0.9998,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Heatwave Emergency (HAP Stage III)",
+        "priority_interventions": [
+          "Mandatory cessation of outdoor construction and manual labor between 11:00 AM and 4:00 PM",
+          "Dispatch dedicated fleet of mobile drinking water tankers to high-density informal settlements and transit hubs",
+          "Activate designated public transit halls, community centers, and libraries as air-conditioned emergency cooling shelters"
+        ]
+      },
+      {
+        "h3_index": "883cf2130dfffff",
+        "peak_date": "2022-01-01",
+        "hazard_type": "Hazardous Smog Inversion",
+        "predicted_prob": 1.0,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Atmospheric Smog Crisis (GRAP Stage IV)",
+        "priority_interventions": [
+          "Immediate statutory ban on entry of non-BS-VI diesel commercial trucks (except essential goods)",
+          "Complete moratorium on all construction, excavation, demolition, and road-cutting dust activities",
+          "Mandatory 50% work-from-home mandate for all government and commercial corporate offices"
+        ]
+      },
+      {
+        "h3_index": "883cf2c553fffff",
+        "peak_date": "2022-01-01",
+        "hazard_type": "Hazardous Smog Inversion",
+        "predicted_prob": 1.0,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Atmospheric Smog Crisis (GRAP Stage IV)",
+        "priority_interventions": [
+          "Immediate statutory ban on entry of non-BS-VI diesel commercial trucks (except essential goods)",
+          "Complete moratorium on all construction, excavation, demolition, and road-cutting dust activities",
+          "Mandatory 50% work-from-home mandate for all government and commercial corporate offices"
+        ]
+      },
+      {
+        "h3_index": "883cf2c551fffff",
+        "peak_date": "2022-10-01",
+        "hazard_type": "Hazardous Smog Inversion",
+        "predicted_prob": 1.0,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Atmospheric Smog Crisis (GRAP Stage IV)",
+        "priority_interventions": [
+          "Immediate statutory ban on entry of non-BS-VI diesel commercial trucks (except essential goods)",
+          "Complete moratorium on all construction, excavation, demolition, and road-cutting dust activities",
+          "Mandatory 50% work-from-home mandate for all government and commercial corporate offices"
+        ]
+      }
+    ],
+    "statutory_frameworks_invoked": [
+      "Indian Meteorological Department (IMD) Heat Action Plan",
+      "Commission for Air Quality Management (CAQM) / CPCB GRAP Stage I-IV",
+      "State Disaster Management Authority (SDMA) / Power Grid DISCOM Protocol"
+    ]
+  },
+  "hyderabad": {
+    "city": "hyderabad",
+    "monthly_alert_timeline": {
+      "2022-01-01": {
+        "total_hexes": 1505,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 244,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-02-01": {
+        "total_hexes": 1505,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-03-01": {
+        "total_hexes": 1505,
+        "heatwave_red_alerts": 134,
+        "heatwave_orange_alerts": 261,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-04-01": {
+        "total_hexes": 1505,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-05-01": {
+        "total_hexes": 1505,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-06-01": {
+        "total_hexes": 1505,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-07-01": {
+        "total_hexes": 1505,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-08-01": {
+        "total_hexes": 1505,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-09-01": {
+        "total_hexes": 1505,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-10-01": {
+        "total_hexes": 1505,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-11-01": {
+        "total_hexes": 1505,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 1505,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      }
+    },
+    "sample_priority_ward_interventions": [
+      {
+        "h3_index": "8860a25a47fffff",
+        "peak_date": "2022-03-01",
+        "hazard_type": "Heatwave Shock",
+        "predicted_prob": 0.9676,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Heatwave Emergency (HAP Stage III)",
+        "priority_interventions": [
+          "Mandatory cessation of outdoor construction and manual labor between 11:00 AM and 4:00 PM",
+          "Dispatch dedicated fleet of mobile drinking water tankers to high-density informal settlements and transit hubs",
+          "Activate designated public transit halls, community centers, and libraries as air-conditioned emergency cooling shelters"
+        ]
+      },
+      {
+        "h3_index": "8860b1968bfffff",
+        "peak_date": "2022-03-01",
+        "hazard_type": "Heatwave Shock",
+        "predicted_prob": 0.952,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Heatwave Emergency (HAP Stage III)",
+        "priority_interventions": [
+          "Mandatory cessation of outdoor construction and manual labor between 11:00 AM and 4:00 PM",
+          "Dispatch dedicated fleet of mobile drinking water tankers to high-density informal settlements and transit hubs",
+          "Activate designated public transit halls, community centers, and libraries as air-conditioned emergency cooling shelters"
+        ]
+      },
+      {
+        "h3_index": "8860a25a43fffff",
+        "peak_date": "2022-03-01",
+        "hazard_type": "Heatwave Shock",
+        "predicted_prob": 0.9491,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Heatwave Emergency (HAP Stage III)",
+        "priority_interventions": [
+          "Mandatory cessation of outdoor construction and manual labor between 11:00 AM and 4:00 PM",
+          "Dispatch dedicated fleet of mobile drinking water tankers to high-density informal settlements and transit hubs",
+          "Activate designated public transit halls, community centers, and libraries as air-conditioned emergency cooling shelters"
+        ]
+      },
+      {
+        "h3_index": "8860a2412dfffff",
+        "peak_date": "2022-01-01",
+        "hazard_type": "Hazardous Smog Inversion",
+        "predicted_prob": 1.0,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Atmospheric Smog Crisis (GRAP Stage IV)",
+        "priority_interventions": [
+          "Immediate statutory ban on entry of non-BS-VI diesel commercial trucks (except essential goods)",
+          "Complete moratorium on all construction, excavation, demolition, and road-cutting dust activities",
+          "Mandatory 50% work-from-home mandate for all government and commercial corporate offices"
+        ]
+      },
+      {
+        "h3_index": "8860b192b9fffff",
+        "peak_date": "2022-11-01",
+        "hazard_type": "Hazardous Smog Inversion",
+        "predicted_prob": 1.0,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Atmospheric Smog Crisis (GRAP Stage IV)",
+        "priority_interventions": [
+          "Immediate statutory ban on entry of non-BS-VI diesel commercial trucks (except essential goods)",
+          "Complete moratorium on all construction, excavation, demolition, and road-cutting dust activities",
+          "Mandatory 50% work-from-home mandate for all government and commercial corporate offices"
+        ]
+      },
+      {
+        "h3_index": "8860b19299fffff",
+        "peak_date": "2022-11-01",
+        "hazard_type": "Hazardous Smog Inversion",
+        "predicted_prob": 1.0,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Atmospheric Smog Crisis (GRAP Stage IV)",
+        "priority_interventions": [
+          "Immediate statutory ban on entry of non-BS-VI diesel commercial trucks (except essential goods)",
+          "Complete moratorium on all construction, excavation, demolition, and road-cutting dust activities",
+          "Mandatory 50% work-from-home mandate for all government and commercial corporate offices"
+        ]
+      }
+    ],
+    "statutory_frameworks_invoked": [
+      "Indian Meteorological Department (IMD) Heat Action Plan",
+      "Commission for Air Quality Management (CAQM) / CPCB GRAP Stage I-IV",
+      "State Disaster Management Authority (SDMA) / Power Grid DISCOM Protocol"
+    ]
+  },
+  "bikaner": {
+    "city": "bikaner",
+    "monthly_alert_timeline": {
+      "2022-01-01": {
+        "total_hexes": 959,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-02-01": {
+        "total_hexes": 959,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-03-01": {
+        "total_hexes": 959,
+        "heatwave_red_alerts": 898,
+        "heatwave_orange_alerts": 5,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-04-01": {
+        "total_hexes": 959,
+        "heatwave_red_alerts": 930,
+        "heatwave_orange_alerts": 19,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 959
+      },
+      "2022-05-01": {
+        "total_hexes": 959,
+        "heatwave_red_alerts": 959,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 959,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 959
+      },
+      "2022-06-01": {
+        "total_hexes": 959,
+        "heatwave_red_alerts": 959,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 959,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 959
+      },
+      "2022-07-01": {
+        "total_hexes": 959,
+        "heatwave_red_alerts": 959,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-08-01": {
+        "total_hexes": 959,
+        "heatwave_red_alerts": 643,
+        "heatwave_orange_alerts": 246,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-09-01": {
+        "total_hexes": 959,
+        "heatwave_red_alerts": 264,
+        "heatwave_orange_alerts": 78,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-10-01": {
+        "total_hexes": 959,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-11-01": {
+        "total_hexes": 959,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      }
+    },
+    "sample_priority_ward_interventions": [
+      {
+        "h3_index": "884259c94dfffff",
+        "peak_date": "2022-06-01",
+        "hazard_type": "Heatwave Shock",
+        "predicted_prob": 1.0,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Heatwave Emergency (HAP Stage III)",
+        "priority_interventions": [
+          "Mandatory cessation of outdoor construction and manual labor between 11:00 AM and 4:00 PM",
+          "Dispatch dedicated fleet of mobile drinking water tankers to high-density informal settlements and transit hubs",
+          "Activate designated public transit halls, community centers, and libraries as air-conditioned emergency cooling shelters"
+        ]
+      },
+      {
+        "h3_index": "884259c109fffff",
+        "peak_date": "2022-06-01",
+        "hazard_type": "Heatwave Shock",
+        "predicted_prob": 1.0,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Heatwave Emergency (HAP Stage III)",
+        "priority_interventions": [
+          "Mandatory cessation of outdoor construction and manual labor between 11:00 AM and 4:00 PM",
+          "Dispatch dedicated fleet of mobile drinking water tankers to high-density informal settlements and transit hubs",
+          "Activate designated public transit halls, community centers, and libraries as air-conditioned emergency cooling shelters"
+        ]
+      },
+      {
+        "h3_index": "884259c995fffff",
+        "peak_date": "2022-05-01",
+        "hazard_type": "Heatwave Shock",
+        "predicted_prob": 1.0,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Heatwave Emergency (HAP Stage III)",
+        "priority_interventions": [
+          "Mandatory cessation of outdoor construction and manual labor between 11:00 AM and 4:00 PM",
+          "Dispatch dedicated fleet of mobile drinking water tankers to high-density informal settlements and transit hubs",
+          "Activate designated public transit halls, community centers, and libraries as air-conditioned emergency cooling shelters"
+        ]
+      },
+      {
+        "h3_index": "884259c923fffff",
+        "peak_date": "2022-05-01",
+        "hazard_type": "Hazardous Smog Inversion",
+        "predicted_prob": 0.8716,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Atmospheric Smog Crisis (GRAP Stage IV)",
+        "priority_interventions": [
+          "Immediate statutory ban on entry of non-BS-VI diesel commercial trucks (except essential goods)",
+          "Complete moratorium on all construction, excavation, demolition, and road-cutting dust activities",
+          "Mandatory 50% work-from-home mandate for all government and commercial corporate offices"
+        ]
+      },
+      {
+        "h3_index": "884259c163fffff",
+        "peak_date": "2022-05-01",
+        "hazard_type": "Hazardous Smog Inversion",
+        "predicted_prob": 0.8498,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Atmospheric Smog Crisis (GRAP Stage IV)",
+        "priority_interventions": [
+          "Immediate statutory ban on entry of non-BS-VI diesel commercial trucks (except essential goods)",
+          "Complete moratorium on all construction, excavation, demolition, and road-cutting dust activities",
+          "Mandatory 50% work-from-home mandate for all government and commercial corporate offices"
+        ]
+      },
+      {
+        "h3_index": "884259d801fffff",
+        "peak_date": "2022-05-01",
+        "hazard_type": "Hazardous Smog Inversion",
+        "predicted_prob": 0.8498,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Atmospheric Smog Crisis (GRAP Stage IV)",
+        "priority_interventions": [
+          "Immediate statutory ban on entry of non-BS-VI diesel commercial trucks (except essential goods)",
+          "Complete moratorium on all construction, excavation, demolition, and road-cutting dust activities",
+          "Mandatory 50% work-from-home mandate for all government and commercial corporate offices"
+        ]
+      }
+    ],
+    "statutory_frameworks_invoked": [
+      "Indian Meteorological Department (IMD) Heat Action Plan",
+      "Commission for Air Quality Management (CAQM) / CPCB GRAP Stage I-IV",
+      "State Disaster Management Authority (SDMA) / Power Grid DISCOM Protocol"
+    ]
+  },
+  "coimbatore": {
+    "city": "coimbatore",
+    "monthly_alert_timeline": {
+      "2022-01-01": {
+        "total_hexes": 995,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-02-01": {
+        "total_hexes": 995,
+        "heatwave_red_alerts": 6,
+        "heatwave_orange_alerts": 139,
+        "smog_red_alerts": 116,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-03-01": {
+        "total_hexes": 995,
+        "heatwave_red_alerts": 1,
+        "heatwave_orange_alerts": 17,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-04-01": {
+        "total_hexes": 995,
+        "heatwave_red_alerts": 42,
+        "heatwave_orange_alerts": 67,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-05-01": {
+        "total_hexes": 995,
+        "heatwave_red_alerts": 4,
+        "heatwave_orange_alerts": 50,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-06-01": {
+        "total_hexes": 995,
+        "heatwave_red_alerts": 18,
+        "heatwave_orange_alerts": 72,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-07-01": {
+        "total_hexes": 995,
+        "heatwave_red_alerts": 10,
+        "heatwave_orange_alerts": 8,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-08-01": {
+        "total_hexes": 995,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 5,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-09-01": {
+        "total_hexes": 995,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-10-01": {
+        "total_hexes": 995,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 995,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-11-01": {
+        "total_hexes": 995,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 995,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      }
+    },
+    "sample_priority_ward_interventions": [
+      {
+        "h3_index": "8860338765fffff",
+        "peak_date": "2022-07-01",
+        "hazard_type": "Heatwave Shock",
+        "predicted_prob": 0.9459,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Heatwave Emergency (HAP Stage III)",
+        "priority_interventions": [
+          "Mandatory cessation of outdoor construction and manual labor between 11:00 AM and 4:00 PM",
+          "Dispatch dedicated fleet of mobile drinking water tankers to high-density informal settlements and transit hubs",
+          "Activate designated public transit halls, community centers, and libraries as air-conditioned emergency cooling shelters"
+        ]
+      },
+      {
+        "h3_index": "88603394abfffff",
+        "peak_date": "2022-04-01",
+        "hazard_type": "Heatwave Shock",
+        "predicted_prob": 0.9425,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Heatwave Emergency (HAP Stage III)",
+        "priority_interventions": [
+          "Mandatory cessation of outdoor construction and manual labor between 11:00 AM and 4:00 PM",
+          "Dispatch dedicated fleet of mobile drinking water tankers to high-density informal settlements and transit hubs",
+          "Activate designated public transit halls, community centers, and libraries as air-conditioned emergency cooling shelters"
+        ]
+      },
+      {
+        "h3_index": "8860339439fffff",
+        "peak_date": "2022-04-01",
+        "hazard_type": "Heatwave Shock",
+        "predicted_prob": 0.9409,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Heatwave Emergency (HAP Stage III)",
+        "priority_interventions": [
+          "Mandatory cessation of outdoor construction and manual labor between 11:00 AM and 4:00 PM",
+          "Dispatch dedicated fleet of mobile drinking water tankers to high-density informal settlements and transit hubs",
+          "Activate designated public transit halls, community centers, and libraries as air-conditioned emergency cooling shelters"
+        ]
+      },
+      {
+        "h3_index": "886033bb5dfffff",
+        "peak_date": "2022-11-01",
+        "hazard_type": "Hazardous Smog Inversion",
+        "predicted_prob": 1.0,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Atmospheric Smog Crisis (GRAP Stage IV)",
+        "priority_interventions": [
+          "Immediate statutory ban on entry of non-BS-VI diesel commercial trucks (except essential goods)",
+          "Complete moratorium on all construction, excavation, demolition, and road-cutting dust activities",
+          "Mandatory 50% work-from-home mandate for all government and commercial corporate offices"
+        ]
+      },
+      {
+        "h3_index": "886033b065fffff",
+        "peak_date": "2022-11-01",
+        "hazard_type": "Hazardous Smog Inversion",
+        "predicted_prob": 1.0,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Atmospheric Smog Crisis (GRAP Stage IV)",
+        "priority_interventions": [
+          "Immediate statutory ban on entry of non-BS-VI diesel commercial trucks (except essential goods)",
+          "Complete moratorium on all construction, excavation, demolition, and road-cutting dust activities",
+          "Mandatory 50% work-from-home mandate for all government and commercial corporate offices"
+        ]
+      },
+      {
+        "h3_index": "886033b06dfffff",
+        "peak_date": "2022-11-01",
+        "hazard_type": "Hazardous Smog Inversion",
+        "predicted_prob": 1.0,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Atmospheric Smog Crisis (GRAP Stage IV)",
+        "priority_interventions": [
+          "Immediate statutory ban on entry of non-BS-VI diesel commercial trucks (except essential goods)",
+          "Complete moratorium on all construction, excavation, demolition, and road-cutting dust activities",
+          "Mandatory 50% work-from-home mandate for all government and commercial corporate offices"
+        ]
+      }
+    ],
+    "statutory_frameworks_invoked": [
+      "Indian Meteorological Department (IMD) Heat Action Plan",
+      "Commission for Air Quality Management (CAQM) / CPCB GRAP Stage I-IV",
+      "State Disaster Management Authority (SDMA) / Power Grid DISCOM Protocol"
+    ]
+  },
+  "indore": {
+    "city": "indore",
+    "monthly_alert_timeline": {
+      "2022-01-01": {
+        "total_hexes": 731,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-02-01": {
+        "total_hexes": 731,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-03-01": {
+        "total_hexes": 731,
+        "heatwave_red_alerts": 348,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-04-01": {
+        "total_hexes": 731,
+        "heatwave_red_alerts": 731,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 731
+      },
+      "2022-05-01": {
+        "total_hexes": 731,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-06-01": {
+        "total_hexes": 731,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-07-01": {
+        "total_hexes": 731,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-08-01": {
+        "total_hexes": 731,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-09-01": {
+        "total_hexes": 731,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-10-01": {
+        "total_hexes": 731,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      },
+      "2022-11-01": {
+        "total_hexes": 731,
+        "heatwave_red_alerts": 0,
+        "heatwave_orange_alerts": 0,
+        "smog_red_alerts": 0,
+        "smog_orange_alerts": 0,
+        "compound_red_alerts": 0
+      }
+    },
+    "sample_priority_ward_interventions": [
+      {
+        "h3_index": "883d96299bfffff",
+        "peak_date": "2022-04-01",
+        "hazard_type": "Heatwave Shock",
+        "predicted_prob": 0.9994,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Heatwave Emergency (HAP Stage III)",
+        "priority_interventions": [
+          "Mandatory cessation of outdoor construction and manual labor between 11:00 AM and 4:00 PM",
+          "Dispatch dedicated fleet of mobile drinking water tankers to high-density informal settlements and transit hubs",
+          "Activate designated public transit halls, community centers, and libraries as air-conditioned emergency cooling shelters"
+        ]
+      },
+      {
+        "h3_index": "883d9629edfffff",
+        "peak_date": "2022-03-01",
+        "hazard_type": "Heatwave Shock",
+        "predicted_prob": 0.9994,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Heatwave Emergency (HAP Stage III)",
+        "priority_interventions": [
+          "Mandatory cessation of outdoor construction and manual labor between 11:00 AM and 4:00 PM",
+          "Dispatch dedicated fleet of mobile drinking water tankers to high-density informal settlements and transit hubs",
+          "Activate designated public transit halls, community centers, and libraries as air-conditioned emergency cooling shelters"
+        ]
+      },
+      {
+        "h3_index": "883d9628c1fffff",
+        "peak_date": "2022-03-01",
+        "hazard_type": "Heatwave Shock",
+        "predicted_prob": 0.9994,
+        "alert_tier": "RED",
+        "statutory_playbook": "Severe Heatwave Emergency (HAP Stage III)",
+        "priority_interventions": [
+          "Mandatory cessation of outdoor construction and manual labor between 11:00 AM and 4:00 PM",
+          "Dispatch dedicated fleet of mobile drinking water tankers to high-density informal settlements and transit hubs",
+          "Activate designated public transit halls, community centers, and libraries as air-conditioned emergency cooling shelters"
+        ]
+      }
+    ],
+    "statutory_frameworks_invoked": [
+      "Indian Meteorological Department (IMD) Heat Action Plan",
+      "Commission for Air Quality Management (CAQM) / CPCB GRAP Stage I-IV",
+      "State Disaster Management Authority (SDMA) / Power Grid DISCOM Protocol"
+    ]
+  }
+}

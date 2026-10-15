@@ -1,0 +1,27 @@
+{
+  "_meta": {
+    "git_sha": "24144e31892b85f8bddd594cb466eab5410d777c",
+    "config_sha256": "66607df101c2831905a734047f13f06807e9a6f3f77f5600e7e283410d0a86a8",
+    "created_utc": "2026-10-15T13:57:23.739438+00:00",
+    "seed": 20260101
+  },
+  "coimbatore": {
+    "city": "coimbatore",
+    "mode": "hybrid",
+    "total_hex_months": 35820,
+    "unique_hexes": 995,
+    "unique_dates": 36,
+    "event_prevalence": {
+      "heatwave_share": 0.0995,
+      "heatwave_count": 3565,
+      "smog_share": 0.1,
+      "smog_count": 3582,
+      "compound_share": 0.0068,
+      "compound_count": 242,
+      "extreme_ssi_share": 0.1077,
+      "extreme_ssi_count": 3858,
+      "any_emergency_share": 0.2714,
+      "any_emergency_count": 9720
+    }
+  }
+}

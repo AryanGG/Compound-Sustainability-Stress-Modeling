@@ -1,4 +1,4 @@
-.PHONY: reproduce test lint audit figures dashboard pdf all
+.PHONY: reproduce test lint audit figures dashboard pdf ml ml-events ml-figures all
 
 all: reproduce
 
@@ -30,3 +30,13 @@ dashboard:
 
 pdf:
 	python scripts/generate_changes_pdf.py
+
+ml-pipeline:
+	python -m src.ml.predict_extreme_events --city all
+
+ml-figures:
+	python scripts/generate_event_figures.py
+
+ml: ml-pipeline
+
+

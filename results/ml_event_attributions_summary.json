@@ -1,0 +1,303 @@
+{
+  "_meta": {
+    "git_sha": "24144e31892b85f8bddd594cb466eab5410d777c",
+    "config_sha256": "b09098715201d03fe8ec19e9736e6a765663dd064a1a7d502f81193f4a572f83",
+    "created_utc": "2026-10-15T13:57:38.403770+00:00",
+    "seed": 20260101
+  },
+  "coimbatore": {
+    "city": "coimbatore",
+    "global_heatwave_drivers": {
+      "lst_c": 0.0551,
+      "pm25_surge_2m": 0.0463,
+      "lst_c_lag1": 0.0219,
+      "soil_moisture_drawdown_1m": 0.01,
+      "longitude": 0.0053,
+      "latitude": 0.0043,
+      "lst_c_lag2": 0.004,
+      "wind_speed": 0.0014,
+      "radiation_lag1": 0.0014,
+      "soil_moisture_lag2": 0.0013
+    },
+    "global_smog_drivers": {
+      "pm25": 0.4345,
+      "pm25_surge_1m": 0.0245,
+      "radiation_lag1": 0.0128,
+      "precip_sum_mm_lag2": 0.0001
+    },
+    "sample_heatwave_alerts_explained": [
+      {
+        "h3_index": "886031496bfffff",
+        "date": "2022-02-01",
+        "event": "Heatwave Shock",
+        "predicted_probability": 0.7374,
+        "alert_tier": "ORANGE",
+        "precursor_breakdown": [
+          {
+            "feature": "pm25_surge_2m",
+            "contribution_pct": 33.5,
+            "physical_meaning": "Precursor driver: pm25_surge_2m",
+            "observed_value": -8.2986
+          },
+          {
+            "feature": "lst_c",
+            "contribution_pct": 32.5,
+            "physical_meaning": "Satellite radiometric surface temperature anomaly",
+            "observed_value": 37.22
+          },
+          {
+            "feature": "lst_c_lag1",
+            "contribution_pct": 13.5,
+            "physical_meaning": "Prior-month residual urban heat island retention",
+            "observed_value": 33.555
+          }
+        ]
+      },
+      {
+        "h3_index": "8860314993fffff",
+        "date": "2022-05-01",
+        "event": "Heatwave Shock",
+        "predicted_probability": 0.7305,
+        "alert_tier": "ORANGE",
+        "precursor_breakdown": [
+          {
+            "feature": "lst_c",
+            "contribution_pct": 35.8,
+            "physical_meaning": "Satellite radiometric surface temperature anomaly",
+            "observed_value": 41.45
+          },
+          {
+            "feature": "pm25_surge_2m",
+            "contribution_pct": 30.3,
+            "physical_meaning": "Precursor driver: pm25_surge_2m",
+            "observed_value": -15.0293
+          },
+          {
+            "feature": "lst_c_lag1",
+            "contribution_pct": 14.1,
+            "physical_meaning": "Prior-month residual urban heat island retention",
+            "observed_value": 41.4833
+          }
+        ]
+      },
+      {
+        "h3_index": "8860314999fffff",
+        "date": "2022-05-01",
+        "event": "Heatwave Shock",
+        "predicted_probability": 0.7587,
+        "alert_tier": "RED",
+        "precursor_breakdown": [
+          {
+            "feature": "lst_c",
+            "contribution_pct": 34.9,
+            "physical_meaning": "Satellite radiometric surface temperature anomaly",
+            "observed_value": 41.035
+          },
+          {
+            "feature": "pm25_surge_2m",
+            "contribution_pct": 30.5,
+            "physical_meaning": "Precursor driver: pm25_surge_2m",
+            "observed_value": -15.0293
+          },
+          {
+            "feature": "lst_c_lag1",
+            "contribution_pct": 15.0,
+            "physical_meaning": "Prior-month residual urban heat island retention",
+            "observed_value": 42.165
+          }
+        ]
+      },
+      {
+        "h3_index": "886031499bfffff",
+        "date": "2022-04-01",
+        "event": "Heatwave Shock",
+        "predicted_probability": 0.8314,
+        "alert_tier": "RED",
+        "precursor_breakdown": [
+          {
+            "feature": "lst_c",
+            "contribution_pct": 39.8,
+            "physical_meaning": "Satellite radiometric surface temperature anomaly",
+            "observed_value": 42.42
+          },
+          {
+            "feature": "pm25_surge_2m",
+            "contribution_pct": 30.2,
+            "physical_meaning": "Precursor driver: pm25_surge_2m",
+            "observed_value": -13.811
+          },
+          {
+            "feature": "lst_c_lag1",
+            "contribution_pct": 12.4,
+            "physical_meaning": "Prior-month residual urban heat island retention",
+            "observed_value": 39.715
+          }
+        ]
+      },
+      {
+        "h3_index": "886031499bfffff",
+        "date": "2022-05-01",
+        "event": "Heatwave Shock",
+        "predicted_probability": 0.79,
+        "alert_tier": "RED",
+        "precursor_breakdown": [
+          {
+            "feature": "lst_c",
+            "contribution_pct": 35.1,
+            "physical_meaning": "Satellite radiometric surface temperature anomaly",
+            "observed_value": 41.28
+          },
+          {
+            "feature": "pm25_surge_2m",
+            "contribution_pct": 30.2,
+            "physical_meaning": "Precursor driver: pm25_surge_2m",
+            "observed_value": -15.0293
+          },
+          {
+            "feature": "lst_c_lag1",
+            "contribution_pct": 15.1,
+            "physical_meaning": "Prior-month residual urban heat island retention",
+            "observed_value": 42.42
+          }
+        ]
+      }
+    ],
+    "sample_smog_alerts_explained": [
+      {
+        "h3_index": "8860314801fffff",
+        "date": "2022-10-01",
+        "event": "Hazardous Smog Inversion",
+        "predicted_probability": 1.0,
+        "alert_tier": "RED",
+        "precursor_breakdown": [
+          {
+            "feature": "pm25",
+            "contribution_pct": 89.0,
+            "physical_meaning": "Particulate matter concentration exceeding statutory crisis limits",
+            "observed_value": 68.8159
+          },
+          {
+            "feature": "pm25_surge_1m",
+            "contribution_pct": 9.5,
+            "physical_meaning": "Rapid atmospheric particulate surge velocity",
+            "observed_value": 32.4851
+          },
+          {
+            "feature": "radiation_lag1",
+            "contribution_pct": 1.5,
+            "physical_meaning": "Precursor driver: radiation_lag1",
+            "observed_value": 36.2408
+          }
+        ]
+      },
+      {
+        "h3_index": "8860314801fffff",
+        "date": "2022-11-01",
+        "event": "Hazardous Smog Inversion",
+        "predicted_probability": 1.0,
+        "alert_tier": "RED",
+        "precursor_breakdown": [
+          {
+            "feature": "pm25",
+            "contribution_pct": 94.2,
+            "physical_meaning": "Particulate matter concentration exceeding statutory crisis limits",
+            "observed_value": 88.6149
+          },
+          {
+            "feature": "pm25_surge_1m",
+            "contribution_pct": 4.5,
+            "physical_meaning": "Rapid atmospheric particulate surge velocity",
+            "observed_value": 19.799
+          },
+          {
+            "feature": "radiation_lag1",
+            "contribution_pct": 1.3,
+            "physical_meaning": "Precursor driver: radiation_lag1",
+            "observed_value": 32.0752
+          }
+        ]
+      },
+      {
+        "h3_index": "8860314803fffff",
+        "date": "2022-10-01",
+        "event": "Hazardous Smog Inversion",
+        "predicted_probability": 1.0,
+        "alert_tier": "RED",
+        "precursor_breakdown": [
+          {
+            "feature": "pm25",
+            "contribution_pct": 89.0,
+            "physical_meaning": "Particulate matter concentration exceeding statutory crisis limits",
+            "observed_value": 68.8159
+          },
+          {
+            "feature": "pm25_surge_1m",
+            "contribution_pct": 9.5,
+            "physical_meaning": "Rapid atmospheric particulate surge velocity",
+            "observed_value": 32.4851
+          },
+          {
+            "feature": "radiation_lag1",
+            "contribution_pct": 1.5,
+            "physical_meaning": "Precursor driver: radiation_lag1",
+            "observed_value": 36.1551
+          }
+        ]
+      },
+      {
+        "h3_index": "8860314803fffff",
+        "date": "2022-11-01",
+        "event": "Hazardous Smog Inversion",
+        "predicted_probability": 1.0,
+        "alert_tier": "RED",
+        "precursor_breakdown": [
+          {
+            "feature": "pm25",
+            "contribution_pct": 94.2,
+            "physical_meaning": "Particulate matter concentration exceeding statutory crisis limits",
+            "observed_value": 88.6149
+          },
+          {
+            "feature": "pm25_surge_1m",
+            "contribution_pct": 4.5,
+            "physical_meaning": "Rapid atmospheric particulate surge velocity",
+            "observed_value": 19.799
+          },
+          {
+            "feature": "radiation_lag1",
+            "contribution_pct": 1.3,
+            "physical_meaning": "Precursor driver: radiation_lag1",
+            "observed_value": 32.0628
+          }
+        ]
+      },
+      {
+        "h3_index": "8860314805fffff",
+        "date": "2022-10-01",
+        "event": "Hazardous Smog Inversion",
+        "predicted_probability": 1.0,
+        "alert_tier": "RED",
+        "precursor_breakdown": [
+          {
+            "feature": "pm25",
+            "contribution_pct": 88.9,
+            "physical_meaning": "Particulate matter concentration exceeding statutory crisis limits",
+            "observed_value": 68.8159
+          },
+          {
+            "feature": "pm25_surge_1m",
+            "contribution_pct": 9.5,
+            "physical_meaning": "Rapid atmospheric particulate surge velocity",
+            "observed_value": 32.4851
+          },
+          {
+            "feature": "radiation_lag1",
+            "contribution_pct": 1.5,
+            "physical_meaning": "Precursor driver: radiation_lag1",
+            "observed_value": 36.3097
+          }
+        ]
+      }
+    ]
+  }
+}

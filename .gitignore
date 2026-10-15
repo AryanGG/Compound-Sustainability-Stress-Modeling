@@ -1,11 +1,16 @@
 # Virtual environment
 .venv/
 env/
+venv/
+ENV/
 
 # Cache directories
 cache/
+.cache/
 .pytest_cache/
 .ipynb_checkpoints/
+.ruff_cache/
+.mypy_cache/
 
 # Python cache
 __pycache__/
@@ -13,20 +18,33 @@ __pycache__/
 *.pyo
 *.pyd
 
-# Mac system files
+# Operating system artifacts
 .DS_Store
+._*
+Thumbs.db
 
-# Data folders (DO NOT push large data to GitHub)
-data/raw/*
-data/processed/*
-data/feature/*
-data/features/*
-data/metadata/*
-data/h3_panel/*
+# IDE and editor configurations
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 
-# Keep folder structure
+# Data directories (DO NOT push raw, intermediate, or panel data to GitHub)
+data/raw/**
+data/processed/**
+data/feature/**
+data/features/**
+data/metadata/**
+data/h3_panel/**
+data/interim/**
+data/temp/**
+data/exports/**
+data/cache/**
+data/*.*
+
+# Keep folder structure & tracked reference templates
 !data/raw/.gitkeep
-# Allow small reference CSVs needed to run the pipeline
 !data/raw/vulnerability/
 !data/raw/vulnerability/india_district_vulnerability.csv
 !data/raw/vulnerability/india_district_vulnerability_TEMPLATE.csv
@@ -35,6 +53,71 @@ data/h3_panel/*
 !data/features/.gitkeep
 !data/metadata/.gitkeep
 !data/h3_panel/.gitkeep
+
+# Root-level data dumps and exports
+/*.csv
+/*.tsv
+/*.parquet
+/*.geoparquet
+/*.feather
+/*.arrow
+/*.geojson
+/*.jsonl
+/*.nc
+/*.h5
+/*.hdf5
+/*.zip
+/*.tar
+/*.tar.gz
+/*.tgz
+
+# Geospatial and raster/vector satellite datasets anywhere
+*.tif
+*.tiff
+*.geotif
+*.geotiff
+*.gpkg
+*.shp
+*.shx
+*.dbf
+*.prj
+*.cpg
+*.nc
+*.nc4
+*.hdf
+*.hdf5
+*.h5
+
+# Tabular & columnar binary datasets anywhere
+*.parquet
+*.pq
+*.geoparquet
+*.feather
+*.arrow
+*.orc
+
+# Machine learning serialized model artifacts & checkpoints
+*.pkl
+*.pickle
+*.joblib
+*.pt
+*.pth
+*.onnx
+*.model
+*.bin
+*.weights
+
+# Compressed archives & databases
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+*.bz2
+*.sqlite
+*.sqlite3
+*.db
 
 # Logs
 logs/*
@@ -49,13 +132,16 @@ logs/*
 # Generated reports (large self-contained HTML files)
 reports/*
 !reports/.gitkeep
-
-# Generated root-level visualization maps & raw downloaded datasets
 /*.html
-/*.nc
 
-# Raw parquet files anywhere
-*.parquet
-
-# Scratch / throwaway scripts (may contain credentials or hardcoded paths)
+# Scratch & throwaway directories
 scratch/
+.scratch/
+tmp/
+temp/
+runs/
+wandb/
+mlruns/
+*.tmp
+*.temp
+*.bak

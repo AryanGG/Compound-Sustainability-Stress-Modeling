@@ -1,0 +1,122 @@
+{
+  "_meta": {
+    "git_sha": "24144e31892b85f8bddd594cb466eab5410d777c",
+    "config_sha256": "10bf2de8df5225b2589dbba8ba4fe38ef32889aff98c51453f7b6d042fab65cc",
+    "created_utc": "2026-10-15T13:57:33.228064+00:00",
+    "seed": 20260101
+  },
+  "coimbatore": {
+    "city": "coimbatore",
+    "split_date": "2022-01-01",
+    "n_features": 100,
+    "train_period": "2020-03-01 to 2021-12-01",
+    "test_period": "2022-01-01 to 2022-11-01",
+    "train_rows": 21890,
+    "test_rows": 10945,
+    "events": {
+      "heatwave": {
+        "train_samples": 21890,
+        "test_samples": 10945,
+        "train_prevalence": 0.1245,
+        "test_prevalence": 0.0238,
+        "roc_auc": 0.86,
+        "pr_auc": 0.1068,
+        "precision": 0.1367,
+        "recall": 0.2308,
+        "f1": 0.1717,
+        "f2": 0.2028,
+        "brier_score": 0.038,
+        "confusion_matrix": {
+          "tp": 60,
+          "fp": 379,
+          "tn": 10306,
+          "fn": 200
+        }
+      },
+      "smog": {
+        "train_samples": 21890,
+        "test_samples": 10945,
+        "train_prevalence": 0.0818,
+        "test_prevalence": 0.1379,
+        "roc_auc": 0.922,
+        "pr_auc": 0.8505,
+        "precision": 0.5826,
+        "recall": 0.8131,
+        "f1": 0.6788,
+        "f2": 0.7535,
+        "brier_score": 0.1061,
+        "confusion_matrix": {
+          "tp": 1227,
+          "fp": 879,
+          "tn": 8557,
+          "fn": 282
+        }
+      },
+      "compound": {
+        "train_samples": 21890,
+        "test_samples": 10945,
+        "train_prevalence": 0.0111,
+        "test_prevalence": 0.0,
+        "roc_auc": 0.5,
+        "pr_auc": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "f2": 0.0,
+        "brier_score": 0.0,
+        "confusion_matrix": {
+          "tp": 0,
+          "fp": 0,
+          "tn": 10945,
+          "fn": 0
+        }
+      },
+      "any_emergency": {
+        "train_samples": 21890,
+        "test_samples": 10945,
+        "train_prevalence": 0.2722,
+        "test_prevalence": 0.2577,
+        "roc_auc": 0.8437,
+        "pr_auc": 0.5467,
+        "precision": 0.6473,
+        "recall": 0.8465,
+        "f1": 0.7336,
+        "f2": 0.7974,
+        "brier_score": 0.1429,
+        "confusion_matrix": {
+          "tp": 2388,
+          "fp": 1301,
+          "tn": 6823,
+          "fn": 433
+        }
+      }
+    },
+    "continuous_ssi": {
+      "train_samples": 21890,
+      "test_samples": 10945,
+      "r2_score": 0.8723,
+      "mae": 0.031,
+      "rmse": 0.0396,
+      "test_mean_actual": 0.3469,
+      "test_mean_predicted": 0.3381
+    },
+    "benchmarks": {
+      "Benchmark_A_March_April_2022_Heatwave": {
+        "hex_months": 1990,
+        "true_heatwave_count": 135,
+        "heatwave_share": 0.0678,
+        "recall": 0.1778,
+        "precision": 0.189,
+        "f2_score": 0.1799
+      },
+      "Benchmark_B_Nov_2022_Smog_Spike": {
+        "hex_months": 1990,
+        "true_smog_count": 1111,
+        "smog_share": 0.5583,
+        "recall": 1.0,
+        "precision": 0.5583,
+        "f2_score": 0.8634
+      }
+    }
+  }
+}

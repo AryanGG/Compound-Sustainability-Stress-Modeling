@@ -1,0 +1,39 @@
+{
+  "_meta": {
+    "git_sha": "24144e31892b85f8bddd594cb466eab5410d777c",
+    "config_sha256": "5d9d7fc7583044386a5e078f729e28d045c0c8808120ded8f98bc192c545a133",
+    "created_utc": "2026-10-15T13:57:24.025987+00:00",
+    "seed": 20260101
+  },
+  "coimbatore": {
+    "city": "coimbatore",
+    "total_rows_raw": 35820,
+    "total_columns": 125,
+    "total_features": 100,
+    "valid_rows_1m_lead": 32835,
+    "valid_rows_2m_lead": 31840,
+    "valid_dates_1m": 33,
+    "valid_dates_2m": 32,
+    "date_range_1m": {
+      "start": "2020-03-01",
+      "end": "2022-11-01"
+    },
+    "feature_list_sample": [
+      "temp_mean_c",
+      "dewpoint_mean_c",
+      "precip_sum_mm",
+      "wind_speed",
+      "radiation",
+      "soil_moisture",
+      "ndvi",
+      "lst_c",
+      "pm25",
+      "built_up_fraction",
+      "road_density_km_km2",
+      "building_density",
+      "building_fp_fraction",
+      "green_space_fraction",
+      "latitude"
+    ]
+  }
+}

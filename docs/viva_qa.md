@@ -85,3 +85,20 @@ All numerical figures are extracted live from artifacts in `results/`. No number
     - **Spatial Coherence:** 100% of adjacent hex pairs share the same cluster assignment (compared to a 500-permutation null mean of 51.35%).
   - Figure F7 (`figures/F7_archetype_profiles.png`) and `results/archetypes__hex_assignments.csv`.
 - **Limitation:** A 2-cluster macro-typology provides high-level zoning guidance (identifying thermal suburban expansion vs. dense urban core exposure), but planners requiring localized micro-interventions should examine the continuous multi-indicator profiles.
+
+---
+
+### Question 8: Beyond forensic SSI index calculation, how does the Hyperlocal Early Warning System predict statutory crisis events, and how was it evaluated out-of-time on unseen historical benchmarks?
+
+- **Claim:** Retrospective environmental dashboards report historical degradation after emergency wards have already flooded with heatstroke patients and water reserves are depleted. To address the fundamental need for actionable foresight, we formulated a temporal predictive early warning system (EWS) trained strictly on 2020–2021 historical panels (104 non-leaking temporal predictors) and evaluated out-of-time on the unseen 2022 historical benchmark. Evaluated against real historical crises—specifically the devastating March–April 2022 pan-Indian heatwave—the system achieved 93.8% recall in Mumbai, 92.2% recall in Delhi NCR, 99.5% recall in Bikaner, and 100% recall in Kolkata and Indore, with continuous forward SSI trajectory prediction reaching $R^2 = 0.895$ in Delhi and $R^2 = 0.888$ in Mumbai.
+- **Evidence:**
+  - `results/ml_event_prediction_metrics.json` and `results/ml_event_prevalence.json`:
+    - **Heatwave Event PR-AUC (Unseen 2022):** 0.990 in Delhi NCR, 0.886 in Mumbai, 0.983 in Bikaner, 0.903 in Indore, and 0.862 in Kolkata.
+    - **March–April 2022 Pan-Indian Heatwave Holdout Recall:** Correctly flagged 93.8% of acute heatwave hex-months in Mumbai (165 of 176 alert cells), 92.2% in Delhi (1,844 of 2,000 alert cells), 99.5% in Bikaner (1,154 of 1,160 alert cells), and 100% in Kolkata and Indore.
+    - **Continuous Future Stress ($t+1$ SSI):** $R^2 = 0.895$ in Delhi, $R^2 = 0.888$ in Mumbai, $R^2 = 0.872$ in Coimbatore.
+    - **Permutation Risk Attribution:** Identifies leading physical precursors: rolling 90-day temperature anomalies, heat stress momentum ($\Delta \text{heat}$ velocity), cumulative 3-month precipitation deficits, and dry soil moisture exhaustions.
+  - `results/ml_policy_playbook_summary.json`: Direct mapping of forecasted probabilities into statutory action tiers: IMD Heat Action Plan (HAP Stage II Amber & Stage III Red alerts) and CAQM Graded Response Action Plan (GRAP Stage III & IV directives).
+  - Figures F9, F10, F11 (`paper_images/`): ROC/PR curves, spatial hex threat maps (Mumbai April 2022 and Delhi March 2022), and precursor attribution waterfalls.
+- **Limitation:** Model predictions rely on precursor environmental signals and accumulated biophysical stress. Sudden exogenous shocks (such as localized industrial chemical fires or unannounced cross-border power transmission failures) that lack multi-week environmental precursory signals cannot be anticipated by sensor-lag models.
+
+
