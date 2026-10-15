@@ -1,0 +1,86 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- Essential Core Packages ---
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{subcaption}
+\usepackage{natbib}
+\usepackage{xcolor}
+\usepackage{microtype}
+\usepackage{url}
+\usepackage{setspace}
+\usepackage[colorlinks=true,linkcolor=blue!80!black,citecolor=blue!80!black,urlcolor=blue!80!black]{hyperref}
+\usepackage[capitalize,noabbrev]{cleveref}
+
+% --- Styling and Line Numbers for Peer Review ---
+\onehalfspacing
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0pt}
+
+% --- Graphics Path ---
+\graphicspath{{figures/}}
+
+% --- Title and Metadata ---
+\title{\textbf{\Large Beyond Single-Domain Indices: Quantifying Compound Urban Environmental Stress Through Integrated Biophysical and Infrastructural Analytics Across Diverse Climatic Biomes}}
+
+\author{
+    \textbf{Aryan Goel}$^{1,*}$, 
+    \textbf{Yash Badhe}$^{2}$, 
+    \textbf{Collaborators}$^{1}$ \\[0.5em]
+    \small $^{1}$Department of Computer Science and Engineering, Technological University \\
+    \small $^{2}$Indian Institute of Technology Madras (IITM), Chennai, India \\
+    \small $^*$Corresponding Author: \texttt{aryan@example.com}
+}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% --- Section 0: Abstract & Keywords ---
+\input{sections/00_abstract.tex}
+
+\newpage
+
+% --- Section 1: Introduction ---
+\input{sections/01_introduction.tex}
+
+% --- Section 2: Study Area and Spatio-Temporal Grid ---
+\input{sections/02_study_area.tex}
+
+% --- Section 3: Data Ingestion and Drivers ---
+\input{sections/03_data.tex}
+
+% --- Section 4: Mathematical Methodology ---
+\input{sections/04_methodology.tex}
+
+% --- Section 5: Empirical Results ---
+\input{sections/05_results.tex}
+
+% --- Section 6: Validation and Ground-Truthing ---
+\input{sections/06_validation.tex}
+
+% --- Section 7: Sensitivity and Robustness ---
+\input{sections/07_sensitivity.tex}
+
+% --- Section 8: Discussion and Policy Implications ---
+\input{sections/08_discussion.tex}
+
+% --- Section 9: Conclusion and Data Availability ---
+\input{sections/09_conclusion.tex}
+
+% --- Acknowledgments ---
+\section*{Acknowledgments}
+The authors gratefully acknowledge the European Centre for Medium-Range Weather Forecasts (ECMWF) for ERA5 atmospheric reanalysis access, the European Space Agency (ESA) and Microsoft Planetary Computer for Sentinel-2 multispectral imagery, the Copernicus Atmosphere Monitoring Service (CAMS) for aerosol composition fields, the European Commission Joint Research Centre for Global Human Settlement Layer impervious surface products, and the OpenStreetMap contributors for vector urban morphology datasets.
+
+% --- References ---
+\bibliographystyle{apalike}
+\bibliography{references}
+
+\end{document}

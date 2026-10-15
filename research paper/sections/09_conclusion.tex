@@ -1,0 +1,14 @@
+\section{Conclusion and Data Availability}
+\label{sec:conclusion}
+
+\subsection{Summary of Findings}
+In this study, we developed, evaluated, and validated the Compound Sustainability Stress Index (SSI), a non-linear, multi-hazard spatio-temporal modeling framework designed for metropolitan regions in the Global South. Grounded in a strictly balanced panel of 334,332 hexagonal micro-units (Uber H3 Resolution~8, $\sim 0.74\text{ km}^2$) spanning seven contrasting Indian climatic biomes across 36 continuous months (2020--2022), the model overcomes four longstanding methodological pathologies of traditional composite vulnerability indices: seasonal compression, linear substitutability, boundary clipping, and PCA variance collapse.
+
+By pairing un-normalized physical environmental observations with a smooth asymptotic bivariate joint-tail hazard amplifier, the framework captures a $+25.3\%$ stress escalation during compound extremes while eliminating artificial ceiling clipping ($0.00\%$ records clamped at 1.0). An eight-part pre-registered validation protocol confirmed indicator orthogonality ($\text{VIF} < 1.12$), cross-biome discriminant power ($F = 6,888$), robust spatial coherence (Moran's $I > 0.45$), convergent construct validity against independent satellite thermal observations ($\rho = 0.72\text{--}0.88$), and precise alignment with recorded historical climate shocks. Furthermore, unsupervised clustering identified six stable pan-India urban stress archetypes that translate complex multi-hazard interactions into actionable spatial typologies for municipal climate adaptation and resilience planning.
+
+\subsection{Data and Code Availability Statement}
+To ensure complete scientific reproducibility and open science transparency, the canonical multi-city panel dataset (\texttt{final\_7\_cities.parquet} and \texttt{final\_7\_cities.csv}, comprising 334,332 rows and 29 standardized attributes) alongside all Python pipeline scripts, statistical test harnesses, and visualization workflows are openly available in the project repository at:
+\begin{center}
+    \url{https://github.com/AryanGG/Compound-Sustainability-Stress-Modeling}
+\end{center}
+All primary satellite, reanalysis, and vector inputs were acquired from public repositories: ECMWF ERA5 (\url{https://cds.climate.copernicus.eu}), Copernicus CAMS EAC4 (\url{https://ads.atmosphere.copernicus.eu}), Sentinel-2 L2A via Microsoft Planetary Computer (\url{https://planetarycomputer.microsoft.com}), European Commission GHSL (\url{https://ghsl.jrc.ec.europa.eu}), and OpenStreetMap (\url{https://www.openstreetmap.org}).
