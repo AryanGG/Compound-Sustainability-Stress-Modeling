@@ -1,0 +1,48 @@
+\section{Data Ingestion, Physical Drivers, and Integrity Protocols}
+\label{sec:data}
+
+\subsection{Physical Environmental Drivers in Native Scientific Units}
+To decouple index construction from arbitrary sample distributions, all environmental variables are initially acquired, preprocessed, and aggregated in their un-normalized physical units (Table~\ref{tab:data_sources}).
+
+\input{tables/table1_data_sources}
+
+\subsubsection{Meteorological Heat Stress \texorpdfstring{($\text{heat\_raw}$)}{(heat\_raw)}}
+Ambient air temperature alone fails to capture biological sultriness. We calculate the apparent physiological Heat Index ($^\circ\text{C}$) using hourly $0.1^\circ$ ($\sim 11\text{ km}$) reanalysis fields from the European Centre for Medium-Range Weather Forecasts (ECMWF) ERA5 \citep{hersbach2020era5}. First, relative humidity ($\text{RH}$, $\%$) is derived from 2-meter air temperature ($T$, $^\circ\text{C}$) and 2-meter dewpoint temperature ($T_d$, $^\circ\text{C}$) via the Magnus-Tetens vapor pressure formulation:
+\begin{equation}
+    \text{RH} = 100 \times \frac{\exp\left(\frac{17.27 \cdot T_d}{237.7 + T_d}\right)}{\exp\left(\frac{17.27 \cdot T}{237.7 + T}\right)}
+\end{equation}
+The Steadman apparent temperature is then evaluated using the Rothfusz polynomial approximation, applying standard arid and high-humidity adjustment coefficients \citep{steadman1979assessment, rothfusz1990heat}. Monthly means are spatially downscaled to each H3 cell via inverse distance weighting (IDW).
+
+\subsubsection{Hydrological Deficit \texorpdfstring{($\text{water\_raw}$)}{(water\_raw)}}
+Water stress is formulated through the Climatic Water Deficit ($\text{CWD}$, $\text{mm}/\text{month}$), defined as the shortfall between atmospheric evaporative demand and moisture supply \citep{thornthwaite1948approach}:
+\begin{equation}
+    \text{CWD} = \max\left(0, \text{PET} - P\right)
+\end{equation}
+where $P$ is total monthly precipitation ($\text{mm}$) from ERA5, and $\text{PET}$ is Potential Evapotranspiration ($\text{mm}/\text{month}$) calculated using the Thornthwaite daylight-adjusted thermal index model based on cell latitude and monthly mean temperature. Negative deficits denote moisture surplus and are clipped at zero.
+
+\subsubsection{Vegetation Canopy Depletion \texorpdfstring{($\text{veg\_raw}$)}{(veg\_raw)}}
+Urban vegetation mitigation potential is assessed using the Normalized Difference Vegetation Index (NDVI) derived from cloud-masked, surface reflectance multispectral imagery from the European Space Agency (ESA) Sentinel-2A/B satellites (Level-2A MSI) via the Microsoft Planetary Computer:
+\begin{equation}
+    \text{NDVI} = \frac{\text{Band 8 (NIR)} - \text{Band 4 (Red)}}{\text{Band 8 (NIR)} + \text{Band 4 (Red)}}
+\end{equation}
+10-meter pixel values are aggregated to each H3 cell via zonal mean. Because higher NDVI reflects photosynthetic canopy health, this driver is inverted during index standardization so that higher values denote vegetative stress.
+
+\subsubsection{Particulate Air Pollution \texorpdfstring{($\text{pollution\_raw}$)}{(pollution\_raw)}}
+Atmospheric fine particulate exposure is quantified using surface $\text{PM}_{2.5}$ concentrations ($\mu\text{g}/\text{m}^3$) obtained from the Copernicus Atmosphere Monitoring Service (CAMS) Global Reanalysis (EAC4) blended with NASA SEDAC ground estimates \citep{inness2019cams, van2016global}. CAMS assimilate aerosol optical depth from MODIS and Sentinel-5P, providing continuous monthly ground concentrations.
+
+\subsubsection{Physical Built Infrastructure Exposure \texorpdfstring{($\text{exposure\_raw}$)}{(exposure\_raw)}}
+Physical urban exposure represents stationary morphological susceptibility to hazard convergence. It is constructed as an unweighted linear composite of three min-max scaled spatial infrastructure layers:
+\begin{equation}
+    \text{exposure\_raw} = \frac{1}{3}\left[\widetilde{\text{BuiltUp}} + \widetilde{\text{BldDens}} + \widetilde{\text{RoadDens}}\right]
+\end{equation}
+where $\text{BuiltUp}$ is the 10-meter impervious built surface fraction from the European Commission Global Human Settlement Layer (GHSL Built-Up S2) \citep{pesaresi2016ghsl}; $\text{BldDens}$ is the count of building footprint polygons per square kilometer extracted from OpenStreetMap vector layers; and $\text{RoadDens}$ is the total length of the vehicular road network ($\text{km}/\text{km}^2$) from OpenStreetMap.
+
+\subsection{The Circularity Prevention Standard}
+To maintain the highest level of scientific integrity, two independent empirical datasets are \textbf{strictly excluded} from index construction and held out exclusively for external validation:
+\begin{enumerate}
+    \item \textbf{MODIS Land Surface Temperature ($\text{lst\_c}$):} Satellite thermal infrared observations from MODIS Terra/Aqua (MOD11A2, 1-km resolution) \citep{van2013modis} are held out to validate the meteorological heat index without circular bias.
+    \item \textbf{Socioeconomic Census Deprivation:} Census 2011 ward-level slum proportions and below-poverty-line ($\text{BPL}$) percentages are withheld to benchmark the equity distribution of final risk archetypes.
+\end{enumerate}
+
+\subsection{Imputation Audit and Data Transparency}
+Due to persistent monsoon and winter cloud/haze cover, optical Sentinel-2 MSI data occasionally exhibited localized missingness. Rather than introducing synthetic noise or arbitrary default fills, missing NDVI values were linearly interpolated strictly from adjacent temporal observation months. Every interpolated cell-month is explicitly and permanently flagged in the panel using the boolean auditor column $\text{is\_imputed} = \text{True}$. Across the entire 334,332-record panel, the overall imputation rate is $28.43\%$, driven primarily by persistent post-monsoon winter fog and agricultural haze over Delhi ($70.63\%$) and localized monsoon cloud cover in Hyderabad ($11.11\%$), Bikaner ($5.18\%$), Indore ($2.78\%$), and Kolkata ($0.35\%$), while Mumbai and Coimbatore experienced $0.00\%$ imputation. All other four physical drivers ($\text{heat}$, $\text{water}$, $\text{pollution}$, and $\text{exposure}$) have $0.00\%$ missingness across all seven metropolises.

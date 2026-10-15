@@ -1,0 +1,33 @@
+\section{Discussion and Policy Implications}
+\label{sec:discussion}
+
+\subsection{Theoretical Implications for Compound Risk Modeling in the Global South}
+Our findings provide substantial empirical support for the IPCC AR6 emphasis on compound climate hazards \citep{ipcc2022ar6}. In rapidly urbanizing regions of the Global South, environmental stress is not simply an additive accumulation of independent stressors. When pre-monsoon heatwaves co-occur with severe water scarcity and high built-surface thermal mass, biological, infrastructural, and economic systems face threshold-activated failure modes \citep{zscheischler2018future}.
+
+By demonstrating that the top 10th percentile of multi-hazard events experiences an average $+25.3\%$ stress escalation over naive linear weighted sums, our framework underscores why conventional single-hazard indices systematically underestimate catastrophic risk. Furthermore, by replacing legacy hard-clipping models ($\min(1.0, \text{linear} + \text{compound})$) with our smooth asymptotic formulation ($\text{SSI}_{\text{lin}} + \gamma \cdot \Omega \cdot (1 - \text{SSI}_{\text{lin}})$), we demonstrate how composite indices can incorporate non-linear compound amplification without suffering from ceiling truncation artifacts that obliterate spatial differentiation.
+
+\subsection{From Single-Hazard Silos to Typology-Driven Spatial Zoning}
+In contemporary urban governance across South Asia, environmental interventions remain heavily fractured into institutional silos: municipal health departments manage Heat Action Plans (HAPs), pollution control boards implement Clean Air Action Plans, and water supply boards manage drought contingencies independently.
+
+The six pan-India stress archetypes identified in this study (Table~\ref{tab:archetype_profiles}) demonstrate that identical absolute stress scores can arise from fundamentally different physical mechanisms, necessitating targeted, typology-specific policy interventions:
+\begin{itemize}
+    \item \textbf{Archetype 6 (Compound Multi-Hazard Core):} Requires simultaneous structural interventions: cool roofs and reflective pavements to counter high built exposure, localized stormwater harvesting to alleviate water deficits, and intensive roadside green buffers to scrub particulate matter.
+    \item \textbf{Archetype 4 \& 5 (Atmospheric Inversion \& Smog Corridors):} Demands dynamic winter emergency protocols: traffic congestion pricing, localized mist cannons, and temporary industrial emission curbs during calm boundary layer episodes.
+    \item \textbf{Archetype 2 (Arid Thermal-Hydrological Stress):} Calls for decentralized groundwater recharge, solar shading, and micro-vegetative dune stabilization rather than traditional stormwater infrastructure.
+\end{itemize}
+
+\subsection{Overcoming the Methodological Pitfalls of Contemporary Vulnerability Indices}
+The mathematical formulation developed in this study provides three key architectural lessons for environmental composite indicator design:
+\begin{enumerate}
+    \item \textit{Avoid Monthly Sample Normalizations:} Normalizing data month-by-month subtracts the primary phenomenon of interest (seasonal climate cycles). A single pooled reference baseline is essential to capture true macro-seasonal dynamics.
+    \item \textit{Scrutinize PCA Loadings in Non-Collinear Systems:} While automated dimensionality reduction is appealing, PCA can arbitrarily collapse critical societal hazards (such as air pollution and built vulnerability) if they are statistically orthogonal to the dominant thermal-hydrological axis. Equal weighting, supported by rigorous sensitivity invariance testing, represents the most scientifically defensible foundation under international composite indicator standards \citep{oecd2008handbook}.
+    \item \textit{Eliminate Ceiling Clipping:} Enforcing hard ceilings at $1.0000$ distorts spatial prioritization by declaring large swaths of urban territory equally ``at maximum risk.'' Damped asymptotic functions preserve internal variance across extreme percentiles.
+\end{enumerate}
+
+\subsection{Explicit Scientific Limitations}
+To maintain transparent academic rigor, several limitations of this framework must be stated:
+\begin{enumerate}
+    \item \textbf{Temporal Window (36 Months):} The panel spans 2020 through 2022. While this period captures historic anomalies (the COVID-19 national lockdown drop, the Spring 2022 mega-heatwave, and the 2021 Hyderabad deluge), longer multi-decadal reanalysis panels are required to model multi-year climate change trajectories.
+    \item \textbf{Stationary Physical Exposure:} OpenStreetMap building footprints and GHSL impervious fractions are treated as temporally stationary over the 3-year study period. While urban morphology changes gradually, rapid informal construction in peri-urban fringes is not captured in real time.
+    \item \textbf{Absence of Clinical Morbidity and Mortality Calibration:} The SSI measures physical environmental hazard exposure and built vulnerability. Due to the lack of geocoded, ward-level public hospital admission records in Indian metropolises, the index is not directly calibrated to human clinical morbidity or financial asset loss functions.
+\end{enumerate}

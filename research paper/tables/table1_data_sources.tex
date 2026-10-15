@@ -1,0 +1,24 @@
+\begin{table}[t]
+\centering
+\footnotesize
+\caption{Systematic specification of physical environmental drivers, empirical earth observation and vector sources, and spatio-temporal resolutions for the Compound Sustainability Stress Index (SSI).}
+\label{tab:data_sources}
+\begin{tabularx}{\textwidth}{@{}l l l X l l l@{}}
+\toprule
+\textbf{Domain} & \textbf{Driver} & \textbf{Physical Unit} & \textbf{Empirical Source} & \textbf{Spatial Res.} & \textbf{Temporal} & \textbf{Orientation} \\
+\midrule
+Heat Stress & $\text{heat\_raw}$ & $^\circ\text{C}$ (Heat Index) & ECMWF ERA5 & $\sim 11\text{ km}$ ($0.1^\circ$) & Monthly mean & Higher $\rightarrow$ Stress \\
+Water Deficit & $\text{water\_raw}$ & $\text{mm}/\text{month}$ (CWD) & ECMWF ERA5 & $\sim 11\text{ km}$ ($0.1^\circ$) & Monthly sum & Higher $\rightarrow$ Stress \\
+Vegetation Canopy Loss & $\text{veg\_raw}$ & NDVI $[-1, +1]$ & Sentinel-2 L2A MSI & $10\text{ m}$ & Monthly comp. & Lower $\rightarrow$ Stress \\
+Particulate Air Pollution & $\text{pollution\_raw}$ & $\mu\text{g}/\text{m}^3$ (PM$_{2.5}$) & Copernicus CAMS EAC4 & $\sim 0.75^\circ$ & Monthly mean & Higher $\rightarrow$ Stress \\
+Physical Built Exposure & $\text{exposure\_raw}$ & Index $[0, 1]$ & GHSL Built-Up + OSM & Vector / $10\text{ m}$ & Static (2020) & Higher $\rightarrow$ Stress \\
+\quad Impervious Fraction & $\text{exp\_built\_up}$ & Fraction $[0, 1]$ & GHSL Built-Up S2 & $10\text{ m}$ & Static (2020) & Component \\
+\quad Building Density & $\text{exp\_bld\_dens}$ & Footprints/$\text{km}^2$ & OpenStreetMap & Vector & Static (2022) & Component \\
+\quad Road Density & $\text{exp\_road\_dens}$ & $\text{km}/\text{km}^2$ & OpenStreetMap & Vector & Static (2022) & Component \\
+\midrule
+\multicolumn{7}{@{}l}{\textbf{Held-Out Independent Benchmark Layers (Circularity Prevention Standard)}} \\
+Thermal Infrared LST & $\text{lst\_c}$ & $^\circ\text{C}$ & MODIS MOD11A2 & $1\text{ km}$ & 8-day comp. & Convergent valid. \\
+Social Deprivation & Slum / BPL \% & Percentage & Census of India & District / Ward & Decennial & Equity valid. \\
+\bottomrule
+\end{tabularx}
+\end{table}
