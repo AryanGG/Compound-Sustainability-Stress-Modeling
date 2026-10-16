@@ -18,7 +18,7 @@ Outputs generated at 300 DPI:
   - Figure 7: Pan-India Urban Stress Archetypes (6-Axis Radar Centroids)
 
 Usage in Google Colab:
-  !pip install -q pyarrow geopandas matplotlib seaborn scipy scikit-learn
+  !pip install -q h3 pyarrow geopandas matplotlib seaborn scipy scikit-learn
   !python colab_analysis.py --data final_7_cities.parquet --out_dir ./figures
 """
 
@@ -43,7 +43,14 @@ plt.rcParams['legend.fontsize'] = 10
 
 
 def generate_figure1_study_area(df: pd.DataFrame, out_dir: Path):
-    """Figure 1: Spatial Grid Extents for all 7 Metropolises."""
+    """Figure 1: Spatial Grid Extents for all 7 Metropolises with True H3 Hexagonal Cells."""
+    from matplotlib.collections import PolyCollection
+    try:
+        import h3
+        has_h3 = True
+    except ImportError:
+        has_h3 = False
+
     cities = ['delhi', 'kolkata', 'hyderabad', 'coimbatore', 'mumbai', 'indore', 'bikaner']
     fig, axes = plt.subplots(2, 4, figsize=(18, 9))
     axes = axes.flatten()
@@ -53,12 +60,49 @@ def generate_figure1_study_area(df: pd.DataFrame, out_dir: Path):
         'coimbatore': '#377eb8', 'mumbai': '#ff7f00', 'indore': '#a65628', 'bikaner': '#f781bf'
     }
 
+    city_edge_palettes = {
+        'delhi': '#7f0000', 'kolkata': '#49006a', 'hyderabad': '#00441b',
+        'coimbatore': '#08306b', 'mumbai': '#7f2704', 'indore': '#543005', 'bikaner': '#67001f'
+    }
+
     for idx, c in enumerate(cities):
         cdf = df[df['city_id'] == c].drop_duplicates(subset=['h3_index'])
-        axes[idx].scatter(
-            cdf['longitude'], cdf['latitude'],
-            c=city_palettes[c], s=12, alpha=0.7, edgecolors='none'
-        )
+        
+        if has_h3:
+            # Build real Uber H3 hexagonal polygon boundaries for each cell
+            polys = []
+            for h in cdf['h3_index']:
+                coords = h3.cell_to_boundary(h)
+                polys.append([(lon, lat) for lat, lon in coords])
+            
+            coll = PolyCollection(
+                polys,
+                facecolors=city_palettes[c],
+                edgecolors=city_edge_palettes[c],
+                linewidths=0.25,
+                alpha=0.78
+            )
+            axes[idx].add_collection(coll)
+            
+            # Bound limits with padding
+            lons = cdf['longitude'].values
+            lats = cdf['latitude'].values
+            pad_x = (lons.max() - lons.min()) * 0.04
+            pad_y = (lats.max() - lats.min()) * 0.04
+            axes[idx].set_xlim(lons.min() - pad_x, lons.max() + pad_x)
+            axes[idx].set_ylim(lats.min() - pad_y, lats.max() + pad_y)
+            
+            mean_lat = np.mean(lats)
+            axes[idx].set_aspect(1.0 / np.cos(np.radians(mean_lat)))
+        else:
+            # Fallback to hexagon scatter markers if h3 library is not present
+            axes[idx].scatter(
+                cdf['longitude'], cdf['latitude'],
+                marker='h', s=24,
+                c=city_palettes[c], edgecolors=city_edge_palettes[c],
+                linewidths=0.3, alpha=0.8
+            )
+
         axes[idx].set_title(f"{c.capitalize()} ({len(cdf):,} cells)", fontweight='bold', fontsize=11)
         axes[idx].set_xlabel("Longitude (°E)", fontsize=9)
         axes[idx].set_ylabel("Latitude (°N)", fontsize=9)
